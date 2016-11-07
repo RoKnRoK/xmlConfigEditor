@@ -1,0 +1,4 @@
+<module>
+    <source path="config_dto"/>
+    <source path="settings"/>
+</module>

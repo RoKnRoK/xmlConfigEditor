@@ -1,0 +1,19 @@
+<!DOCTYPE module PUBLIC "-//Google Inc.//DTD Google Web Toolkit 2.0//EN"
+        "http://google-web-toolkit.googlecode.com/svn/releases/2.0/distro-source/core/src/gwt-module.dtd">
+<module rename-to="XmlConfigEditorGwt">
+
+    <!-- Inherit the core Web Toolkit stuff.                  -->
+    <inherits name='com.google.gwt.user.User'/>
+    <inherits name="com.rok.xml.XmlConfigEditorModel"/>
+
+    <!-- Specify the app entry point class.                   -->
+    <entry-point class='com.rok.gwt.xmlConfigEditorGwt.client.XmlConfigEditorGwt'/>
+
+
+    <!-- Specify the app servlets.                   -->
+    <servlet path='/XmlConfigEditorGwtService'
+             class='com.rok.gwt.xmlConfigEditorGwt.server.XmlConfigEditorGwtServiceImpl'/>
+
+    <source path='client'/>
+    <source path="model"/>
+</module>
