@@ -1,0 +1,5 @@
+<module>
+    <source path="client"/>
+    <source path="config_dto"/>
+    <source path="settings"/>
+</module>

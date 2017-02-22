@@ -4,14 +4,16 @@ import com.rok.xml.config_dto.ConfigBlock;
 import com.rok.xml.modifier.FSXmlConfigModifier;
 import com.rok.xml.api.XmlConfigModifier;
 
-import javax.ejb.Stateful;
+import javax.ejb.LocalBean;
+import javax.ejb.Stateless;
 
 /**
  * Created by RoK on 10.07.2015.
  * All rights reserved =)
  */
-@Stateful(name = "XmlConfigEditorEJB")
-public class XmlConfigEditorImpl implements XmlConfigEditorRemote {
+@Stateless(name = "XmlConfigEditorEJB")
+@LocalBean
+public class XmlConfigEditorImpl implements XmlConfigEditorLocal, XmlConfigEditorRemote {
 
     private XmlConfigModifier xmlConfigModifier;
 
@@ -23,7 +25,7 @@ public class XmlConfigEditorImpl implements XmlConfigEditorRemote {
     @Override
     public ConfigBlock getConfigBlock() {
 
-        xmlConfigModifier = new FSXmlConfigModifier("environment_config.xml");
+        xmlConfigModifier = new FSXmlConfigModifier("D:/Temp/environment_config.xml");
         return xmlConfigModifier.getConfig();
     }
 

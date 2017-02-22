@@ -11,15 +11,9 @@
     <artifactId>XmlConfigEditorEar</artifactId>
 
     <packaging>ear</packaging>
-    <name>My EAR</name>
+    <name>XmlConfigEditorEar</name>
 
     <dependencies>
-
-        <dependency>
-            <groupId>com.rok.xml</groupId>
-            <artifactId>XmlConfigEditorModel</artifactId>
-            <version>${project.parent.version}</version>
-        </dependency>
 
         <dependency>
             <groupId>com.rok.xml</groupId>
@@ -40,19 +34,10 @@
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <source>1.7</source>
-                    <target>1.7</target>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-ear-plugin</artifactId>
                 <version>2.3.2</version>
-                <!-- configuring the ear plugin -->
                 <configuration>
-                    <!--<version>1.4</version>-->
+                    <defaultLibBundleDir>lib</defaultLibBundleDir>
                     <modules>
                         <webModule>
                             <groupId>com.rok.xml</groupId>
@@ -64,12 +49,11 @@
                         </ejbModule>
                     </modules>
                     <displayName>XmlConfigEditor EAR</displayName>
-                    <!-- If I want maven to generate the application.xml, set this to true -->
                     <generateApplicationXml>true</generateApplicationXml>
                 </configuration>
             </plugin>
 
         </plugins>
-        <finalName>myEarName</finalName>
+        <finalName>XmlConfigEditor</finalName>
     </build>
 </project>
