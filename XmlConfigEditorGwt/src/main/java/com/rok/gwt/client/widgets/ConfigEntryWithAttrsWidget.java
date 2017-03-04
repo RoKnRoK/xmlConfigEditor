@@ -3,8 +3,12 @@ package com.rok.gwt.client.widgets;
 import com.google.gwt.event.logical.shared.OpenEvent;
 import com.google.gwt.event.logical.shared.OpenHandler;
 import com.google.gwt.user.client.ui.*;
+import com.rok.xml.config_dto.AbstractConfigNode;
+import com.rok.xml.config_dto.ConfigEntry;
 import com.rok.xml.config_dto.ConfigNodeType;
 import com.rok.xml.config_dto.ConfigValueNode;
+
+import java.util.List;
 
 /**
  * Created by RoK on 28.06.2015.
@@ -30,14 +34,17 @@ public class ConfigEntryWithAttrsWidget extends Composite {
             @Override
             public void onOpen(OpenEvent<DisclosurePanel> event) {
                 //todo: map to avoid creation every time when clicked
-                Widget containerWidget = new ConfigEntryWidget(configValueNode.getNodeAttributes());
+                List<ConfigValueNode> nodeAttributes = configValueNode.getNodeAttributes();
+                ConfigValueNode fictiveValueAttribute =
+                        new ConfigEntry(configValueNode.getName() + " value ", configValueNode.getValue(), (AbstractConfigNode) configValueNode);
+                nodeAttributes.add(fictiveValueAttribute);
+                Widget containerWidget = new ConfigEntryWidget(nodeAttributes);
                 containerWidget.setStyleName("padding");
                 widgetMainPanel.setContent(containerWidget);
             }
         });
         widgetMainPanel.addStyleName("configBlock");
 
-        widgetMainPanel.setHeader(new ConfigEntryWidget(configValueNode));
         initWidget(widgetMainPanel);
     }
 }
