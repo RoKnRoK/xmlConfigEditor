@@ -2,7 +2,7 @@ package com.rok.gwt.client.widgets;
 
 import com.google.gwt.user.client.ui.*;
 import com.google.gwt.view.client.ListDataProvider;
-import com.rok.xml.config_dto.ConfigEntry;
+import com.rok.gwt.client.widgets.table.ConfigEntriesTable;
 import com.rok.xml.config_dto.ConfigValueNode;
 
 import java.util.ArrayList;

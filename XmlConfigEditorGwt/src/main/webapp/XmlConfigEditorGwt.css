@@ -11,6 +11,7 @@ body, td, a, div, .p {
 }
 input {
     margin-right: 10px;
+    /*width: 100%;*/
 }
 
 .gwt-TabPanel
@@ -30,12 +31,10 @@ input {
     background: #FFFFFF;
 }
 .gwt-TabPanelBottom {
-    /*border: 2px solid #458818;*/
     border-radius: 10px;
 
-    border-color: #ccc;
-    border-style: solid;
-    border-width: 0px 1px 1px;
+    border: 1px solid #ccc;
+    border-top-width: 0;
     overflow: hidden;
     padding: 6px;
 }
@@ -44,12 +43,11 @@ input {
     padding: 6px 16px 6px 16px;
     cursor: pointer;
     font-size: 1.2em;
-    /*color: #8bc53d;*/
     color: white;
     font-weight: normal;
     text-align: center;
-    /*background: #458818;*/
-    background: #8E8E8E;
+    /*background: #999;*/
+    background: #8e8e8e;
     border-radius: 5px 5px 0 0;
     outline: none;
 
@@ -57,40 +55,27 @@ input {
 
 .gwt-TabBar .gwt-TabBarItem-selected {
     cursor: default;
-    /*background: #8bc53d;*/
-    /*font-size: 1.2em;*/
-    /*color: #FFFFFF;*/
-    /*background: white;*/
     background: #ddd;
-    color: #333;
     font-weight: bold;
+    color: #555;
 }
 
-.gwt-TabBar .gwt-TabBarItem-disabled {
-    cursor: default;
-    color: #999;
-}
 
-.gwt-DisclosurePanel {
-    font-size: 1.2em;
-}
 .gwt-DisclosurePanel a {
     text-decoration: none;
     color: #333;
 }
+/* to align Disclosure Panel's Header */
 .gwt-DisclosurePanel td {
     text-align: center;
 }
 
 .gwt-DisclosurePanel.gwt-DisclosurePanel-open  {
-    background: #999;
-    color: #333;
+    /*background: #999;*/
+    background: #8e8e8e;
     font-weight: bold;
+}
 
-}
-.gwt-DisclosurePanel.gwt-DisclosurePanel-closed {
-    background:  #ddd;
-}
 .gwt-CheckBox {
     margin-left: 24%
 }
@@ -106,8 +91,15 @@ input {
     margin-bottom: 5px;
     padding: 10px 0 10px 0;
     text-align: center;
+    background: #ddd;
+    font-size: 1.2em;
+}
+.error {
+    color: darkred;
 }
 
 .gwt-DisclosurePanel-open .gwt-DisclosurePanel-open{
     border: solid 1px #555;
 }
+
+

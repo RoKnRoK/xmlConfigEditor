@@ -8,6 +8,7 @@ import com.google.gwt.view.client.ListDataProvider;
 import com.rok.gwt.client.events.ConfigValueChangedEvent;
 import com.rok.gwt.client.events.EventBusStorage;
 import com.rok.gwt.client.logic.ConfigBlockWidgetFactory;
+import com.rok.gwt.client.widgets.table.ConfigEntriesTable;
 import com.rok.xml.config_dto.ConfigBlock;
 import com.rok.xml.config_dto.ConfigBooleanEntry;
 import com.rok.xml.config_dto.ConfigNode;

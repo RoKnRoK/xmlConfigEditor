@@ -1,9 +1,10 @@
-package com.rok.gwt.client.widgets;
+package com.rok.gwt.client.widgets.table;
 
 import com.google.gwt.cell.client.AbstractCell;
 import com.google.gwt.cell.client.EditTextCell;
 import com.google.gwt.cell.client.FieldUpdater;
 import com.google.gwt.cell.client.TextCell;
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.Column;
 import com.google.gwt.user.cellview.client.TextColumn;
@@ -20,12 +21,16 @@ import java.util.Objects;
  */
 public class ConfigEntriesTable extends CellTable<ConfigValueNode> {
 
+    private static final int DEFAULT_PAGESIZE = 15;
+    private static CellTable.Resources resources = GWT.create(ConfigEntriesTableResources.class);
+
     public ConfigEntriesTable() {
-       this(false);
+        this(false);
     }
+
     public ConfigEntriesTable(boolean isEditable) {
-        super();
-       this.setWidth("100%");
+        super(DEFAULT_PAGESIZE, resources);
+        this.setWidth("100%");
         initColumns(isEditable);
     }
 
@@ -54,7 +59,9 @@ public class ConfigEntriesTable extends CellTable<ConfigValueNode> {
             public void update(int index, ConfigValueNode object, String value) {
                 // Called when the user changes the value.
                 String oldValue = object.getValue();
-                if (Objects.equals(oldValue, value)) {return;}
+                if (Objects.equals(oldValue, value)) {
+                    return;
+                }
                 object.setValue(value);
                 EventBusStorage.getInstance().getEventBus().fireEvent(new ConfigValueChangedEvent(object));
 
