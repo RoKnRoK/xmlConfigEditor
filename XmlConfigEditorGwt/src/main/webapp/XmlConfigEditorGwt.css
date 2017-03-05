@@ -71,18 +71,28 @@ input {
 }
 
 .gwt-DisclosurePanel.gwt-DisclosurePanel-open  {
-    /*background: #999;*/
     background: #8e8e8e;
     font-weight: bold;
+}
+
+.gwt-DisclosurePanel.gwt-DisclosurePanel-closed:hover {
+    background: #aeaeae;
+}
+
+.gwt-DisclosurePanel-open .gwt-DisclosurePanel-open{
+    border: solid 1px #555;
 }
 
 .gwt-CheckBox {
     margin-left: 24%
 }
+
+/*Custom styles*/
+
 .padding {
     padding-left: 50px;
     padding-right: 50px;
-    padding-bottom: 15px;
+    padding-top: 10px;
 }
 
 .configBlock {
@@ -94,12 +104,11 @@ input {
     background: #ddd;
     font-size: 1.2em;
 }
+
 .error {
     color: darkred;
 }
 
-.gwt-DisclosurePanel-open .gwt-DisclosurePanel-open{
-    border: solid 1px #555;
-}
+
 
 
