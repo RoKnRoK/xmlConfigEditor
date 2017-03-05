@@ -25,6 +25,7 @@ public class XmlConfigEditorImpl implements XmlConfigEditorLocal, XmlConfigEdito
     @Override
     public ConfigBlock getConfigBlock() {
 
+        //todo: filename as @Resource
         xmlConfigModifier = new FSXmlConfigModifier("D:/Temp/environment_config.xml");
         return xmlConfigModifier.getConfig();
     }

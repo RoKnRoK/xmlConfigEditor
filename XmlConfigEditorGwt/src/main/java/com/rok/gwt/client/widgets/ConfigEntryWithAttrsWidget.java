@@ -33,7 +33,6 @@ public class ConfigEntryWithAttrsWidget extends Composite {
         widgetMainPanel.addOpenHandler(new OpenHandler<DisclosurePanel>() {
             @Override
             public void onOpen(OpenEvent<DisclosurePanel> event) {
-                //todo: map to avoid creation every time when clicked
                 List<ConfigValueNode> nodeAttributes = configValueNode.getNodeAttributes();
                 ConfigValueNode fictiveValueAttribute =
                         new ConfigEntry(configValueNode.getName() + " value ", configValueNode.getValue(), (AbstractConfigNode) configValueNode);

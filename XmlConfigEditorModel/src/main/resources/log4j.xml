@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration SYSTEM
+        "http://logging.apache.org/log4j/1.2/apidocs/org/apache/log4j/xml/doc-files/log4j.dtd">
+
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+
+    <appender name="fileAppender" class="org.apache.log4j.RollingFileAppender">
+        <param name="file" value="logs/XmlConfigEditorModel.log"/>
+        <param name="append" value="true"/>
+        <param name="encoding" value="UTF-8"/>
+        <param name="MaxFileSize" value="10MB"/>
+        <param name="MaxBackupIndex" value="10"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d [%t] %-5p %c{3} - %m%n"/>
+        </layout>
+    </appender>
+
+
+
+    <!-- Application Loggers -->
+    <logger name="com.rok.xml">
+        <level value="trace"/>
+        <appender-ref ref="fileAppender"/>
+    </logger>
+
+
+</log4j:configuration>
