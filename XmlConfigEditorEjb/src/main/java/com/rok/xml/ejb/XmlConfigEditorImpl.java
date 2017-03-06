@@ -1,6 +1,7 @@
 package com.rok.xml.ejb;
 
 import com.rok.xml.config_dto.ConfigBlock;
+import com.rok.xml.config_dto.ConfigModificationInfo;
 import com.rok.xml.modifier.FSXmlConfigModifier;
 import com.rok.xml.api.XmlConfigModifier;
 
@@ -23,7 +24,7 @@ public class XmlConfigEditorImpl implements XmlConfigEditorLocal, XmlConfigEdito
 
 
     @Override
-    public ConfigBlock getConfigBlock() {
+    public ConfigModificationInfo getConfigModificationInfo() {
 
         //todo: filename as @Resource
         xmlConfigModifier = new FSXmlConfigModifier("D:/Temp/environment_config.xml");
@@ -31,7 +32,12 @@ public class XmlConfigEditorImpl implements XmlConfigEditorLocal, XmlConfigEdito
     }
 
     @Override
-    public boolean saveConfigBlock(ConfigBlock configBlock) {
-        return xmlConfigModifier.saveConfig(configBlock);
+    public boolean saveConfigBlock(ConfigModificationInfo configModificationInfo) {
+        return xmlConfigModifier.saveConfig(configModificationInfo);
+    }
+
+    @Override
+    public void cancelConfigEditing(ConfigModificationInfo configModificationInfo) {
+        xmlConfigModifier.cancelConfigEditing(configModificationInfo);
     }
 }

@@ -6,5 +6,5 @@ package com.rok.gwt.client.constants;
  */
 public class TimeConstants {
 
-    public static final int EDITING_TIME_IN_MILLIS = 30000;
+    public static final int EDITING_TIME_IN_MILLIS = 300000;
 }

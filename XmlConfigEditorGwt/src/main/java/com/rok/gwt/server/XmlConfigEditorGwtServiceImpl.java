@@ -3,6 +3,7 @@ package com.rok.gwt.server;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.rok.gwt.client.service.XmlConfigEditorGwtService;
 import com.rok.xml.config_dto.ConfigBlock;
+import com.rok.xml.config_dto.ConfigModificationInfo;
 import com.rok.xml.ejb.XmlConfigEditorLocal;
 
 import javax.annotation.PostConstruct;
@@ -22,13 +23,18 @@ public class XmlConfigEditorGwtServiceImpl extends RemoteServiceServlet implemen
         System.out.println("XmlConfigEditorLocal: " + xmlConfigEditorLocal);
     }
     @Override
-    public ConfigBlock getConfigBlock() {
-        return  xmlConfigEditorLocal.getConfigBlock();
+    public ConfigModificationInfo getConfigModificationInfo() {
+        return  xmlConfigEditorLocal.getConfigModificationInfo();
 
     }
 
     @Override
-    public boolean saveConfigBlock(ConfigBlock configBlock){
-        return  xmlConfigEditorLocal.saveConfigBlock(configBlock);
+    public boolean saveConfigBlock(ConfigModificationInfo configModificationInfo){
+        return  xmlConfigEditorLocal.saveConfigBlock(configModificationInfo);
+    }
+
+    @Override
+    public void cancelConfigEditing(ConfigModificationInfo configModificationInfo) {
+        xmlConfigEditorLocal.cancelConfigEditing(configModificationInfo);
     }
 }

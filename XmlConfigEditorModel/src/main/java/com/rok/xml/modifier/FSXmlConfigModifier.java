@@ -1,9 +1,9 @@
 package com.rok.xml.modifier;
 
 import com.rok.xml.backuper.FSConfigBackuper;
+import com.rok.xml.locker.ByLockFileLocker;
 import com.rok.xml.retriever.FSFileRetriever;
 import com.rok.xml.api.FileRetriever;
-import com.rok.xml.locker.FSConfigLocker;
 
 import java.io.*;
 
@@ -19,7 +19,7 @@ public class FSXmlConfigModifier extends CommonConfigModifier{
         if (xmlConfig == null) {
             throw new IllegalStateException("Не найден файл настроек "+fileName);
         }
-        configLocker = new FSConfigLocker(xmlConfig);
+        configLocker = new ByLockFileLocker(xmlConfig);
         configBackuper = new FSConfigBackuper(xmlConfig);
     }
 

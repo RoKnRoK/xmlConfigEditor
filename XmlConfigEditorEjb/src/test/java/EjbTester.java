@@ -22,7 +22,7 @@ public class EjbTester extends TestCase {
         XmlConfigEditorLocal bean = (XmlConfigEditorLocal) context.lookup("java:global/XmlConfigEditorEjb/XmlConfigEditorEJB");
 
         assertNotNull(bean);
-        System.out.println(bean.getConfigBlock());
+        System.out.println(bean.getConfigModificationInfo());
     }
 
 //    public void testBlue() throws Exception {

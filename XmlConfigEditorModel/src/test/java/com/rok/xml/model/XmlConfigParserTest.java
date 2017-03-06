@@ -2,8 +2,8 @@ package com.rok.xml.model;
 
 import com.rok.xml.config_dto.ConfigBlock;
 import com.rok.xml.config_dto.ConfigEntry;
+import com.rok.xml.config_dto.ConfigModificationInfo;
 import com.rok.xml.config_dto.ConfigNode;
-import com.rok.xml.locker.ByFSBackupLocker;
 import com.rok.xml.modifier.FSXmlConfigModifier;
 import com.rok.xml.api.XmlConfigModifier;
 import org.testng.annotations.DataProvider;
@@ -27,16 +27,15 @@ public class XmlConfigParserTest {
 
     @Test(dataProvider = "test1", threadPoolSize = 1, invocationCount = 1)
     public void doTest(String newValue, int i) {
-        XmlConfigModifier configModifier = new FSXmlConfigModifier("D:\\Work\\test\\environment_config.xml");
-       // ByFSBackupLocker locker = new ByFSBackupLocker((File) configModifier.getConfigAsObject());
-      //  configModifier.setLocker(locker);
-        ConfigBlock configBlock = configModifier.getConfig();
+        XmlConfigModifier configModifier = new FSXmlConfigModifier("D:\\Temp\\environment_config.xml");
+        ConfigModificationInfo configModificationInfo = configModifier.getConfig();
+        ConfigBlock configBlock = configModificationInfo.getConfigBlock();
         ConfigBlock childNode = (ConfigBlock) configBlock.getChildNode(0);
-        ConfigEntry childEntry = (ConfigEntry) childNode.getChildNode(1);
+        ConfigEntry childEntry = (ConfigEntry) childNode.getChildNode(3);
         if (childEntry.isEditable()) {
             System.out.println("set");
             childEntry.setValue(newValue);
         }
-        System.out.println(configModifier.saveConfig(configBlock));
+        System.out.println(configModifier.saveConfig(configModificationInfo));
     }
 }

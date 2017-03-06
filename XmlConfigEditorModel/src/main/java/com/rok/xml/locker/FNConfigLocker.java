@@ -4,6 +4,8 @@ import com.rok.xml.api.ConfigLocker;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.Serializable;
+import java.util.UUID;
 
 /**
  * Created by RoK on 11.07.2015.
@@ -25,12 +27,12 @@ public class FNConfigLocker implements ConfigLocker {
     }
 
     @Override
-    public void tryLockConfig() {
-
+    public UUID tryLockConfig() {
+        return UUID.randomUUID();
     }
 
     @Override
-    public void unlockConfig() {
+    public void unlockConfig(Serializable lock) {
 
     }
 }

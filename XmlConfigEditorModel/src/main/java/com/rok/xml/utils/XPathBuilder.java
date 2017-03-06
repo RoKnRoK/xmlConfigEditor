@@ -13,17 +13,21 @@ import java.util.List;
 public class XPathBuilder {
 
     public String createXPath(AbstractConfigNode configNode) {
-        if (configNode == null) {return "";}
+        if (configNode == null) {
+            return "";
+        }
         String configNodeName = configNode.getName();
         List<ConfigValueNode> nodeAttributes = configNode.getNodeAttributes();
-        String myXPath = "/"+configNodeName+"[";
+        String myXPath = "/" + configNodeName + "[";
 
         for (ConfigValueNode nodeAttribute : nodeAttributes) {
-            myXPath +="@"+nodeAttribute.getName()+"=\'"+nodeAttribute.getValue()+"\' and";
+            myXPath += "@" + nodeAttribute.getName() + "=\'" + nodeAttribute.getValue() + "\' and";
         }
-        if (myXPath.indexOf("and")>0){ myXPath = myXPath.substring(0, myXPath.length()-4);}
-        myXPath+="]";
-        myXPath = myXPath.replace("[]","");
+        if (myXPath.indexOf("and") > 0) {
+            myXPath = myXPath.substring(0, myXPath.length() - 4);
+        }
+        myXPath += "]";
+        myXPath = myXPath.replace("[]", "");
 
         myXPath = createXPath(configNode.getParentNode()) + myXPath;
         return myXPath;

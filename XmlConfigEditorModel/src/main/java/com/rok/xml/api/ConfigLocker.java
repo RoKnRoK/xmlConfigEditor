@@ -1,6 +1,7 @@
 package com.rok.xml.api;
 
 import java.io.IOException;
+import java.io.Serializable;
 
 /**
  * Created by RoK on 11.07.2015.
@@ -8,6 +9,6 @@ import java.io.IOException;
  */
 public interface ConfigLocker {
     boolean isConfigLockedBySomeoneElse();
-    void tryLockConfig();
-    void unlockConfig();
+    Serializable tryLockConfig();
+    void unlockConfig(Serializable lock);
 }

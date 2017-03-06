@@ -1,6 +1,7 @@
 package com.rok.xml.ejb;
 
 import com.rok.xml.config_dto.ConfigBlock;
+import com.rok.xml.config_dto.ConfigModificationInfo;
 
 import javax.ejb.Remote;
 
@@ -10,6 +11,7 @@ import javax.ejb.Remote;
  */
 @Remote
 public interface XmlConfigEditorRemote {
-    ConfigBlock getConfigBlock();
-    boolean saveConfigBlock(ConfigBlock configBlock) ;
+    ConfigModificationInfo getConfigModificationInfo();
+    boolean saveConfigBlock(ConfigModificationInfo configModificationInfo) ;
+    void cancelConfigEditing(ConfigModificationInfo configModificationInfo);
 }

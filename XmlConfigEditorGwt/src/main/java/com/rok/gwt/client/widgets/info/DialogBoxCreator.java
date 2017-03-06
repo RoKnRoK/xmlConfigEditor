@@ -3,12 +3,8 @@ package com.rok.gwt.client.widgets.info;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.DialogBox;
-import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.VerticalPanel;
+import com.google.gwt.user.client.ui.*;
 import com.rok.gwt.client.i18n.XmlConfigEditorConstants;
-import com.rok.gwt.client.i18n.XmlConfigEditorMessages;
 
 /**
  * Created by RoK.
@@ -16,29 +12,56 @@ import com.rok.gwt.client.i18n.XmlConfigEditorMessages;
  */
 public class DialogBoxCreator {
 
+    private static final XmlConfigEditorConstants constants = GWT.create(XmlConfigEditorConstants.class);
 
     public static DialogBox createErrorMessageBox(String capture, String message) {
-        DialogBox dialogBox = new DialogBox(true, true);
+        final DialogBox dialogBox = new DialogBox(false);
         dialogBox.setText(capture);
 
-        // Setcontent
         Label content = new Label(message);
-        if (dialogBox.isAutoHideEnabled())  {
+        if (dialogBox.isAutoHideEnabled()) {
             dialogBox.setWidget(content);
         } else {
             VerticalPanel vPanel = new VerticalPanel();
             vPanel.setSpacing(2);
             vPanel.add(content);
             vPanel.add(new Label("\n"));
-            vPanel.add(new Button("Close", new ClickHandler() {
+            vPanel.add(new Button(constants.close(), new ClickHandler() {
                 public void onClick(ClickEvent event) {
                     dialogBox.hide();
                 }
             }));
             dialogBox.setWidget(vPanel);
         }
-        return  dialogBox;
-//        setPopupPosition(100, 150);
+        return dialogBox;
     }
 
+    public static DialogBox createConfirmationBox(String capture, String message, final ConfirmCallback callback) {
+        final DialogBox dialogBox = new DialogBox(false);
+        dialogBox.setText(capture);
+
+        Widget content = new Label(message);
+        Button okButton = new Button(constants.yes(), new ClickHandler() {
+            public void onClick(ClickEvent event) {
+                callback.onOk();
+            }
+        });
+        Button cancelButton = new Button(constants.no(), new ClickHandler() {
+            public void onClick(ClickEvent event) {
+                callback.onCancel();
+            }
+        });
+        HorizontalPanel horizontalPanel = new HorizontalPanel();
+        horizontalPanel.add(okButton);
+        horizontalPanel.add(cancelButton);
+
+        VerticalPanel verticalPanel = new VerticalPanel();
+        verticalPanel.setSpacing(2);
+        verticalPanel.add(content);
+        verticalPanel.add(new Label("\n"));
+        verticalPanel.add(horizontalPanel);
+
+        dialogBox.setWidget(verticalPanel);
+        return dialogBox;
+    }
 }

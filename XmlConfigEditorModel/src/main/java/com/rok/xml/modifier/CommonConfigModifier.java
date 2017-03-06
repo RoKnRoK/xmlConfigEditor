@@ -5,7 +5,6 @@ import com.rok.xml.api.ConfigLocker;
 import com.rok.xml.api.XmlConfigModifier;
 import com.rok.xml.backuper.StubConfigBackuper;
 import com.rok.xml.config_dto.*;
-import com.rok.xml.locker.ByFSBackupLocker;
 import com.rok.xml.locker.StubConfigLocker;
 import com.rok.xml.utils.DomNodeToConfigBlockConverter;
 import com.rok.xml.utils.XPathBuilder;
@@ -14,24 +13,23 @@ import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
-import org.xml.sax.SAXException;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
-import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.Serializable;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Created by RoK on 11.07.2015.
@@ -69,8 +67,11 @@ public abstract class CommonConfigModifier implements XmlConfigModifier {
     }
 
     @Override
-    public ConfigBlock getConfig() {
-        configLocker.tryLockConfig();
+    public ConfigModificationInfo getConfig() {
+        Serializable lockObject = configLocker.tryLockConfig();
+        if (lockObject instanceof UUID) {
+            lockObject = lockObject.toString();
+        }
         boolean isConfigLockedBySomeoneElse = configLocker.isConfigLockedBySomeoneElse();
         boolean backupSuccessful = false;
         if (!isConfigLockedBySomeoneElse) {
@@ -79,12 +80,15 @@ public abstract class CommonConfigModifier implements XmlConfigModifier {
         ConfigBlock configNode = parseConfig();
         configNode.setEditable(backupSuccessful);
 
-        return configNode;
+        return new ConfigModificationInfo(configNode, lockObject);
     }
 
-    public boolean saveConfig(ConfigBlock configBlock) {
+    public boolean saveConfig(ConfigModificationInfo configModificationInfo) {
+        if (configModificationInfo.getLock() == null){
+            logger.warn("Config is not locked by me, skipping save");
+            return false;
+        }
         try {
-            configLocker.unlockConfig();
 
             DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
@@ -93,11 +97,12 @@ public abstract class CommonConfigModifier implements XmlConfigModifier {
             XPath xpath = factory.newXPath();
 
             XPathBuilder xPathBuilder = new XPathBuilder();
-            List<ConfigValueNode> changedNodes = configBlock.getChangedValueNodes();
+            List<ConfigValueNode> changedNodes = configModificationInfo.getConfigBlock().getChangedValueNodes();
             for (ConfigValueNode changedNode : changedNodes) {
                 switch (changedNode.getNodeType()) {
                     case ENTRY:
-                    case ENTRY_WITH_ATTRS: {
+                    case ENTRY_WITH_ATTRS:
+                    case BOOLEAN_ENTRY:{
                         String expression = xPathBuilder.createXPath((AbstractConfigNode) changedNode);
                         Node node = (Node) xpath.evaluate(expression, document, XPathConstants.NODE);
                         node.setTextContent(changedNode.getValue());
@@ -108,12 +113,20 @@ public abstract class CommonConfigModifier implements XmlConfigModifier {
 
                 }
             }
+//            String fileCopyName = xmlConfig.getAbsolutePath().replace(".xml", "_new.xml");
             DOMSource source = new DOMSource(document);
+//            File fileCopy = new File(fileCopyName);
+//            StreamResult outputFile = new StreamResult(fileCopy);
             StreamResult outputFile = new StreamResult(xmlConfig);
             Transformer transformer = TransformerFactory.newInstance().newTransformer();
             transformer.transform(source, outputFile);
 
-           configBackuper.deleteBackup();
+            //todo: theoretically in period of time between this lines someone can open config for editing
+            configLocker.unlockConfig(configModificationInfo.getLock());
+//            Files.move(fileCopy.toPath(), xmlConfig.toPath(), StandardCopyOption.ATOMIC_MOVE);
+
+
+            configBackuper.deleteBackup();
 
         } catch (Exception e) {
             logger.error("Save configuration failed, reason: {}", e.getMessage(), e);
@@ -123,19 +136,27 @@ public abstract class CommonConfigModifier implements XmlConfigModifier {
     }
 
     @Override
+    public void cancelConfigEditing(ConfigModificationInfo configModificationInfo) {
+        logger.trace("Cancelling editing of config");
+        configLocker.unlockConfig(configModificationInfo.getLock());
+        configBackuper.deleteBackup();
+        logger.trace("Cancelling finished");
+    }
+
+    @Override
     public void setBackuper(ConfigBackuper backuper) {
-        if (backuper == null) {this.configBackuper = new StubConfigBackuper();}
-        else  {this.configBackuper = backuper;}
+        if (backuper == null) {
+            this.configBackuper = new StubConfigBackuper();
+        } else {
+            this.configBackuper = backuper;
+        }
     }
 
     @Override
     public void setLocker(ConfigLocker locker) {
-        if (locker == null) {this.configLocker = new StubConfigLocker();}
-        else if (locker instanceof ByFSBackupLocker) {
-            setBackuper(null);
-            this.configLocker = locker;
-        }
-        else {
+        if (locker == null) {
+            this.configLocker = new StubConfigLocker();
+        } else {
             this.configLocker = locker;
         }
     }

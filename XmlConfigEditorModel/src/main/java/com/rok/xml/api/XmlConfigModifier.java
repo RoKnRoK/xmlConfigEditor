@@ -1,6 +1,7 @@
 package com.rok.xml.api;
 
 import com.rok.xml.config_dto.ConfigBlock;
+import com.rok.xml.config_dto.ConfigModificationInfo;
 import com.rok.xml.config_dto.ConfigNode;
 
 import java.io.File;
@@ -12,9 +13,10 @@ import java.io.IOException;
  */
 public interface XmlConfigModifier {
 
-    ConfigBlock getConfig();
+    ConfigModificationInfo getConfig();
     Object getConfigAsObject();
-    boolean saveConfig(ConfigBlock config);
+    boolean saveConfig(ConfigModificationInfo configModificationInfo);
+    void cancelConfigEditing(ConfigModificationInfo configModificationInfo);
 
     void setBackuper(ConfigBackuper backuper);
     void setLocker(ConfigLocker locker);
