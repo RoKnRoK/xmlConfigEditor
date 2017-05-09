@@ -8,6 +8,8 @@ import com.rok.xml.api.XmlConfigModifier;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 
+import static com.rok.xml.Constants.FILE_NAME;
+
 /**
  * Created by RoK on 10.07.2015.
  * All rights reserved =)
@@ -15,6 +17,7 @@ import javax.ejb.Stateless;
 @Stateless(name = "XmlConfigEditorEJB")
 @LocalBean
 public class XmlConfigEditorImpl implements XmlConfigEditorLocal, XmlConfigEditorRemote {
+
 
     private XmlConfigModifier xmlConfigModifier;
 
@@ -27,7 +30,7 @@ public class XmlConfigEditorImpl implements XmlConfigEditorLocal, XmlConfigEdito
     public ConfigModificationInfo getConfigModificationInfo() {
 
         //todo: filename as @Resource
-        xmlConfigModifier = new FSXmlConfigModifier("D:/Temp/environment_config.xml");
+        xmlConfigModifier = new FSXmlConfigModifier(FILE_NAME);
         return xmlConfigModifier.getConfig();
     }
 

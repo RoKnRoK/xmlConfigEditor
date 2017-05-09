@@ -11,11 +11,15 @@ import org.testng.annotations.Test;
 
 import java.io.File;
 
+import static com.rok.xml.Constants.FILE_NAME;
+
 /**
  * Created by RoK on 21.06.2015.
  * All rights reserved =)
  */
 public class XmlConfigParserTest {
+
+//    public static final String FILE_NAME = "C:\\Temp\\standart.xml";
 
     @DataProvider(parallel = true, name = "test1")
     public Object[][] concurrencyData() {
@@ -27,7 +31,7 @@ public class XmlConfigParserTest {
 
     @Test(dataProvider = "test1", threadPoolSize = 1, invocationCount = 1)
     public void doTest(String newValue, int i) {
-        XmlConfigModifier configModifier = new FSXmlConfigModifier("D:\\Temp\\environment_config.xml");
+        XmlConfigModifier configModifier = new FSXmlConfigModifier(FILE_NAME);
         ConfigModificationInfo configModificationInfo = configModifier.getConfig();
         ConfigBlock configBlock = configModificationInfo.getConfigBlock();
         ConfigBlock childNode = (ConfigBlock) configBlock.getChildNode(0);

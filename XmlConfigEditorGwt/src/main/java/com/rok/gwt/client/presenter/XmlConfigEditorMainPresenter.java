@@ -42,6 +42,7 @@ public class XmlConfigEditorMainPresenter implements XmlConfigEditorMainView.Pre
     private boolean configBlockChanged = false;
 
     public XmlConfigEditorMainPresenter() {
+        Logger.log("Trying to initialize");
         mainView.setPresenter(this);
         SimpleEventBus eventBus = new SimpleEventBus();
         EventBusStorage.getInstance().setEventBus(eventBus);
@@ -109,10 +110,12 @@ public class XmlConfigEditorMainPresenter implements XmlConfigEditorMainView.Pre
     }
 
     private void fetchConfig() {
+        Logger.log("Trying to fetch config");
         serviceAsync.getConfigModificationInfo(new AsyncCallback<ConfigModificationInfo>() {
 
             @Override
             public void onFailure(Throwable caught) {
+                Logger.log("Failure! " + caught.getMessage());
             }
 
             @Override
