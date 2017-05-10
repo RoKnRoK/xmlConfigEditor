@@ -4,7 +4,8 @@ import com.rok.xml.api.ConfigBackuper;
 import com.rok.xml.api.ConfigLocker;
 import com.rok.xml.api.XmlConfigModifier;
 import com.rok.xml.backuper.StubConfigBackuper;
-import com.rok.xml.config_dto.*;
+import com.rok.xml.dto.config_dto.*;
+import com.rok.xml.dto.LockInfo;
 import com.rok.xml.locker.StubConfigLocker;
 import com.rok.xml.utils.DomNodeToConfigBlockConverter;
 import com.rok.xml.utils.XPathBuilder;
@@ -26,8 +27,6 @@ import javax.xml.xpath.XPathFactory;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.Serializable;
-import java.nio.file.Files;
-import java.nio.file.StandardCopyOption;
 import java.util.List;
 import java.util.UUID;
 
@@ -68,9 +67,10 @@ public abstract class CommonConfigModifier implements XmlConfigModifier {
 
     @Override
     public ConfigModificationInfo getConfig() {
-        Serializable lockObject = configLocker.tryLockConfig();
+        LockInfo lockInfo = configLocker.tryLockConfig();
+        Serializable lockObject = lockInfo.getLockObject();
         if (lockObject instanceof UUID) {
-            lockObject = lockObject.toString();
+            lockInfo.setLockObject(lockObject.toString());
         }
         boolean isConfigLockedBySomeoneElse = configLocker.isConfigLockedBySomeoneElse();
         boolean backupSuccessful = false;
@@ -80,7 +80,7 @@ public abstract class CommonConfigModifier implements XmlConfigModifier {
         ConfigBlock configNode = parseConfig();
         configNode.setEditable(backupSuccessful);
 
-        return new ConfigModificationInfo(configNode, lockObject);
+        return new ConfigModificationInfo(configNode, lockInfo);
     }
 
     public boolean saveConfig(ConfigModificationInfo configModificationInfo) {

@@ -1,4 +1,4 @@
-package com.rok.xml.config_dto;
+package com.rok.xml.dto.config_dto;
 
 import java.util.ArrayList;
 import java.util.List;

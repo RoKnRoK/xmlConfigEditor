@@ -1,14 +1,13 @@
 package com.rok.xml.locker;
 
+import com.rok.xml.Constants;
 import com.rok.xml.api.ConfigLocker;
+import com.rok.xml.dto.LockInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.Serializable;
-import java.util.Objects;
-import java.util.UUID;
+import java.io.*;
+import java.util.*;
 
 /**
  * Created by RoK.
@@ -19,7 +18,6 @@ public class ByLockFileLocker implements ConfigLocker {
     private final Logger logger = LoggerFactory.getLogger(ByLockFileLocker.class);
 
     private File lockingConfig;
-    private static final String LOCK_FILENAME = "config.lock";
     private UUID lockGuid;
     private File lockFile;
 
@@ -34,21 +32,28 @@ public class ByLockFileLocker implements ConfigLocker {
     }
 
     @Override
-    public UUID tryLockConfig() {
+    public LockInfo tryLockConfig() {
         try {
-            String path = lockingConfig.getParent();
-            lockFile = new File(path + "\\" + LOCK_FILENAME);
+            String lockFilePath = lockingConfig.getParent() + File.separator + Constants.LOCK_FILENAME;
+            lockFile = new File(lockFilePath);
             logger.trace("Trying to create custom lock file {}", lockFile.getAbsolutePath());
             boolean created = lockFile.createNewFile();
             if (!created) {
                 logger.error("Config is already locked by someone else");
-                return null;
+                return new LockInfo();
             }
             lockGuid = UUID.randomUUID();
-            return lockGuid;
+            try (BufferedWriter bw = new BufferedWriter(new FileWriter(lockFile))) {
+                bw.write(lockGuid + "\n" + new Date().getTime() + "\n");
+            } catch (IOException e) {
+                logger.error("Cannot write lock info to lock file");
+                return new LockInfo();
+            }
+
+            return new LockInfo(lockGuid, new Date().getTime());
 
         } catch (Exception e) {
-            return null;
+            return new LockInfo();
         }
     }
 

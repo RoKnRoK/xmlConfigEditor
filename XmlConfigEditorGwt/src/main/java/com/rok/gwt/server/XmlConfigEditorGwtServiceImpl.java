@@ -2,8 +2,7 @@ package com.rok.gwt.server;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.rok.gwt.client.service.XmlConfigEditorGwtService;
-import com.rok.xml.config_dto.ConfigBlock;
-import com.rok.xml.config_dto.ConfigModificationInfo;
+import com.rok.xml.dto.config_dto.ConfigModificationInfo;
 import com.rok.xml.ejb.XmlConfigEditorLocal;
 
 import javax.annotation.PostConstruct;

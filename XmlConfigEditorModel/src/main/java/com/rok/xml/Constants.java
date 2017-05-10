@@ -10,4 +10,8 @@ import java.nio.file.FileSystem;
 public interface Constants {
     String DISPLAY_NAME = "displayName";
     String FILE_NAME = "C:" + File.separator + "Temp" + File.separator + "standard.xml";
+
+
+    int EDITING_TIME_IN_MILLIS = 300000;
+    String LOCK_FILENAME = "config.lock";
 }

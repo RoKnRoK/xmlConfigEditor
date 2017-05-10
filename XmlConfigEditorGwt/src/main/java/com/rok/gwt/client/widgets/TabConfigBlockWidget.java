@@ -2,12 +2,10 @@ package com.rok.gwt.client.widgets;
 
 import com.google.gwt.event.logical.shared.BeforeSelectionEvent;
 import com.google.gwt.event.logical.shared.BeforeSelectionHandler;
-import com.google.gwt.event.logical.shared.SelectionEvent;
-import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.user.client.ui.*;
-import com.rok.xml.config_dto.ConfigBlock;
-import com.rok.xml.config_dto.ConfigNode;
-import com.rok.xml.config_dto.ConfigNodeType;
+import com.rok.xml.dto.config_dto.ConfigBlock;
+import com.rok.xml.dto.config_dto.ConfigNode;
+import com.rok.xml.dto.config_dto.ConfigNodeType;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.rok.xml.config_dto;
+package com.rok.xml.dto.config_dto;
 
 import java.io.Serializable;
 import java.util.List;

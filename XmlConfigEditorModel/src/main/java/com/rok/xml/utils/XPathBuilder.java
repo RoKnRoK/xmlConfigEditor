@@ -1,8 +1,7 @@
 package com.rok.xml.utils;
 
-import com.rok.xml.config_dto.AbstractConfigNode;
-import com.rok.xml.config_dto.ConfigNodeAttribute;
-import com.rok.xml.config_dto.ConfigValueNode;
+import com.rok.xml.dto.config_dto.AbstractConfigNode;
+import com.rok.xml.dto.config_dto.ConfigValueNode;
 
 import java.util.List;
 

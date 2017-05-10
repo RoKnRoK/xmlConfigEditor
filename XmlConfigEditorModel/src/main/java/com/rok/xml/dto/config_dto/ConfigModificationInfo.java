@@ -1,6 +1,7 @@
-package com.rok.xml.config_dto;
+package com.rok.xml.dto.config_dto;
 
-import javax.sql.rowset.serial.SerialArray;
+import com.rok.xml.dto.LockInfo;
+
 import java.io.Serializable;
 
 /**
@@ -12,16 +13,15 @@ public class ConfigModificationInfo implements Serializable {
     private static final long serialVersionUID = -2968138039395794332L;
 
     private ConfigBlock configBlock;
-    private Serializable lock;
+    private LockInfo lockInfo;
 
     public ConfigModificationInfo() {
         this.configBlock = null;
-        this.lock = null;
     }
 
-    public ConfigModificationInfo(ConfigBlock configBlock, Serializable lock) {
+    public ConfigModificationInfo(ConfigBlock configBlock, LockInfo lockInfo) {
         this.configBlock = configBlock;
-        this.lock = lock;
+        this.lockInfo = lockInfo;
     }
 
     public ConfigBlock getConfigBlock() {
@@ -33,10 +33,12 @@ public class ConfigModificationInfo implements Serializable {
     }
 
     public Serializable getLock() {
-        return lock;
+        return lockInfo.getLockObject();
     }
 
-    public void setLock(Serializable lock) {
-        this.lock = lock;
+    public long getLockStartTimeMillis() {
+        return lockInfo.getLockStartTime();
     }
+
+
 }

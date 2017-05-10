@@ -7,7 +7,7 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.*;
 import com.rok.gwt.client.logic.ConfigBlockWidgetFactory;
-import com.rok.xml.config_dto.ConfigBlock;
+import com.rok.xml.dto.config_dto.ConfigBlock;
 
 /**
  * Created by RoK on 21.06.2015.

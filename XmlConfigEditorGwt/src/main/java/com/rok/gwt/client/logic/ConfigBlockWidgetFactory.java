@@ -3,12 +3,11 @@ package com.rok.gwt.client.logic;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.ui.*;
 import com.rok.gwt.client.i18n.XmlConfigEditorMessages;
-import com.rok.gwt.client.widgets.ConfigEntryWithAttrsWidget;
 import com.rok.gwt.client.widgets.ExpandableConfigBlockWidget;
 import com.rok.gwt.client.widgets.ConfigEntryWidget;
 import com.rok.gwt.client.widgets.TabConfigBlockWidget;
 import com.rok.gwt.constants.StyleNames;
-import com.rok.xml.config_dto.*;
+import com.rok.xml.dto.config_dto.*;
 
 
 /**

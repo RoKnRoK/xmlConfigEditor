@@ -1,6 +1,7 @@
 package com.rok.xml.api;
 
-import java.io.IOException;
+import com.rok.xml.dto.LockInfo;
+
 import java.io.Serializable;
 
 /**
@@ -9,6 +10,6 @@ import java.io.Serializable;
  */
 public interface ConfigLocker {
     boolean isConfigLockedBySomeoneElse();
-    Serializable tryLockConfig();
+    LockInfo tryLockConfig();
     void unlockConfig(Serializable lock);
 }

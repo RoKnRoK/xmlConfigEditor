@@ -1,7 +1,7 @@
 package com.rok.xml.utils;
 
 import com.rok.xml.Constants;
-import com.rok.xml.config_dto.*;
+import com.rok.xml.dto.config_dto.*;
 import com.rok.xml.settings.ApplicationSettings;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;

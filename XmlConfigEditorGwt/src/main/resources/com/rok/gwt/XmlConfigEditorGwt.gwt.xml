@@ -17,6 +17,6 @@
              class='com.rok.gwt.server.XmlConfigEditorGwtServiceImpl'/>
 
     <source path="client"/>
-    <source path="config_dto"/>
+    <source path="dto"/>
     <source path="settings"/>
 </module>

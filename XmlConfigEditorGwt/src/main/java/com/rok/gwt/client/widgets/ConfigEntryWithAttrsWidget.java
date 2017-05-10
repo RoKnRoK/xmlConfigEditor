@@ -3,10 +3,10 @@ package com.rok.gwt.client.widgets;
 import com.google.gwt.event.logical.shared.OpenEvent;
 import com.google.gwt.event.logical.shared.OpenHandler;
 import com.google.gwt.user.client.ui.*;
-import com.rok.xml.config_dto.AbstractConfigNode;
-import com.rok.xml.config_dto.ConfigEntry;
-import com.rok.xml.config_dto.ConfigNodeType;
-import com.rok.xml.config_dto.ConfigValueNode;
+import com.rok.xml.dto.config_dto.AbstractConfigNode;
+import com.rok.xml.dto.config_dto.ConfigEntry;
+import com.rok.xml.dto.config_dto.ConfigNodeType;
+import com.rok.xml.dto.config_dto.ConfigValueNode;
 
 import java.util.List;
 

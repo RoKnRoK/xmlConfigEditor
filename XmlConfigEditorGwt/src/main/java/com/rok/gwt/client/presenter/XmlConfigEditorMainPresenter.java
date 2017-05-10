@@ -1,14 +1,11 @@
 package com.rok.gwt.client.presenter;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.event.logical.shared.CloseEvent;
-import com.google.gwt.event.logical.shared.CloseHandler;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.event.shared.SimpleEventBus;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.Window;
-import com.rok.gwt.client.constants.TimeConstants;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.*;
 import com.rok.gwt.client.events.ConfigValueChangedEvent;
@@ -19,9 +16,9 @@ import com.rok.gwt.client.service.XmlConfigEditorGwtService;
 import com.rok.gwt.client.service.XmlConfigEditorGwtServiceAsync;
 import com.rok.gwt.client.view.XmlConfigEditorMainView;
 import com.rok.gwt.client.widgets.info.DialogBoxCreator;
-import com.rok.xml.config_dto.ConfigBlock;
-import com.rok.xml.config_dto.ConfigModificationInfo;
-import com.rok.xml.config_dto.ConfigValueNode;
+import com.rok.xml.Constants;
+import com.rok.xml.dto.config_dto.ConfigModificationInfo;
+import com.rok.xml.dto.config_dto.ConfigValueNode;
 import com.rok.xml.settings.ApplicationSettings;
 
 import java.util.Objects;
@@ -144,7 +141,7 @@ public class XmlConfigEditorMainPresenter implements XmlConfigEditorMainView.Pre
                         });
                     }
                 };
-                editingTimer.schedule(TimeConstants.EDITING_TIME_IN_MILLIS);
+                editingTimer.schedule(Constants.EDITING_TIME_IN_MILLIS);
             }
         });
     }

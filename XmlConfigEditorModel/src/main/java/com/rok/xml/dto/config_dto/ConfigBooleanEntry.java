@@ -1,4 +1,4 @@
-package com.rok.xml.config_dto;
+package com.rok.xml.dto.config_dto;
 
 /**
  * Created by RoK on 27.06.2015.

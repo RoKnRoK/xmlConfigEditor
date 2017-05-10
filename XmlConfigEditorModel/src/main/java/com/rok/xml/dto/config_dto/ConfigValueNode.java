@@ -1,6 +1,4 @@
-package com.rok.xml.config_dto;
-
-import java.io.Serializable;
+package com.rok.xml.dto.config_dto;
 
 /**
  * Created by RoK on 26.06.2015.

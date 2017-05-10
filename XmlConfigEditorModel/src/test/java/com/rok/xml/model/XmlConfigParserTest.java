@@ -1,15 +1,12 @@
 package com.rok.xml.model;
 
-import com.rok.xml.config_dto.ConfigBlock;
-import com.rok.xml.config_dto.ConfigEntry;
-import com.rok.xml.config_dto.ConfigModificationInfo;
-import com.rok.xml.config_dto.ConfigNode;
+import com.rok.xml.dto.config_dto.ConfigBlock;
+import com.rok.xml.dto.config_dto.ConfigEntry;
+import com.rok.xml.dto.config_dto.ConfigModificationInfo;
 import com.rok.xml.modifier.FSXmlConfigModifier;
 import com.rok.xml.api.XmlConfigModifier;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-
-import java.io.File;
 
 import static com.rok.xml.Constants.FILE_NAME;
 

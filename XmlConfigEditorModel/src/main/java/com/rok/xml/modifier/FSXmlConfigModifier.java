@@ -11,13 +11,13 @@ import java.io.*;
  * Created by RoK on 27.06.2015.
  * All rights reserved =)
  */
-public class FSXmlConfigModifier extends CommonConfigModifier{
+public class FSXmlConfigModifier extends CommonConfigModifier {
 
     public FSXmlConfigModifier(String fileName) {
         FileRetriever fileRetriever = new FSFileRetriever();
         this.xmlConfig = (File) fileRetriever.retrieveFile(fileName);
         if (xmlConfig == null) {
-            throw new IllegalStateException("Не найден файл настроек "+fileName);
+            throw new IllegalStateException("Configuration file not found: " + fileName);
         }
         configLocker = new ByLockFileLocker(xmlConfig);
         configBackuper = new FSConfigBackuper(xmlConfig);

@@ -1,15 +1,12 @@
 package com.rok.gwt.client.widgets;
 
-import com.google.gwt.core.client.GWT;
-import com.google.gwt.event.logical.shared.CloseEvent;
-import com.google.gwt.event.logical.shared.CloseHandler;
 import com.google.gwt.event.logical.shared.OpenEvent;
 import com.google.gwt.event.logical.shared.OpenHandler;
 import com.google.gwt.user.client.ui.*;
 import com.rok.gwt.client.logger.Logger;
-import com.rok.xml.config_dto.ConfigBlock;
-import com.rok.xml.config_dto.ConfigNode;
-import com.rok.xml.config_dto.ConfigNodeType;
+import com.rok.xml.dto.config_dto.ConfigBlock;
+import com.rok.xml.dto.config_dto.ConfigNode;
+import com.rok.xml.dto.config_dto.ConfigNodeType;
 
 /**
  * Created by RoK on 28.06.2015.

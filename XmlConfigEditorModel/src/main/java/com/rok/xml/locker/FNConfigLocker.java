@@ -1,10 +1,11 @@
 package com.rok.xml.locker;
 
 import com.rok.xml.api.ConfigLocker;
+import com.rok.xml.dto.LockInfo;
 
 import java.io.File;
-import java.io.IOException;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.UUID;
 
 /**
@@ -27,8 +28,8 @@ public class FNConfigLocker implements ConfigLocker {
     }
 
     @Override
-    public UUID tryLockConfig() {
-        return UUID.randomUUID();
+    public LockInfo tryLockConfig() {
+        return new LockInfo(UUID.randomUUID(), new Date().getTime());
     }
 
     @Override

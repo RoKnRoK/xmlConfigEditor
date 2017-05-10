@@ -1,11 +1,6 @@
 package com.rok.xml.api;
 
-import com.rok.xml.config_dto.ConfigBlock;
-import com.rok.xml.config_dto.ConfigModificationInfo;
-import com.rok.xml.config_dto.ConfigNode;
-
-import java.io.File;
-import java.io.IOException;
+import com.rok.xml.dto.config_dto.ConfigModificationInfo;
 
 /**
  * Created by RoK on 30.06.2015.

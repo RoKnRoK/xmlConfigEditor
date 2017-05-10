@@ -72,6 +72,7 @@
                     <generateClient>true</generateClient>
                     <clientExcludes>
                         <clientExclude>**/*Impl.class</clientExclude>
+                        <clientExclude>**/XmlLockCanceller.class</clientExclude>
                     </clientExcludes>
                 </configuration>
             </plugin>

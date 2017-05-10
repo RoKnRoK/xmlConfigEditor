@@ -11,7 +11,7 @@ import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.rok.gwt.client.events.ConfigValueChangedEvent;
 import com.rok.gwt.client.events.EventBusStorage;
-import com.rok.xml.config_dto.ConfigValueNode;
+import com.rok.xml.dto.config_dto.ConfigValueNode;
 
 import java.util.Objects;
 

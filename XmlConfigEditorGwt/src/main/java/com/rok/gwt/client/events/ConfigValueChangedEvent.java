@@ -2,7 +2,7 @@ package com.rok.gwt.client.events;
 
 import com.google.gwt.event.shared.EventHandler;
 import com.google.gwt.event.shared.GwtEvent;
-import com.rok.xml.config_dto.ConfigValueNode;
+import com.rok.xml.dto.config_dto.ConfigValueNode;
 
 /**
  * Created by RoK on 27.06.2015.

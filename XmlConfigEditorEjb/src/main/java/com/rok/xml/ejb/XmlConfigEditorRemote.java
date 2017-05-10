@@ -1,7 +1,6 @@
 package com.rok.xml.ejb;
 
-import com.rok.xml.config_dto.ConfigBlock;
-import com.rok.xml.config_dto.ConfigModificationInfo;
+import com.rok.xml.dto.config_dto.ConfigModificationInfo;
 
 import javax.ejb.Remote;
 

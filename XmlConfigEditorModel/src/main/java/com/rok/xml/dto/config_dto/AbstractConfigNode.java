@@ -1,4 +1,4 @@
-package com.rok.xml.config_dto;
+package com.rok.xml.dto.config_dto;
 
 import com.rok.xml.Constants;
 import com.rok.xml.settings.ApplicationSettings;

@@ -1,12 +1,17 @@
 package com.rok.xml.ejb;
 
-import com.rok.xml.config_dto.ConfigBlock;
-import com.rok.xml.config_dto.ConfigModificationInfo;
+import com.rok.xml.Constants;
+import com.rok.xml.dto.config_dto.ConfigModificationInfo;
 import com.rok.xml.modifier.FSXmlConfigModifier;
 import com.rok.xml.api.XmlConfigModifier;
+import com.rok.xml.timer.XmlLockCanceller;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import javax.ejb.LocalBean;
-import javax.ejb.Stateless;
+import javax.annotation.Resource;
+import javax.ejb.*;
+
+import java.io.Serializable;
 
 import static com.rok.xml.Constants.FILE_NAME;
 
@@ -20,10 +25,13 @@ public class XmlConfigEditorImpl implements XmlConfigEditorLocal, XmlConfigEdito
 
 
     private XmlConfigModifier xmlConfigModifier;
+    private static final Logger logger = LoggerFactory.getLogger(XmlConfigEditorImpl.class);
 
-    public XmlConfigEditorImpl() {
 
-    }
+    @EJB
+    private XmlLockCanceller canceller;
+
+    public XmlConfigEditorImpl() {}
 
 
     @Override
@@ -31,8 +39,12 @@ public class XmlConfigEditorImpl implements XmlConfigEditorLocal, XmlConfigEdito
 
         //todo: filename as @Resource
         xmlConfigModifier = new FSXmlConfigModifier(FILE_NAME);
-        return xmlConfigModifier.getConfig();
+        ConfigModificationInfo config = xmlConfigModifier.getConfig();
+        canceller.startLockValidityTimer(config);
+        return config;
     }
+
+
 
     @Override
     public boolean saveConfigBlock(ConfigModificationInfo configModificationInfo) {
