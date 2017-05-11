@@ -11,10 +11,6 @@
 
     <artifactId>XmlConfigEditorModel</artifactId>
 
-   <!-- <properties>
-        <maven.test.skip>true</maven.test.skip>
-    </properties>-->
-
     <dependencies>
         <dependency>
             <groupId>com.google.gwt</groupId>
@@ -45,6 +41,7 @@
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-core</artifactId>
+            <optional>false</optional>
         </dependency>
 
     </dependencies>

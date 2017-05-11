@@ -53,7 +53,7 @@ public class XmlLockCanceller {
         long lockStartTime = configModificationInfo.getLockStartTimeMillis();
         long currentTime = new Date().getTime();
 
-        if (currentTime - lockStartTime > Constants.EDITING_TIME_IN_MILLIS) {
+        if (currentTime - lockStartTime > Constants.EDITING_TIME_IN_MILLIS*1.2) {
             logger.warn("Lock expired; removing lock");
             timer.cancel();
             xmlConfigEditor.cancelConfigEditing(configModificationInfo);

@@ -9,7 +9,6 @@ import java.io.Serializable;
  * All rights reserved =)
  */
 public interface ConfigLocker {
-    boolean isConfigLockedBySomeoneElse();
     LockInfo tryLockConfig();
-    void unlockConfig(Serializable lock);
+    boolean unlockConfig(Serializable lock);
 }

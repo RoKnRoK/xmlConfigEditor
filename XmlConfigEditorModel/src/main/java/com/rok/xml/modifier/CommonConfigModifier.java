@@ -67,16 +67,14 @@ public abstract class CommonConfigModifier implements XmlConfigModifier {
 
     @Override
     public ConfigModificationInfo getConfig() {
+        logger.trace("Trying to lock configuration file");
         LockInfo lockInfo = configLocker.tryLockConfig();
         Serializable lockObject = lockInfo.getLockObject();
-        if (lockObject instanceof UUID) {
-            lockInfo.setLockObject(lockObject.toString());
-        }
-        boolean isConfigLockedBySomeoneElse = configLocker.isConfigLockedBySomeoneElse();
         boolean backupSuccessful = false;
-        if (!isConfigLockedBySomeoneElse) {
+        if (lockObject != null) {
             backupSuccessful = configBackuper.backupConfig();
         }
+        logger.trace("Trying to lock configuration file");
         ConfigBlock configNode = parseConfig();
         configNode.setEditable(backupSuccessful);
 
@@ -122,11 +120,11 @@ public abstract class CommonConfigModifier implements XmlConfigModifier {
             transformer.transform(source, outputFile);
 
             //todo: theoretically in period of time between this lines someone can open config for editing
-            configLocker.unlockConfig(configModificationInfo.getLock());
+            boolean unlocked = configLocker.unlockConfig(configModificationInfo.getLock());
 //            Files.move(fileCopy.toPath(), xmlConfig.toPath(), StandardCopyOption.ATOMIC_MOVE);
-
-
-            configBackuper.deleteBackup();
+            if (unlocked) {
+                configBackuper.deleteBackup();
+            }
 
         } catch (Exception e) {
             logger.error("Save configuration failed, reason: {}", e.getMessage(), e);
@@ -138,8 +136,10 @@ public abstract class CommonConfigModifier implements XmlConfigModifier {
     @Override
     public void cancelConfigEditing(ConfigModificationInfo configModificationInfo) {
         logger.trace("Cancelling editing of config");
-        configLocker.unlockConfig(configModificationInfo.getLock());
-        configBackuper.deleteBackup();
+        boolean unlocked = configLocker.unlockConfig(configModificationInfo.getLock());
+        if (unlocked) {
+            configBackuper.deleteBackup();
+        }
         logger.trace("Cancelling finished");
     }
 

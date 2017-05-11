@@ -14,18 +14,12 @@ import java.util.UUID;
  */
 public class FNConfigLocker implements ConfigLocker {
     private File lockingConfig;
-    private boolean isConfigLockedBySomeoneElse;
 
 
     public FNConfigLocker(File lockingConfig) {
-        this.isConfigLockedBySomeoneElse = false;
         this.lockingConfig = lockingConfig;
     }
 
-    @Override
-    public boolean isConfigLockedBySomeoneElse() {
-        return isConfigLockedBySomeoneElse;
-    }
 
     @Override
     public LockInfo tryLockConfig() {
@@ -33,7 +27,8 @@ public class FNConfigLocker implements ConfigLocker {
     }
 
     @Override
-    public void unlockConfig(Serializable lock) {
+    public boolean unlockConfig(Serializable lock) {
 
+        return true;
     }
 }

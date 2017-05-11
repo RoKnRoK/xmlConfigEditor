@@ -7,7 +7,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.*;
-import java.util.*;
+import java.util.Date;
+import java.util.Objects;
+import java.util.UUID;
 
 /**
  * Created by RoK.
@@ -18,8 +20,6 @@ public class ByLockFileLocker implements ConfigLocker {
     private final Logger logger = LoggerFactory.getLogger(ByLockFileLocker.class.getName());
 
     private File lockingConfig;
-    private UUID lockGuid;
-    private File lockFile;
 
     public ByLockFileLocker(File lockingConfig) {
         this.lockingConfig = lockingConfig;
@@ -27,22 +27,16 @@ public class ByLockFileLocker implements ConfigLocker {
 
 
     @Override
-    public boolean isConfigLockedBySomeoneElse() {
-        return lockGuid == null;
-    }
-
-    @Override
     public LockInfo tryLockConfig() {
         try {
-            String lockFilePath = lockingConfig.getParent() + File.separator + Constants.LOCK_FILENAME;
-            lockFile = new File(lockFilePath);
+            File lockFile = getLockFile();
             logger.trace("Trying to create custom lock file {}", lockFile.getAbsolutePath());
             boolean created = lockFile.createNewFile();
             if (!created) {
                 logger.error("Config is already locked by someone else");
                 return new LockInfo();
             }
-            lockGuid = UUID.randomUUID();
+            String lockGuid = UUID.randomUUID().toString();
             try (BufferedWriter bw = new BufferedWriter(new FileWriter(lockFile))) {
                 bw.write(lockGuid + "\n" + new Date().getTime() + "\n");
             } catch (IOException e) {
@@ -57,30 +51,57 @@ public class ByLockFileLocker implements ConfigLocker {
         }
     }
 
+    private File getLockFile() {
+        String lockFilePath = lockingConfig.getParent() + File.separator + Constants.LOCK_FILENAME;
+        return new File(lockFilePath);
+    }
+
     @Override
-    public void unlockConfig(Serializable lockGuid) {
-        if (lockGuid instanceof String){
+    public boolean unlockConfig(Serializable lockGuid) {
+        if (lockGuid instanceof String) {
             lockGuid = UUID.fromString((String) lockGuid);
         }
         if (!(lockGuid instanceof UUID) && (lockGuid != null)) {
             logger.error("Cannot process lock of type {}, only UUID is supported", lockGuid.getClass().getName());
-            return;
+            return false;
         }
-        if (!Objects.equals(lockGuid, this.lockGuid)) {
-            logger.error("Cannot unlock lock {}: not owned lock", lockGuid);
-            return;
+
+        File lockFile = getLockFile();
+
+        Serializable readLockGuid = readLockGuid(lockFile);
+        if (readLockGuid == null) {
+            return false;
         }
+        if (!Objects.equals(lockGuid, readLockGuid)) {
+            logger.warn("File {} is locked by other user, cannot unlock", lockingConfig.getAbsolutePath());
+            return false;
+        }
+
         try {
             logger.trace("Trying to FS unlock file {}", lockingConfig.getAbsolutePath());
-            if (this.lockGuid == null) {
-                logger.warn("File {} is locked by other user, cannot unlock", lockingConfig.getAbsolutePath());
-                return;
-            }
             boolean deleted = lockFile.delete();
-            if (deleted) {logger.trace("Successfully unlocked");}
-            
+            if (deleted) {
+                logger.trace("Successfully unlocked");
+            }
+            return deleted;
         } catch (Exception e) {
             logger.error("Some error occurred while unlocking config: {}", e.getMessage(), e);
+            return false;
         }
+    }
+
+    private UUID readLockGuid(File lockFile) {
+        if (lockFile == null || !lockFile.exists()) {
+            logger.trace("No lock exists, skipping unlocking");
+            return null;
+        }
+        Serializable readLockGuid;
+        try (BufferedReader bw = new BufferedReader(new FileReader(lockFile))) {
+            readLockGuid = bw.readLine();
+        } catch (IOException e) {
+            logger.error("Cannot read current lock info: ", e);
+            return null;
+        }
+        return UUID.fromString((String) readLockGuid);
     }
 }

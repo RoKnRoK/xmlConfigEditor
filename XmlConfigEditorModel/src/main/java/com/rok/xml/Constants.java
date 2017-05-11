@@ -12,6 +12,6 @@ public interface Constants {
     String FILE_NAME = "C:" + File.separator + "Temp" + File.separator + "standard.xml";
 
 
-    int EDITING_TIME_IN_MILLIS = 5000;
+    int EDITING_TIME_IN_MILLIS = 15000;
     String LOCK_FILENAME = "config.lock";
 }

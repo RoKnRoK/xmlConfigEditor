@@ -15,17 +15,13 @@ public class StubConfigLocker implements ConfigLocker {
 
 
     @Override
-    public boolean isConfigLockedBySomeoneElse() {
-        return false;
-    }
-
-    @Override
     public LockInfo tryLockConfig() {
         return new LockInfo(UUID.randomUUID(), new Date().getTime());
     }
 
     @Override
-    public void unlockConfig(Serializable lock)  {
+    public boolean unlockConfig(Serializable lock)  {
 
+        return true;
     }
 }

@@ -1,10 +1,10 @@
 package com.rok.xml.model;
 
+import com.rok.xml.api.XmlConfigModifier;
 import com.rok.xml.dto.config_dto.ConfigBlock;
 import com.rok.xml.dto.config_dto.ConfigEntry;
 import com.rok.xml.dto.config_dto.ConfigModificationInfo;
 import com.rok.xml.modifier.FSXmlConfigModifier;
-import com.rok.xml.api.XmlConfigModifier;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -38,5 +38,8 @@ public class XmlConfigParserTest {
             childEntry.setValue(newValue);
         }
         System.out.println(configModifier.saveConfig(configModificationInfo));
+
+        configModifier.cancelConfigEditing(configModificationInfo);
     }
+
 }

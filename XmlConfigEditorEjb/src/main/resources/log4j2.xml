@@ -1,11 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Configuration >
+<Configuration status="INFO">
 
     <Appenders>
         <RollingFile
-                name="fileAppender"
-                fileName="C:\Temp\XmlConfigEditorEjb.log"
-                filePattern="C:\Temp\$${date:yyyy-MM}/XmlConfigEditorEjb-%d{MM-dd-yyyy}-%i.log.gz">
+                name="ejbAppender"
+                fileName="C:\XmlEditor\XmlConfigEditorEjb.log"
+                filePattern="C:\XmlEditor\$${date:yyyy-MM}/XmlConfigEditorEjb-%d{MM-dd-yyyy}-%i.log.gz">
+            <PatternLayout>
+                <Pattern>%d [%t] %-5p %c{3} - %m%n</Pattern>
+            </PatternLayout>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="10 MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="10"/>
+        </RollingFile>
+
+        <RollingFile
+                name="modelAppender"
+                fileName="C:\XmlEditor\XmlConfigEditorModel.log"
+                filePattern="C:\XmlEditor\$${date:yyyy-MM}/XmlConfigEditorModel-%d{MM-dd-yyyy}-%i.log.gz">
             <PatternLayout>
                 <Pattern>%d [%t] %-5p %c{3} - %m%n</Pattern>
             </PatternLayout>
@@ -18,8 +31,15 @@
 
 
     <Loggers>
-        <Logger name="com.rok.xml" level="debug">
-            <AppenderRef ref="fileAppender"/>
+        <Logger name="com.rok.xml.ejb" level="trace">
+            <AppenderRef ref="ejbAppender"/>
+        </Logger>
+        <Logger name="com.rok.xml.timer" level="trace">
+            <AppenderRef ref="ejbAppender"/>
+        </Logger>
+
+        <Logger name="com.rok.xml" level="trace">
+            <AppenderRef ref="modelAppender"/>
         </Logger>
     </Loggers>
 
