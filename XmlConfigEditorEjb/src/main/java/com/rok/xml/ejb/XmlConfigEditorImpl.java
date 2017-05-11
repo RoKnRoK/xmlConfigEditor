@@ -25,7 +25,7 @@ public class XmlConfigEditorImpl implements XmlConfigEditorLocal, XmlConfigEdito
 
 
     private XmlConfigModifier xmlConfigModifier;
-    private static final Logger logger = LoggerFactory.getLogger(XmlConfigEditorImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(XmlConfigEditorImpl.class.getName());
 
 
     @EJB

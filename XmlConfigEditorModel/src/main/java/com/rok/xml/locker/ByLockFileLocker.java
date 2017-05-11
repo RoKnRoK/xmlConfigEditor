@@ -15,7 +15,7 @@ import java.util.*;
  */
 public class ByLockFileLocker implements ConfigLocker {
 
-    private final Logger logger = LoggerFactory.getLogger(ByLockFileLocker.class);
+    private final Logger logger = LoggerFactory.getLogger(ByLockFileLocker.class.getName());
 
     private File lockingConfig;
     private UUID lockGuid;

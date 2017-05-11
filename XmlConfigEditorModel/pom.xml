@@ -11,9 +11,9 @@
 
     <artifactId>XmlConfigEditorModel</artifactId>
 
-    <properties>
+   <!-- <properties>
         <maven.test.skip>true</maven.test.skip>
-    </properties>
+    </properties>-->
 
     <dependencies>
         <dependency>
@@ -26,10 +26,10 @@
             <artifactId>testng</artifactId>
         </dependency>
 
-        <!--<dependency>
+        <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
-        </dependency>-->
+        </dependency>
 
 
         <dependency>
@@ -37,10 +37,10 @@
             <artifactId>log4j-slf4j-impl</artifactId>
         </dependency>
 
-        <!--  <dependency>
+          <dependency>
               <groupId>org.apache.logging.log4j</groupId>
               <artifactId>log4j-api</artifactId>
-          </dependency>-->
+          </dependency>
 
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>

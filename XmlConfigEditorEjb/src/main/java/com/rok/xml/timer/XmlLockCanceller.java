@@ -25,9 +25,10 @@ public class XmlLockCanceller {
     @EJB
     private XmlConfigEditorLocal xmlConfigEditor;
 
-    private static final Logger logger = LoggerFactory.getLogger(XmlLockCanceller.class);
+    private static final Logger logger = LoggerFactory.getLogger(XmlLockCanceller.class.getName());
 
     public void startLockValidityTimer(ConfigModificationInfo configModificationInfo) {
+        System.out.println(XmlLockCanceller.class.getName());
         Serializable lock = configModificationInfo.getLock();
         if (lock == null) {
             logger.warn("No lock be tracked.");

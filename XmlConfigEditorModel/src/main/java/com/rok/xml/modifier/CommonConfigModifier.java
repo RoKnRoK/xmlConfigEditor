@@ -35,7 +35,7 @@ import java.util.UUID;
  * All rights reserved =)
  */
 public abstract class CommonConfigModifier implements XmlConfigModifier {
-    private final Logger logger = LoggerFactory.getLogger(CommonConfigModifier.class);
+    private final Logger logger = LoggerFactory.getLogger(CommonConfigModifier.class.getName());
 
     protected File xmlConfig;
     protected ConfigLocker configLocker;

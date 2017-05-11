@@ -18,7 +18,7 @@ public class FSConfigBackuper implements ConfigBackuper {
 
     public static final String BACKUP_POSTFIX = "_backup";
 
-    private final Logger logger = LoggerFactory.getLogger(FSConfigBackuper.class);
+    private final Logger logger = LoggerFactory.getLogger(FSConfigBackuper.class.getName());
 
     private File configForBackup;
     private boolean rewriteOldBackup;

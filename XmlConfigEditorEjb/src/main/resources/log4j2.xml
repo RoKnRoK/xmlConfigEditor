@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration >
+
+    <Appenders>
+        <RollingFile
+                name="fileAppender"
+                fileName="C:\Temp\XmlConfigEditorEjb.log"
+                filePattern="C:\Temp\$${date:yyyy-MM}/XmlConfigEditorEjb-%d{MM-dd-yyyy}-%i.log.gz">
+            <PatternLayout>
+                <Pattern>%d [%t] %-5p %c{3} - %m%n</Pattern>
+            </PatternLayout>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="10 MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="10"/>
+        </RollingFile>
+    </Appenders>
+
+
+    <Loggers>
+        <Logger name="com.rok.xml" level="debug">
+            <AppenderRef ref="fileAppender"/>
+        </Logger>
+    </Loggers>
+
+
+</Configuration>
