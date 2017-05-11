@@ -129,13 +129,19 @@ public class XmlConfigEditorMainPresenter implements XmlConfigEditorMainView.Pre
                         serviceAsync.saveConfigBlock(configModificationInfo, new AsyncCallback<Boolean>() {
                             @Override
                             public void onFailure(Throwable throwable) {
-
+                                Logger.log("Unexpected error occured!");
                             }
 
                             @Override
                             public void onSuccess(Boolean success) {
+                                //todo: MessageBox
+                                if (!success) {
+                                    Logger.log("Error while saving occurred");
+                                    return;
+                                }
                                 DialogBoxCreator.createErrorMessageBox(constants.warning(), constants.configEditingTimerRunout()).center();
                                 configModificationInfo.getConfigBlock().setEditable(false);
+                                configBlockChanged = false;
                                 mainView.renderConfig(configModificationInfo.getConfigBlock());
                             }
                         });

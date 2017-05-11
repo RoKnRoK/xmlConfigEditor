@@ -27,7 +27,7 @@ public class XmlLockCanceller {
 
     private static final Logger logger = LoggerFactory.getLogger(XmlLockCanceller.class);
 
-    public void startLockValidityTimer(ConfigModificationInfo configModificationInfo){
+    public void startLockValidityTimer(ConfigModificationInfo configModificationInfo) {
         Serializable lock = configModificationInfo.getLock();
         if (lock == null) {
             logger.warn("No lock be tracked.");
@@ -48,27 +48,14 @@ public class XmlLockCanceller {
         }
         logger.trace("Checking if lock expired");
         ConfigModificationInfo configModificationInfo = (ConfigModificationInfo) timerInfo;
-       /* try (BufferedReader br = new BufferedReader(new FileReader(lockFile))) {
-            String sCurrentLine;
-            List<String> lockInfo = new ArrayList<>(2);
-            while ((sCurrentLine = br.readLine()) != null) {
-                lockInfo.add(sCurrentLine);
-            }
-            String lockAsString = lockInfo.get(0);
-            long lockStartTime = Long.valueOf(lockInfo.get(1));
-            long currentTime = new Date().getTime();
 
-            if (currentTime - lockStartTime > Constants.EDITING_TIME_IN_MILLIS) {
-                logger.warn("Lock expired; removing lock");
-                xmlConfigEditor.cancelConfigEditing(new ConfigModificationInfo(null, lockAsString));
-            }*/
-            long lockStartTime = configModificationInfo.getLockStartTimeMillis();
-            long currentTime = new Date().getTime();
+        long lockStartTime = configModificationInfo.getLockStartTimeMillis();
+        long currentTime = new Date().getTime();
 
-            if (currentTime - lockStartTime > Constants.EDITING_TIME_IN_MILLIS) {
-                logger.warn("Lock expired; removing lock");
-                timer.cancel();
-                xmlConfigEditor.cancelConfigEditing(configModificationInfo);
-            }
+        if (currentTime - lockStartTime > Constants.EDITING_TIME_IN_MILLIS) {
+            logger.warn("Lock expired; removing lock");
+            timer.cancel();
+            xmlConfigEditor.cancelConfigEditing(configModificationInfo);
+        }
     }
 }

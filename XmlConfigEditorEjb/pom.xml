@@ -27,26 +27,92 @@
             <artifactId>openejb-core</artifactId>
             <version>4.7.4</version>
             <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <artifactId>slf4j-api</artifactId>
+                    <groupId>org.slf4j</groupId>
+                </exclusion>
+
+                <exclusion>
+                    <artifactId>jansi</artifactId>
+                    <groupId>org.fusesource.jansi</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>slf4j-jdk14</artifactId>
+                    <groupId>org.slf4j</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>openejb-jee-accessors</artifactId>
+                    <groupId>org.apache.openejb</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>openejb-javaagent</artifactId>
+                    <groupId>org.apache.openejb</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>openejb-jpa-integration</artifactId>
+                    <groupId>org.apache.openejb</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>jaxb-impl</artifactId>
+                    <groupId>com.sun.xml.bind</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>openjpa</artifactId>
+                    <groupId>org.apache.openjpa</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>activemq-ra</artifactId>
+                    <groupId>org.apache.activemq</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>activemq-broker</artifactId>
+                    <groupId>org.apache.activemq</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>activemq-jdbc-store</artifactId>
+                    <groupId>org.apache.activemq</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>geronimo-connector</artifactId>
+                    <groupId>org.apache.geronimo.components</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>geronimo-j2ee-connector_1.6_spec</artifactId>
+                    <groupId>org.apache.geronimo.specs</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>javaee-api</artifactId>
+                    <groupId>org.apache.openejb</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>mbean-annotation-api</artifactId>
+                    <groupId>org.apache.openejb</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>openwebbeans-ee</artifactId>
+                    <groupId>org.apache.openwebbeans</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>openwebbeans-ee-common</artifactId>
+                    <groupId>org.apache.openwebbeans</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>xbean-bundleutils</artifactId>
+                    <groupId>org.apache.xbean</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>swizzle-stream</artifactId>
+                    <groupId>org.codehaus.swizzle</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>hsqldb</artifactId>
+                    <groupId>org.hsqldb</groupId>
+                </exclusion>
+
+            </exclusions>
         </dependency>
-        <!-- <dependency>
-             <groupId>javax.ejb</groupId>
-             <artifactId>javax.ejb-api</artifactId>
-             <version>3.2</version>
-             <scope>test</scope>
-         </dependency>
 
-         <dependency>
-             <groupId>org.apache.openejb</groupId>
-             <artifactId>tomee-embedded</artifactId>
-             <version>1.0.0</version>
-             <scope>test</scope>
-         </dependency>
-
-         <dependency>
-             <groupId>javaee</groupId>
-             <artifactId>javaee-api</artifactId>
-             <scope>compile</scope>
-         </dependency>-->
 
         <dependency>
             <groupId>junit</groupId>
@@ -58,6 +124,33 @@
             <groupId>com.rok.xml</groupId>
             <artifactId>XmlConfigEditorModel</artifactId>
             <version>${project.parent.version}</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>gwt-user</artifactId>
+                    <groupId>com.google.gwt</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <!--<dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+        </dependency>-->
+
+
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-slf4j-impl</artifactId>
+        </dependency>
+
+       <!-- <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-api</artifactId>
+        </dependency>-->
+
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
         </dependency>
     </dependencies>
 

@@ -19,10 +19,12 @@
     <properties>
         <gwtVersion>2.7.0</gwtVersion>
         <guavaVersion>18.0</guavaVersion>
-        <log4j.version>1.7.12</log4j.version>
+        <slf4j.version>1.7.25</slf4j.version>
+        <log4j.version>2.8.2</log4j.version>
         <junit.version>4.4</junit.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <testng.version>6.9.4</testng.version>
     </properties>
 
     <dependencyManagement>
@@ -45,17 +47,44 @@
                 <version>${gwtVersion}</version>
             </dependency>
 
-            <dependency>
-                <groupId>org.slf4j</groupId>
-                <artifactId>slf4j-api</artifactId>
-                <version>${log4j.version}</version>
-            </dependency>
+            <!-- <dependency>
+                 <groupId>org.slf4j</groupId>
+                 <artifactId>slf4j-api</artifactId>
+                 <version>${slf4j.version}</version>
+             </dependency>-->
+
 
             <dependency>
-                <groupId>org.slf4j</groupId>
-                <artifactId>slf4j-simple</artifactId>
+                <groupId>org.apache.logging.log4j</groupId>
+                <artifactId>log4j-slf4j-impl</artifactId>
                 <version>${log4j.version}</version>
             </dependency>
+            <!--
+                        <dependency>
+                            <groupId>org.apache.logging.log4j</groupId>
+                            <artifactId>log4j-api</artifactId>
+                            <version>${log4j.version}</version>
+                        </dependency>-->
+
+            <dependency>
+                <groupId>org.apache.logging.log4j</groupId>
+                <artifactId>log4j-core</artifactId>
+                <version>${log4j.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.fusesource.jansi</groupId>
+                        <artifactId>jansi</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+
+
+            <!--    <dependency>
+                    <groupId>log4j</groupId>
+                    <artifactId>log4j</artifactId>
+                    <version>${log4j.version}</version>
+                </dependency>-->
+
 
             <dependency>
                 <groupId>javaee</groupId>
@@ -65,11 +94,20 @@
             </dependency>
 
             <dependency>
-                <groupId>com.google.guava</groupId>
-                <artifactId>guava</artifactId>
-                <version>${guavaVersion}</version>
+                <groupId>org.testng</groupId>
+                <artifactId>testng</artifactId>
+                <version>${testng.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <artifactId>jcommander</artifactId>
+                        <groupId>com.beust</groupId>
+                    </exclusion>
+                    <exclusion>
+                        <artifactId>bsh</artifactId>
+                        <groupId>org.beanshell</groupId>
+                    </exclusion>
+                </exclusions>
             </dependency>
-
         </dependencies>
     </dependencyManagement>
 

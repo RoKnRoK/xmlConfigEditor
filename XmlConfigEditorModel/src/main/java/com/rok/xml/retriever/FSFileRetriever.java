@@ -1,6 +1,5 @@
 package com.rok.xml.retriever;
 
-import com.google.common.base.Preconditions;
 import com.rok.xml.api.FileRetriever;
 
 import javax.validation.constraints.NotNull;
@@ -17,7 +16,10 @@ public class FSFileRetriever implements FileRetriever {
 
     @Override
     public File retrieveFile(@NotNull String fileName) {
-        Preconditions.checkNotNull(fileName, "Имя файла для открытия не может быть пустым!");
+//        Preconditions.checkNotNull(fileName, "Имя файла для открытия не может быть пустым!");
+        if (fileName == null) {
+            throw new IllegalArgumentException("Configuration file name cannot be null");
+        }
         configFile = new File(fileName);
         return configFile;
     }

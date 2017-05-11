@@ -5,7 +5,7 @@
 <log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
 
     <appender name="fileAppender" class="org.apache.log4j.RollingFileAppender">
-        <param name="file" value="C:\XmlConfigEditorModel.log"/>
+        <param name="file" value="C:\Temp\XmlConfigEditorEjb.log"/>
         <param name="append" value="true"/>
         <param name="encoding" value="UTF-8"/>
         <param name="MaxFileSize" value="10MB"/>
