@@ -21,7 +21,6 @@ public class ConfigEntryWidget extends Composite {
         configEntryDataGrid = new ConfigEntriesTable(configEntry.isEditable());
         switch (configEntry.getNodeType()) {
             case ENTRY:
-            case ENTRY_WITH_ATTRS:
             case ATTRIBUTE:
                 createWidget(configEntry); break;
             default: {

@@ -14,6 +14,7 @@ import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
+import org.xml.sax.SAXException;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -26,6 +27,7 @@ import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathFactory;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
 import java.util.UUID;
@@ -47,7 +49,22 @@ public abstract class CommonConfigModifier implements XmlConfigModifier {
 
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-            Document doc = dBuilder.parse(xmlConfig);
+            Document doc = null;
+            //todo: try to get rid of it
+            for (int i = 0; i< 10; i++) {
+                try {
+                    doc = dBuilder.parse(xmlConfig);
+                } catch (SAXException | IOException e) {
+                    logger.error("Try №{}: cannot parse config, {}", i, e.getMessage());
+                    Thread.sleep(250);
+                }
+                if (doc != null) {
+                    break;
+                }
+            }
+            if (doc == null) {
+                throw new IllegalStateException("Cannot parse config because it's being read by someone");
+            }
 
             //optional, but recommended
             //read this - http://stackoverflow.com/questions/13786607/normalization-in-dom-parsing-with-java-how-does-it-work
@@ -74,7 +91,7 @@ public abstract class CommonConfigModifier implements XmlConfigModifier {
         if (lockObject != null) {
             backupSuccessful = configBackuper.backupConfig();
         }
-        logger.trace("Trying to lock configuration file");
+        logger.trace("Trying to parse configuration file");
         ConfigBlock configNode = parseConfig();
         configNode.setEditable(backupSuccessful);
 
@@ -99,7 +116,6 @@ public abstract class CommonConfigModifier implements XmlConfigModifier {
             for (ConfigValueNode changedNode : changedNodes) {
                 switch (changedNode.getNodeType()) {
                     case ENTRY:
-                    case ENTRY_WITH_ATTRS:
                     case BOOLEAN_ENTRY:{
                         String expression = xPathBuilder.createXPath((AbstractConfigNode) changedNode);
                         Node node = (Node) xpath.evaluate(expression, document, XPathConstants.NODE);

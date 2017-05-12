@@ -23,8 +23,6 @@ public class ConfigBlockWidgetFactory {
                 return new TabConfigBlockWidget(configBlock);
             case BLOCK:
                 return new ExpandableConfigBlockWidget(configBlock);
-//            case ENTRY_WITH_ATTRS:
-//                return new ConfigEntryWithAttrsWidget((ConfigValueNode) configBlock);
             case ENTRY:
             case ATTRIBUTE:
                 return new ConfigEntryWidget((ConfigValueNode) configBlock);

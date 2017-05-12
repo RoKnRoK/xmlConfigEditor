@@ -46,14 +46,13 @@ public class  ConfigEntry extends AbstractConfigNode implements ConfigValueNode 
 
     public ConfigNodeType getNodeType(){
         if (getNodeAttributes() != null && !getNodeAttributes().isEmpty()) {
-            return ConfigNodeType.ENTRY_WITH_ATTRS;
+            return ConfigNodeType.ENTRY;
         }
         else {
             return ConfigNodeType.ENTRY;
         }
     }
     public void setNodeType(ConfigNodeType type){
-        //��� ������� ��������� ��� �� ������������� ������������ ��������� ����
     }
 
     @Override

@@ -62,9 +62,6 @@ public class ConfigBlock extends AbstractConfigNode implements ConfigNode, HasCh
     public List<ConfigNode> getConfigContainers() {
         return getChildNodesOfType(ConfigNodeType.BLOCK);
     }
-    public List<ConfigNode> getEntriesWithAttrs() {
-        return getChildNodesOfType(ConfigNodeType.ENTRY_WITH_ATTRS);
-    }
 
     private List<ConfigNode> getChildNodesOfType(ConfigNodeType type) {
         List<ConfigNode> childNodes = new ArrayList<>();

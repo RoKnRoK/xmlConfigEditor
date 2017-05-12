@@ -34,20 +34,12 @@ public class SimpleConfigBlockWidget extends Composite {
         addBooleanEntries(configBlock);
         addAttributes(configBlock);
         addEntries(configBlock);
-        addEntriesWithAttrs(configBlock);
         addChildBlocks(configBlock);
 
         mainWidgetPanel.setWidth("100%");
         initWidget(mainWidgetPanel);
     }
 
-    private void addEntriesWithAttrs(ConfigBlock configBlock) {
-        List<ConfigNode> childConfigContainers = configBlock.getEntriesWithAttrs();
-        for (ConfigNode childConfigContainer : childConfigContainers) {
-            Widget widget = ConfigBlockWidgetFactory.createWidget(childConfigContainer);
-            mainWidgetPanel.add(widget);
-        }
-    }
 
     private void addChildBlocks(ConfigBlock configBlock) {
         List<ConfigNode> childConfigContainers = configBlock.getConfigContainers();

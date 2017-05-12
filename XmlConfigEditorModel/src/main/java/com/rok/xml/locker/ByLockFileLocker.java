@@ -95,11 +95,16 @@ public class ByLockFileLocker implements ConfigLocker {
             logger.trace("No lock exists, skipping unlocking");
             return null;
         }
-        Serializable readLockGuid;
+        Serializable readLockGuid ;
         try (BufferedReader bw = new BufferedReader(new FileReader(lockFile))) {
             readLockGuid = bw.readLine();
         } catch (IOException e) {
             logger.error("Cannot read current lock info: ", e);
+            return null;
+        }
+        if (readLockGuid == null) {
+            logger.warn("Lock file exists, but null lock guid in there. " +
+                    "Probably someone just created it. Skipping unlocking");
             return null;
         }
         return UUID.fromString((String) readLockGuid);

@@ -1,6 +1,5 @@
 package com.rok.gwt.client.events;
 
-import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.event.shared.SimpleEventBus;
 
 /**

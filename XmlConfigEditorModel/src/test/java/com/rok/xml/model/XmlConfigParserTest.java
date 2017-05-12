@@ -26,20 +26,25 @@ public class XmlConfigParserTest {
         };
     }
 
-    @Test(dataProvider = "test1", threadPoolSize = 1, invocationCount = 1)
+    @Test(dataProvider = "test1", threadPoolSize = 1, invocationCount = 10)
     public void doTest(String newValue, int i) {
+
         XmlConfigModifier configModifier = new FSXmlConfigModifier(FILE_NAME);
         ConfigModificationInfo configModificationInfo = configModifier.getConfig();
+        System.out.println("Config lock: " + configModificationInfo.getLock());
         ConfigBlock configBlock = configModificationInfo.getConfigBlock();
+        System.out.println("Config editable: " + configBlock.isEditable());
         ConfigBlock childNode = (ConfigBlock) configBlock.getChildNode(0);
         ConfigEntry childEntry = (ConfigEntry) childNode.getChildNode(3);
         if (childEntry.isEditable()) {
-            System.out.println("set");
+            System.out.println("Setting "+ newValue);
             childEntry.setValue(newValue);
         }
-        System.out.println(configModifier.saveConfig(configModificationInfo));
+        System.out.println("Config saved: " + configModifier.saveConfig(configModificationInfo));
 
         configModifier.cancelConfigEditing(configModificationInfo);
+        System.out.println("===================================");
+        System.out.println();
     }
 
 }

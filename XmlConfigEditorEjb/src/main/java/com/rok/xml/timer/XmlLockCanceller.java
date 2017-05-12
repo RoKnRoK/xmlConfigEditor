@@ -37,7 +37,7 @@ public class XmlLockCanceller {
         logger.trace("Tracking of lock {} has started", lock);
         TimerConfig timerConfig = new TimerConfig();
         timerConfig.setInfo(configModificationInfo);
-        timerService.createIntervalTimer(Constants.EDITING_TIME_IN_MILLIS + 500, 100, timerConfig);
+        timerService.createIntervalTimer((long) (Constants.EDITING_TIME_IN_MILLIS*1.2), 100, timerConfig);
     }
 
     @Timeout
@@ -47,13 +47,13 @@ public class XmlLockCanceller {
             logger.warn("Timer with info different from ConfigModificationInfo ignored");
             return;
         }
-        logger.trace("Checking if lock expired");
         ConfigModificationInfo configModificationInfo = (ConfigModificationInfo) timerInfo;
+        logger.trace("Checking if lock {} expired", configModificationInfo.getLock());
 
         long lockStartTime = configModificationInfo.getLockStartTimeMillis();
         long currentTime = new Date().getTime();
 
-        if (currentTime - lockStartTime > Constants.EDITING_TIME_IN_MILLIS*1.2) {
+        if (currentTime - lockStartTime > Constants.EDITING_TIME_IN_MILLIS) {
             logger.warn("Lock expired; removing lock");
             timer.cancel();
             xmlConfigEditor.cancelConfigEditing(configModificationInfo);
