@@ -7,5 +7,4 @@ package com.rok.xml.api;
 public interface ConfigBackuper {
     boolean backupConfig();
     void deleteBackup();
-    boolean isBackupAlreadyExists();
 }

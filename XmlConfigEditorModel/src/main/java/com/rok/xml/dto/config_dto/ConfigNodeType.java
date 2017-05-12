@@ -5,5 +5,5 @@ package com.rok.xml.dto.config_dto;
  * All rights reserved =)
  */
 public enum ConfigNodeType {
-    BLOCK, ENTRY, ENTRY_WITH_ATTRS, ROOT_BLOCK, BOOLEAN_ENTRY, ATTRIBUTE
+    BLOCK, ENTRY, ROOT_BLOCK, BOOLEAN_ENTRY, ATTRIBUTE
 }

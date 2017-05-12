@@ -1,8 +1,8 @@
 package com.rok.gwt.client.widgets;
 
-import com.google.gwt.event.logical.shared.OpenEvent;
-import com.google.gwt.event.logical.shared.OpenHandler;
-import com.google.gwt.user.client.ui.*;
+import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.DisclosurePanel;
+import com.google.gwt.user.client.ui.Label;
 import com.rok.gwt.client.logger.Logger;
 import com.rok.xml.dto.config_dto.ConfigBlock;
 import com.rok.xml.dto.config_dto.ConfigNode;
@@ -14,7 +14,7 @@ import com.rok.xml.dto.config_dto.ConfigNodeType;
  */
 public class ExpandableConfigBlockWidget extends Composite {
 
-    DisclosurePanel widgetMainPanel = new DisclosurePanel();
+    private DisclosurePanel widgetMainPanel = new DisclosurePanel();
 
     public ExpandableConfigBlockWidget(final ConfigNode configNode) {
         if (configNode.getNodeType() != ConfigNodeType.BLOCK) {
@@ -32,15 +32,12 @@ public class ExpandableConfigBlockWidget extends Composite {
 
 
         // please read comment #1 below class
-        widgetMainPanel.addOpenHandler(new OpenHandler<DisclosurePanel>() {
-            @Override
-            public void onOpen(OpenEvent<DisclosurePanel> event) {
+        widgetMainPanel.addOpenHandler(event -> {
 
-                SimpleConfigBlockWidget configBlockWidget = new SimpleConfigBlockWidget((ConfigBlock) configNode);
-                configBlockWidget.setStyleName("padding");
-                widgetMainPanel.setContent(configBlockWidget);
-                Logger.log(widgetMainPanel.getHeader().toString());
-            }
+            SimpleConfigBlockWidget configBlockWidget = new SimpleConfigBlockWidget((ConfigBlock) configNode);
+            configBlockWidget.setStyleName("padding");
+            widgetMainPanel.setContent(configBlockWidget);
+            Logger.log(widgetMainPanel.getHeader().toString());
         });
 
         initWidget(widgetMainPanel);

@@ -3,7 +3,6 @@ package com.rok.xml.locker;
 import com.rok.xml.api.ConfigLocker;
 import com.rok.xml.dto.LockInfo;
 
-import java.io.File;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.UUID;
@@ -12,12 +11,11 @@ import java.util.UUID;
  * Created by RoK on 11.07.2015.
  * All rights reserved =)
  */
+@SuppressWarnings("unused")
 public class FNConfigLocker implements ConfigLocker {
-    private File lockingConfig;
 
 
-    public FNConfigLocker(File lockingConfig) {
-        this.lockingConfig = lockingConfig;
+    public FNConfigLocker() {
     }
 
 

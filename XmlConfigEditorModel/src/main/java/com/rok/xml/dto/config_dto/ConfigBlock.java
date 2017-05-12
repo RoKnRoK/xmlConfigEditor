@@ -16,7 +16,7 @@ public class ConfigBlock extends AbstractConfigNode implements ConfigNode, HasCh
     private ConfigNodeType nodeType;
 
 
-    public ConfigBlock() {
+    private ConfigBlock() {
         this.configNodeName = "defaultBlockName";
         this.nodeType = ConfigNodeType.BLOCK;
     }
@@ -40,9 +40,7 @@ public class ConfigBlock extends AbstractConfigNode implements ConfigNode, HasCh
     public ConfigNode getChildNode(Integer index) {
         return allChildConfigBlocks.get(index);
     }
-    public void setChildNodes(List<ConfigNode> childNodes) {
-        this.allChildConfigBlocks.addAll(childNodes);
-    }
+
     public List<ConfigNode> getChildNodes() {
         return allChildConfigBlocks;
     }
@@ -88,27 +86,22 @@ public class ConfigBlock extends AbstractConfigNode implements ConfigNode, HasCh
 
     @Override
     public String toString() {
-        String result = "";
-        result += "<" + configNodeName;
+        StringBuilder result = new StringBuilder();
+        result.append("<").append(configNodeName);
         for (ConfigValueNode attribute : configNodeAttributes) {
-            result += " " + attribute.toString() + " ";
+            result.append(" ").append(attribute.toString()).append(" ");
         }
-        result += ">\n";
+        result.append(">\n");
         for (ConfigNode child : allChildConfigBlocks) {
-            result += "\t" + child.toString();
+            result.append("\t").append(child.toString());
         }
-        result += "</" + configNodeName + ">\n";
-        return result;
+        result.append("</").append(configNodeName).append(">\n");
+        return result.toString();
     }
 
     @Override
     public AbstractConfigNode getParentNode() {
         return this.parentNode;
-    }
-
-    @Override
-    public void setParentNode(AbstractConfigNode parentNode) {
-        this.parentNode = parentNode;
     }
 
     public List<ConfigValueNode> getChangedValueNodes() {

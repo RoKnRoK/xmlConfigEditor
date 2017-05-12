@@ -27,15 +27,8 @@ public class LockInfo implements Serializable{
         return lockObject;
     }
 
-    public void setLockObject(Serializable lockObject) {
-        this.lockObject = lockObject;
-    }
-
     public long getLockStartTime() {
         return lockStartTime;
     }
 
-    public void setLockStartTime(long lockStartTime) {
-        this.lockStartTime = lockStartTime;
-    }
 }

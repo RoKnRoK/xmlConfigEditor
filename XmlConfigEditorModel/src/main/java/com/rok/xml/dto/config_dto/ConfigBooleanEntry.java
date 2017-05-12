@@ -7,6 +7,7 @@ package com.rok.xml.dto.config_dto;
 public class ConfigBooleanEntry extends ConfigEntry{
     private static final long serialVersionUID = -6812828214278532402L;
 
+    @SuppressWarnings("unused")
     public ConfigBooleanEntry() {
 
     }

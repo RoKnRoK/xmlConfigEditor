@@ -12,11 +12,11 @@ import java.util.List;
  */
 public abstract class AbstractConfigNode implements ConfigNode {
     private static final long serialVersionUID = -3926678108830977911L;
-    protected String configNodeName;
-    protected String configNodeDisplayName;
-    protected List<ConfigValueNode> configNodeAttributes = new ArrayList<>();
-    protected boolean isEditable;
-    public AbstractConfigNode parentNode;
+    String configNodeName;
+    private String configNodeDisplayName;
+    List<ConfigValueNode> configNodeAttributes = new ArrayList<>();
+    private boolean isEditable;
+    AbstractConfigNode parentNode;
 
     public void setName(String configEntryName) {
         this.configNodeName = configEntryName;
@@ -50,11 +50,6 @@ public abstract class AbstractConfigNode implements ConfigNode {
         return configNodeName;
     }
 
-    @Override
-    public void setDisplayName(String displayName) {
-        this.configNodeDisplayName = displayName;
-    }
-
     private ConfigValueNode getDisplayNameAttribute(){
         for (ConfigValueNode configAttribute : configNodeAttributes) {
             if (!Constants.DISPLAY_NAME.equals(configAttribute.getName())) {
@@ -67,8 +62,6 @@ public abstract class AbstractConfigNode implements ConfigNode {
 
 
     public abstract AbstractConfigNode getParentNode() ;
-
-    public abstract void setParentNode(AbstractConfigNode parentNode) ;
 
 
     @Override

@@ -9,10 +9,12 @@ import com.rok.xml.dto.config_dto.ConfigModificationInfo;
 public interface XmlConfigModifier {
 
     ConfigModificationInfo getConfig();
-    Object getConfigAsObject();
+
     boolean saveConfig(ConfigModificationInfo configModificationInfo);
     void cancelConfigEditing(ConfigModificationInfo configModificationInfo);
 
+    @SuppressWarnings("unused")
     void setBackuper(ConfigBackuper backuper);
+    @SuppressWarnings("unused")
     void setLocker(ConfigLocker locker);
 }

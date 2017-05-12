@@ -2,7 +2,6 @@ package com.rok.gwt.client.widgets.table;
 
 import com.google.gwt.cell.client.AbstractCell;
 import com.google.gwt.cell.client.EditTextCell;
-import com.google.gwt.cell.client.FieldUpdater;
 import com.google.gwt.cell.client.TextCell;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.cellview.client.CellTable;
@@ -24,24 +23,20 @@ public class ConfigEntriesTable extends CellTable<ConfigValueNode> {
     private static final int DEFAULT_PAGESIZE = 15;
     private static CellTable.Resources resources = GWT.create(ConfigEntriesTableResources.class);
 
-    public ConfigEntriesTable() {
-        this(false);
-    }
-
     public ConfigEntriesTable(boolean isEditable) {
         super(DEFAULT_PAGESIZE, resources);
         this.setWidth("100%");
         initColumns(isEditable);
     }
 
-    protected void initColumns(boolean isEditable) {
+    private void initColumns(boolean isEditable) {
         initNameColumn();
         AbstractCell<String> valueCell = isEditable ? new EditTextCell() : new TextCell();
         initValueColumn(valueCell);
 
     }
 
-    protected void initValueColumn(AbstractCell<String> valueCell) {
+    private void initValueColumn(AbstractCell<String> valueCell) {
         // EntryValue
 
         //editTextCell.
@@ -54,25 +49,22 @@ public class ConfigEntriesTable extends CellTable<ConfigValueNode> {
                 };
 
         valueColumn.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_LEFT);
-        valueColumn.setFieldUpdater(new FieldUpdater<ConfigValueNode, String>() {
-            @Override
-            public void update(int index, ConfigValueNode object, String value) {
-                // Called when the user changes the value.
-                String oldValue = object.getValue();
-                if (Objects.equals(oldValue, value)) {
-                    return;
-                }
-                object.setValue(value);
-                EventBusStorage.getInstance().getEventBus().fireEvent(new ConfigValueChangedEvent(object));
-
-
+        valueColumn.setFieldUpdater((index, object, value) -> {
+            // Called when the user changes the value.
+            String oldValue = object.getValue();
+            if (Objects.equals(oldValue, value)) {
+                return;
             }
+            object.setValue(value);
+            EventBusStorage.getInstance().getEventBus().fireEvent(new ConfigValueChangedEvent(object));
+
+
         });
         this.addColumn(valueColumn);
         this.setColumnWidth(valueColumn, 70, com.google.gwt.dom.client.Style.Unit.PCT);
     }
 
-    protected void initNameColumn() {
+    private void initNameColumn() {
         TextColumn<ConfigValueNode> nameColumn = new TextColumn<ConfigValueNode>() {
             @Override
             public String getValue(ConfigValueNode object) {

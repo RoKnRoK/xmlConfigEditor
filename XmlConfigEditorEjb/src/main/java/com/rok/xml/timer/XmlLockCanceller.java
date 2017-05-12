@@ -15,6 +15,7 @@ import java.util.Date;
  * Created by roman.kulikov on 5/10/2017.
  * All rights reserved =D
  */
+@SuppressWarnings("unused")
 @Singleton
 public class XmlLockCanceller {
 

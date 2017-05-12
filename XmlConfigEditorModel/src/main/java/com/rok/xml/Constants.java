@@ -1,7 +1,6 @@
 package com.rok.xml;
 
 import java.io.File;
-import java.nio.file.FileSystem;
 
 /**
  * Created by RoK on 27.06.2015.

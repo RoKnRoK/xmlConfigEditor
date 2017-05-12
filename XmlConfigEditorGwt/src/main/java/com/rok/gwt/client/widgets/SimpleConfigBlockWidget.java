@@ -1,7 +1,5 @@
 package com.rok.gwt.client.widgets;
 
-import com.google.gwt.event.logical.shared.ValueChangeEvent;
-import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.i18n.client.HasDirection;
 import com.google.gwt.user.client.ui.*;
 import com.google.gwt.view.client.ListDataProvider;
@@ -20,14 +18,14 @@ import java.util.List;
  * Created by RoK on 25.06.2015.
  * All rights reserved =)
  */
-public class SimpleConfigBlockWidget extends Composite {
+class SimpleConfigBlockWidget extends Composite {
 
-    VerticalPanel mainWidgetPanel = new VerticalPanel();
-    ConfigEntriesTable configEntryDataGrid;
-    ConfigEntriesTable configAttributesDataGrid ;
+    private VerticalPanel mainWidgetPanel = new VerticalPanel();
+    private ConfigEntriesTable configEntryDataGrid;
+    private ConfigEntriesTable configAttributesDataGrid ;
 
 
-    public SimpleConfigBlockWidget(ConfigBlock configBlock) {
+    SimpleConfigBlockWidget(ConfigBlock configBlock) {
         configEntryDataGrid =  new ConfigEntriesTable(configBlock.isEditable());
         configAttributesDataGrid = new ConfigEntriesTable(configBlock.isEditable());
 
@@ -62,13 +60,10 @@ public class SimpleConfigBlockWidget extends Composite {
             final ConfigBooleanEntry configBooleanEntry = (ConfigBooleanEntry) configValueNode;
             CheckBox checkBox = new CheckBox();
             checkBox.setText(configBooleanEntry.getDisplayName(), HasDirection.Direction.RTL);
-            checkBox.addValueChangeHandler(new ValueChangeHandler<Boolean>() {
-                @Override
-                public void onValueChange(ValueChangeEvent<Boolean> event) {
-                    Boolean value = event.getValue();
-                    configBooleanEntry.setBooleanValue(value);
-                    EventBusStorage.getInstance().getEventBus().fireEvent(new ConfigValueChangedEvent(configBooleanEntry));
-                }
+            checkBox.addValueChangeHandler(event -> {
+                Boolean value = event.getValue();
+                configBooleanEntry.setBooleanValue(value);
+                EventBusStorage.getInstance().getEventBus().fireEvent(new ConfigValueChangedEvent(configBooleanEntry));
             });
             checkBox.setValue(configBooleanEntry.getBooleanValue());
             mainWidgetPanel.add(checkBox);

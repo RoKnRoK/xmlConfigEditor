@@ -30,8 +30,10 @@ public class XmlConfigEditorMainView extends Composite {
     private Presenter presenter;
 
     @UiField
+    private
     SimplePanel mainPanel;
     @UiField
+    private
     Button saveButton;
 
     public CheckBox getDisplayNamesMode() {
@@ -39,6 +41,7 @@ public class XmlConfigEditorMainView extends Composite {
     }
 
     @UiField
+    private
     CheckBox displayNamesMode;
 
     public XmlConfigEditorMainView() {

@@ -16,7 +16,7 @@ import java.util.List;
  * All rights reserved =)
  */
 public class DomNodeToConfigBlockConverter {
-    private final static List<Short> relevantNodeTypes = new ArrayList<Short>(Collections.singletonList(Node.ELEMENT_NODE));
+    private final static List<Short> relevantNodeTypes = new ArrayList<>(Collections.singletonList(Node.ELEMENT_NODE));
 
 
     public ConfigNode createConfigNode(Node node, AbstractConfigNode parent) {
@@ -92,9 +92,12 @@ public class DomNodeToConfigBlockConverter {
         List<ConfigValueNode> attributes = defineAttributes(node);
         if ( attributes == null || attributes.isEmpty()) {return true;}
 
-        if (ApplicationSettings.isDisplayNamesEditingEnabled()){return false;}
-        else {
-            return attributes.size() == 1 && Constants.DISPLAY_NAME.equals(attributes.get(0).getName());
+        if (ApplicationSettings.isDisplayNamesEditingEnabled()){
+            return false;
+        } else {
+            boolean onlyOneAttribute = attributes.size() == 1;
+            boolean firstAttrIsDisplayName = Constants.DISPLAY_NAME.equals(attributes.get(0).getName());
+            return onlyOneAttribute && firstAttrIsDisplayName;
         }
     }
 

@@ -27,7 +27,7 @@ public class ConfigNodeAttribute implements ConfigValueNode {
 
     }
 
-    public ConfigNodeAttribute(){
+    private ConfigNodeAttribute(){
         this.type = ConfigNodeType.ATTRIBUTE;
     }
 
@@ -41,10 +41,6 @@ public class ConfigNodeAttribute implements ConfigValueNode {
     @Override
     public String getDisplayName() {
         return attributeName;
-    }
-    @Override
-    public void setDisplayName(String displayName) {
-        this.attributeName = displayName;
     }
 
     public String getValue() {

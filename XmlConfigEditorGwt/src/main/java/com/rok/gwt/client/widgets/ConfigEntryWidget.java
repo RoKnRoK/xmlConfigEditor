@@ -14,8 +14,8 @@ import java.util.List;
  */
 public class ConfigEntryWidget extends Composite {
 
-    SimplePanel mainWidgetPanel = new SimplePanel();
-    ConfigEntriesTable configEntryDataGrid;
+    private SimplePanel mainWidgetPanel = new SimplePanel();
+    private ConfigEntriesTable configEntryDataGrid;
 
     public ConfigEntryWidget(ConfigValueNode configEntry) {
         configEntryDataGrid = new ConfigEntriesTable(configEntry.isEditable());
@@ -42,17 +42,4 @@ public class ConfigEntryWidget extends Composite {
         initWidget(mainWidgetPanel);
     }
 
-    public ConfigEntryWidget(List<ConfigValueNode> configEntries) {
-        if (configEntries==null || configEntries.isEmpty()){
-            initWidget(mainWidgetPanel);
-            return;
-        }
-        configEntryDataGrid = new ConfigEntriesTable(configEntries.get(0).isEditable());
-        ListDataProvider<ConfigValueNode> configEntriesProvider = new ListDataProvider<>(configEntries);
-        configEntriesProvider.addDataDisplay(configEntryDataGrid);
-        configEntryDataGrid.setVisibleRange(0, configEntries.size());
-        mainWidgetPanel.add(configEntryDataGrid);
-
-        initWidget(mainWidgetPanel);
-    }
 }

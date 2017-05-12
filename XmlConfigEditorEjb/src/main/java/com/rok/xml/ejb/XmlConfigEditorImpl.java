@@ -17,6 +17,7 @@ import static com.rok.xml.Constants.FILE_NAME;
  * Created by RoK on 10.07.2015.
  * All rights reserved =)
  */
+@SuppressWarnings("unused")
 @Stateless(name = "XmlConfigEditorEJB")
 @LocalBean
 public class XmlConfigEditorImpl implements XmlConfigEditorLocal, XmlConfigEditorRemote {

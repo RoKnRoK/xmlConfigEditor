@@ -16,14 +16,13 @@ import java.nio.channels.FileChannel;
  */
 public class FSConfigBackuper implements ConfigBackuper {
 
-    public static final String BACKUP_POSTFIX = "_backup";
+    private static final String BACKUP_POSTFIX = "_backup";
 
     private final Logger logger = LoggerFactory.getLogger(FSConfigBackuper.class.getName());
 
     private File configForBackup;
     private boolean rewriteOldBackup;
     private File backupedConfig;
-    private boolean backupAlreadyExists = false;
 
     public FSConfigBackuper(File configForBackup) {
         this(configForBackup, true);
@@ -44,7 +43,6 @@ public class FSConfigBackuper implements ConfigBackuper {
         FileChannel destination = null;
         try {
             if (backupedConfig.exists()){
-                backupAlreadyExists = true;
                 if (!rewriteOldBackup) {
                     logger.error("There is backup already exists and ConfigBackuper not allowed to rewrite it. " +
                             "Further work will be in read-only mode.");
@@ -58,7 +56,6 @@ public class FSConfigBackuper implements ConfigBackuper {
 
             boolean newFileCreated = backupedConfig.createNewFile();
             if (!newFileCreated) {
-                backupAlreadyExists = true;
                 logger.error("Backup not created. Further work will be in read-only mode.");
                 return false;
             }
@@ -98,8 +95,4 @@ public class FSConfigBackuper implements ConfigBackuper {
         return xmlBackupConfigName;
     }
 
-    @Override
-    public boolean isBackupAlreadyExists() {
-        return backupAlreadyExists;
-    }
 }

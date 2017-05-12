@@ -10,8 +10,9 @@ import javax.ejb.EJB;
 
 public class XmlConfigEditorGwtServiceImpl extends RemoteServiceServlet implements XmlConfigEditorGwtService {
 
+    @SuppressWarnings("unused")
     @EJB
-    XmlConfigEditorLocal xmlConfigEditorLocal;
+    private XmlConfigEditorLocal xmlConfigEditorLocal;
 
     private static final long serialVersionUID = -8248560938058853857L;
 

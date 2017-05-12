@@ -2,8 +2,8 @@ package com.rok.xml.modifier;
 
 import com.rok.xml.backuper.FSConfigBackuper;
 import com.rok.xml.locker.ByLockFileLocker;
-import com.rok.xml.retriever.FSFileRetriever;
-import com.rok.xml.api.FileRetriever;
+import com.rok.xml.retriever.FSConfigRetriever;
+import com.rok.xml.api.ConfigRetriever;
 
 import java.io.*;
 
@@ -14,8 +14,8 @@ import java.io.*;
 public class FSXmlConfigModifier extends CommonConfigModifier {
 
     public FSXmlConfigModifier(String fileName) {
-        FileRetriever fileRetriever = new FSFileRetriever();
-        this.xmlConfig = (File) fileRetriever.retrieveFile(fileName);
+        ConfigRetriever configRetriever = new FSConfigRetriever();
+        this.xmlConfig = (File) configRetriever.retrieveConfig(fileName);
         if (xmlConfig == null) {
             throw new IllegalStateException("Configuration file not found: " + fileName);
         }
@@ -23,8 +23,4 @@ public class FSXmlConfigModifier extends CommonConfigModifier {
         configBackuper = new FSConfigBackuper(xmlConfig);
     }
 
-    @Override
-    public Object getConfigAsObject() {
-        return this.xmlConfig;
-    }
 }

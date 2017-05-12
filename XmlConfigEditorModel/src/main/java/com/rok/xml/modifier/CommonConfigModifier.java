@@ -3,10 +3,8 @@ package com.rok.xml.modifier;
 import com.rok.xml.api.ConfigBackuper;
 import com.rok.xml.api.ConfigLocker;
 import com.rok.xml.api.XmlConfigModifier;
-import com.rok.xml.backuper.StubConfigBackuper;
-import com.rok.xml.dto.config_dto.*;
 import com.rok.xml.dto.LockInfo;
-import com.rok.xml.locker.StubConfigLocker;
+import com.rok.xml.dto.config_dto.*;
 import com.rok.xml.utils.DomNodeToConfigBlockConverter;
 import com.rok.xml.utils.XPathBuilder;
 import org.slf4j.Logger;
@@ -30,7 +28,8 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
-import java.util.UUID;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * Created by RoK on 11.07.2015.
@@ -39,9 +38,9 @@ import java.util.UUID;
 public abstract class CommonConfigModifier implements XmlConfigModifier {
     private final Logger logger = LoggerFactory.getLogger(CommonConfigModifier.class.getName());
 
-    protected File xmlConfig;
-    protected ConfigLocker configLocker;
-    protected ConfigBackuper configBackuper;
+    File xmlConfig;
+    ConfigLocker configLocker;
+    ConfigBackuper configBackuper;
 
 
     private ConfigBlock parseConfig() {
@@ -51,7 +50,7 @@ public abstract class CommonConfigModifier implements XmlConfigModifier {
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
             Document doc = null;
             //todo: try to get rid of it
-            for (int i = 0; i< 10; i++) {
+            for (int i = 0; i < 10; i++) {
                 try {
                     doc = dBuilder.parse(xmlConfig);
                 } catch (SAXException | IOException e) {
@@ -99,7 +98,7 @@ public abstract class CommonConfigModifier implements XmlConfigModifier {
     }
 
     public boolean saveConfig(ConfigModificationInfo configModificationInfo) {
-        if (configModificationInfo.getLock() == null){
+        if (configModificationInfo.getLock() == null) {
             logger.warn("Config is not locked by me, skipping save");
             return false;
         }
@@ -116,7 +115,7 @@ public abstract class CommonConfigModifier implements XmlConfigModifier {
             for (ConfigValueNode changedNode : changedNodes) {
                 switch (changedNode.getNodeType()) {
                     case ENTRY:
-                    case BOOLEAN_ENTRY:{
+                    case BOOLEAN_ENTRY: {
                         String expression = xPathBuilder.createXPath((AbstractConfigNode) changedNode);
                         Node node = (Node) xpath.evaluate(expression, document, XPathConstants.NODE);
                         node.setTextContent(changedNode.getValue());
@@ -127,17 +126,13 @@ public abstract class CommonConfigModifier implements XmlConfigModifier {
 
                 }
             }
-//            String fileCopyName = xmlConfig.getAbsolutePath().replace(".xml", "_new.xml");
             DOMSource source = new DOMSource(document);
-//            File fileCopy = new File(fileCopyName);
-//            StreamResult outputFile = new StreamResult(fileCopy);
             StreamResult outputFile = new StreamResult(xmlConfig);
             Transformer transformer = TransformerFactory.newInstance().newTransformer();
             transformer.transform(source, outputFile);
 
             //todo: theoretically in period of time between this lines someone can open config for editing
             boolean unlocked = configLocker.unlockConfig(configModificationInfo.getLock());
-//            Files.move(fileCopy.toPath(), xmlConfig.toPath(), StandardCopyOption.ATOMIC_MOVE);
             if (unlocked) {
                 configBackuper.deleteBackup();
             }
@@ -161,20 +156,12 @@ public abstract class CommonConfigModifier implements XmlConfigModifier {
 
     @Override
     public void setBackuper(ConfigBackuper backuper) {
-        if (backuper == null) {
-            this.configBackuper = new StubConfigBackuper();
-        } else {
-            this.configBackuper = backuper;
-        }
+        this.configBackuper = checkNotNull(backuper);
     }
 
     @Override
     public void setLocker(ConfigLocker locker) {
-        if (locker == null) {
-            this.configLocker = new StubConfigLocker();
-        } else {
-            this.configLocker = locker;
-        }
+        this.configLocker = checkNotNull(locker);
     }
 
 

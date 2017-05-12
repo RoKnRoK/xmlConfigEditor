@@ -10,7 +10,7 @@ public class  ConfigEntry extends AbstractConfigNode implements ConfigValueNode 
 
     private static final long serialVersionUID = -4269070863916591307L;
 
-    protected String configEntryValue;
+    String configEntryValue;
 
     private String configEntryOriginalValue;
 
@@ -22,7 +22,7 @@ public class  ConfigEntry extends AbstractConfigNode implements ConfigValueNode 
 
     }
 
-    public ConfigEntry() {
+    ConfigEntry() {
         this.configNodeName = "defaultEntryName";
         this.configEntryValue = this.configEntryOriginalValue = "defaultEntryValue";
     }
@@ -57,23 +57,19 @@ public class  ConfigEntry extends AbstractConfigNode implements ConfigValueNode 
 
     @Override
     public String toString() {
-        String result ="";
-        result += "<"+ configNodeName;
+        StringBuilder result = new StringBuilder();
+        result.append("<").append(configNodeName);
         for (ConfigValueNode attribute : configNodeAttributes){
-            result +=" "+attribute.toString()+" ";
+            result.append(" ").append(attribute.toString()).append(" ");
         }
-        result +=">";
-        result +=configEntryValue+"</"+ configNodeName +">\n";
-        return result;
+        result.append(">");
+        result.append(configEntryValue).append("</").append(configNodeName).append(">\n");
+        return result.toString();
     }
 
     @Override
     public AbstractConfigNode getParentNode() {
         return this.parentNode;
-    }
-    @Override
-    public void setParentNode(AbstractConfigNode parentNode) {
-        this.parentNode = parentNode;
     }
 
     public void setEditable(boolean isEditable){

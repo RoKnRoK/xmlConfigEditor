@@ -9,7 +9,6 @@ import java.util.List;
 public interface HasChildNodes {
 
     List<ConfigNode> getChildNodes();
-    void setChildNodes(List<ConfigNode> childNodes);
     ConfigNode getChildNode(Integer selectedItem);
     void addChildNode(ConfigNode childNode);
 }

@@ -1,7 +1,6 @@
 package com.rok.gwt.client.widgets.info;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.*;
 import com.rok.gwt.client.i18n.XmlConfigEditorConstants;
@@ -26,31 +25,20 @@ public class DialogBoxCreator {
             vPanel.setSpacing(2);
             vPanel.add(content);
             vPanel.add(new Label("\n"));
-            vPanel.add(new Button(constants.close(), new ClickHandler() {
-                public void onClick(ClickEvent event) {
-                    dialogBox.hide();
-                }
-            }));
+            vPanel.add(new Button(constants.close(), (ClickHandler) event -> dialogBox.hide()));
             dialogBox.setWidget(vPanel);
         }
         return dialogBox;
     }
 
+    @SuppressWarnings("unused")
     public static DialogBox createConfirmationBox(String capture, String message, final ConfirmCallback callback) {
         final DialogBox dialogBox = new DialogBox(false);
         dialogBox.setText(capture);
 
         Widget content = new Label(message);
-        Button okButton = new Button(constants.yes(), new ClickHandler() {
-            public void onClick(ClickEvent event) {
-                callback.onOk();
-            }
-        });
-        Button cancelButton = new Button(constants.no(), new ClickHandler() {
-            public void onClick(ClickEvent event) {
-                callback.onCancel();
-            }
-        });
+        Button okButton = new Button(constants.yes(), (ClickHandler) event -> callback.onOk());
+        Button cancelButton = new Button(constants.no(), (ClickHandler) event -> callback.onCancel());
         HorizontalPanel horizontalPanel = new HorizontalPanel();
         horizontalPanel.add(okButton);
         horizontalPanel.add(cancelButton);

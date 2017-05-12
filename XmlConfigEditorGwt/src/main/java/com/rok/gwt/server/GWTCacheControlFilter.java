@@ -1,10 +1,10 @@
 package com.rok.gwt.server;
 
-/**
- * {@link Filter} to add cache control headers for GWT generated files to ensure
- * that the correct files get cached.
- *
- * @author See Wah Cheng
+/*
+  {@link Filter} to add cache control headers for GWT generated files to ensure
+  that the correct files get cached.
+
+  @author See Wah Cheng
  * @created 24 Feb 2009
  */
 import java.io.IOException;

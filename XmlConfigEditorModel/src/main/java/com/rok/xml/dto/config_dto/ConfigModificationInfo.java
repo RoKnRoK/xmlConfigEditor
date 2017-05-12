@@ -28,10 +28,6 @@ public class ConfigModificationInfo implements Serializable {
         return configBlock;
     }
 
-    public void setConfigBlock(ConfigBlock configBlock) {
-        this.configBlock = configBlock;
-    }
-
     public Serializable getLock() {
         return lockInfo.getLockObject();
     }

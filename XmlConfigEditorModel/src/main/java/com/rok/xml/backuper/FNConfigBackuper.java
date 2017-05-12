@@ -8,12 +8,11 @@ import java.io.File;
  * Created by RoK on 11.07.2015.
  * All rights reserved =)
  */
-//todo: и это тоже
+//todo: don't remember
+@SuppressWarnings("unused")
 public class FNConfigBackuper implements ConfigBackuper {
-    private File configToBackup;
 
     public FNConfigBackuper(File configToBackup) {
-        this.configToBackup = configToBackup;
     }
 
     @Override
@@ -30,8 +29,4 @@ public class FNConfigBackuper implements ConfigBackuper {
         return null;
     }
 
-    @Override
-    public boolean isBackupAlreadyExists() {
-        return false;
-    }
 }

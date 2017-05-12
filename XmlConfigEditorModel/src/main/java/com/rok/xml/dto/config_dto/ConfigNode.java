@@ -13,7 +13,6 @@ public interface ConfigNode extends Serializable{
     void setName(String name);
 
     String getDisplayName();
-    void setDisplayName(String displayName);
 
     ConfigNodeType getNodeType();
     void setNodeType(ConfigNodeType type);
