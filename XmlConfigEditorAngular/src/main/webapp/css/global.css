@@ -1,0 +1,30 @@
+h1 {
+    font-size: 2em;
+    font-weight: bold;
+    text-align: center;
+}
+
+body, td, a, div, .p {
+    font-family: arial, sans-serif
+}
+input {
+    margin-right: 10px;
+}
+
+.md-toolbar
+{
+    height: 100%;
+}
+
+.md-tab {
+    margin-left: 1px;
+    padding: 6px 16px 6px 16px;
+    cursor: pointer;
+    font-size: 1.2em;
+    color: white;
+    font-weight: normal;
+    text-align: center;
+    background: #8e8e8e;
+    border-radius: 5px 5px 0 0;
+    outline: none;
+}

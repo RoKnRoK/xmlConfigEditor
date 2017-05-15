@@ -11,6 +11,17 @@
 
     <profiles>
         <profile>
+            <id>EJB+Angular</id>
+            <modules>
+                <module>XmlConfigEditorModel</module>
+                <module>XmlConfigEditorEjb</module>
+                <module>XmlConfigEditorREST</module>
+                <module>XmlConfigEditorAngular</module>
+                <module>XmlConfigEditorEar</module>
+            </modules>
+        </profile>
+
+        <profile>
             <id>EJB+REST</id>
             <modules>
                 <module>XmlConfigEditorModel</module>
@@ -45,9 +56,7 @@
             </modules>
         </profile>
     </profiles>
-    <modules>
-        <module>XmlConfigEditorREST</module>
-    </modules>
+
 
     <properties>
         <gwtVersion>2.8.0</gwtVersion>

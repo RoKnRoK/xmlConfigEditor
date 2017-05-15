@@ -1,0 +1,52 @@
+<!doctype html>
+
+<html lang="en" ng-app="XmlConfigEditor">
+<head>
+    <title>Hello AngularJS</title>
+    <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/global.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-animate.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-aria.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-messages.min.js"></script>
+    <!--<script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.js">-->
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <!-- if AngularJS fails to load fallback a local version -->
+    <script>window.angular || document.write('<script src="locallib/angular.min.js"><\/script>');
+    </script>
+
+    <script src="js/scripts.js"></script>
+</head>
+
+<body ng-controller="ConfigViewController">
+<<!--md-content>
+    <md-tabs md-dynamic-height md-border-bottom layout="row">
+        &lt;!&ndash;label="{{tabBlock.name}}" ng-repeat="tabBlock in tabLevelBlocks.block"&ndash;&gt;
+        <md-tab label="{{tabBlock.name}}" ng-repeat="tabBlock in tabLevelBlocks.block">
+            <md-content class="md-padding">
+                Tab 1
+            </md-content>
+        </md-tab>
+
+       &lt;!&ndash; <md-tab label="Tab 2">
+            <md-content class="md-padding">
+                Tab 2
+            </md-content>
+        </md-tab>&ndash;&gt;
+    </md-tabs>
+</md-content>-->
+<uib-tabset active="active">
+    <uib-tab index="0" heading="Static title">Static content</uib-tab>
+    <uib-tab index="$index + 1" ng-repeat="tabBlock in tabLevelBlocks.block" heading="{{tabBlock.name}}" disable="tab.disabled">
+        {{tabBlock.childNodes}}
+    </uib-tab>
+</uib-tabset>
+
+</body>
+</html>
