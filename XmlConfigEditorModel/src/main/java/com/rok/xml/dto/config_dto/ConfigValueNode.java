@@ -1,15 +1,13 @@
 package com.rok.xml.dto.config_dto;
 
-import javax.xml.bind.annotation.XmlSeeAlso;
+
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 /**
  * Created by RoK on 26.06.2015.
  * All rights reserved =)
  */
-@XmlSeeAlso({
-        ConfigBooleanEntry.class,
-        ConfigEntry.class,
-        ConfigNodeAttribute.class, })
+@XmlJavaTypeAdapter(AnyTypeAdapter.class)
 public interface ConfigValueNode extends ConfigNode {
 
 

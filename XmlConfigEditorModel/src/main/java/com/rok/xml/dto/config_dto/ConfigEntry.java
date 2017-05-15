@@ -1,11 +1,13 @@
 package com.rok.xml.dto.config_dto;
 
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Objects;
 
 /**
  * Created by RoK on 21.06.2015.
  * All rights reserved =)
  */
+@XmlRootElement
 public class  ConfigEntry extends AbstractConfigNode implements ConfigValueNode {
 
     private static final long serialVersionUID = -4269070863916591307L;

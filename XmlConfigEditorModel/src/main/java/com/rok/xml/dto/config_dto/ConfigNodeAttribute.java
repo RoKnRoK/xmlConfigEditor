@@ -1,5 +1,6 @@
 package com.rok.xml.dto.config_dto;
 
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -8,6 +9,7 @@ import java.util.Objects;
  * Created by RoK on 21.06.2015.
  * All rights reserved =)
  */
+@XmlRootElement
 public class ConfigNodeAttribute implements ConfigValueNode {
     private static final long serialVersionUID = -677434795409847499L;
     private String attributeName;

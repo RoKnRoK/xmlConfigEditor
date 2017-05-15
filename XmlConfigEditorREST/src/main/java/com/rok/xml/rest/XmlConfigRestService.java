@@ -1,10 +1,9 @@
 package com.rok.xml.rest;
 
-import com.rok.xml.dto.config_dto.ConfigModificationInfo;
+import com.rok.xml.dto.config_dto.*;
 import com.rok.xml.ejb.XmlConfigEditorLocal;
 
 import javax.ejb.EJB;
-import javax.ejb.Stateless;
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -16,8 +15,8 @@ import javax.ws.rs.core.MediaType;
  * Created by roman.kulikov on 5/12/2017.
  * All rights reserved =D
  */
-@Stateless
 @ApplicationPath("/rest")
+@Path("/config")
 public class XmlConfigRestService extends Application{
 
     @SuppressWarnings("unused")
@@ -25,11 +24,10 @@ public class XmlConfigRestService extends Application{
     private XmlConfigEditorLocal xmlConfigEditorLocal;
 
     @GET
-    @Path("/config")
+    @Path("/get")
     @Produces(MediaType.APPLICATION_JSON)
     public ConfigModificationInfo getConfig(){
-        ConfigModificationInfo configModificationInfo = xmlConfigEditorLocal.getConfigModificationInfo();
-        return configModificationInfo;
+        return xmlConfigEditorLocal.getConfigModificationInfo();
     }
 
 }

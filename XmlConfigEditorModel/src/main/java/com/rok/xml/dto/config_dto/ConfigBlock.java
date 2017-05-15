@@ -1,5 +1,8 @@
 package com.rok.xml.dto.config_dto;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlElements;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,6 +44,13 @@ public class ConfigBlock extends AbstractConfigNode implements ConfigNode, HasCh
         return allChildConfigBlocks.get(index);
     }
 
+    @XmlElements({
+            @XmlElement(name = "entry", type=ConfigEntry.class),
+            @XmlElement(name = "block", type=ConfigBlock.class),
+            @XmlElement(name = "booleanEntry", type=ConfigBooleanEntry.class),
+            @XmlElement(name = "attribute", type=ConfigNodeAttribute.class)
+    })
+    @XmlElementWrapper
     public List<ConfigNode> getChildNodes() {
         return allChildConfigBlocks;
     }

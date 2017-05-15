@@ -1,9 +1,12 @@
 package com.rok.xml.dto.config_dto;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
 /**
  * Created by RoK on 27.06.2015.
  * All rights reserved =)
  */
+@XmlRootElement
 public class ConfigBooleanEntry extends ConfigEntry{
     private static final long serialVersionUID = -6812828214278532402L;
 

@@ -3,6 +3,9 @@ package com.rok.xml.dto.config_dto;
 import com.rok.xml.Constants;
 import com.rok.xml.settings.ApplicationSettings;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlElements;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,10 +13,12 @@ import java.util.List;
  * Created by RoK on 27.06.2015.
  * All rights reserved =)
  */
+
 public abstract class AbstractConfigNode implements ConfigNode {
     private static final long serialVersionUID = -3926678108830977911L;
     String configNodeName;
     private String configNodeDisplayName;
+
     List<ConfigValueNode> configNodeAttributes = new ArrayList<>();
     private boolean isEditable;
     AbstractConfigNode parentNode;
@@ -27,6 +32,12 @@ public abstract class AbstractConfigNode implements ConfigNode {
 
 
     @Override
+    @XmlElements({
+            @XmlElement(name = "entry", type=ConfigEntry.class),
+            @XmlElement(name = "booleanEntry", type=ConfigBooleanEntry.class),
+            @XmlElement(name = "attribute", type=ConfigNodeAttribute.class)
+    })
+    @XmlElementWrapper
     public List<ConfigValueNode> getNodeAttributes() {
         List<ConfigValueNode> result = new ArrayList<>();
         result.addAll(configNodeAttributes);
