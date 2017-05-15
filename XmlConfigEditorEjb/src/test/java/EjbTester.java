@@ -1,12 +1,10 @@
-/**
+/*
  * Created by RoK.
  * All rights reserved =)
  */
 
 import com.rok.xml.dto.config_dto.ConfigModificationInfo;
 import com.rok.xml.ejb.XmlConfigEditorLocal;
-import junit.framework.TestCase;
-import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -18,12 +16,13 @@ import static org.junit.Assert.assertNotNull;
 
 public class EjbTester {
 
-    private XmlConfigEditorLocal bean;
-    private ConfigModificationInfo configModificationInfo;
+    private static XmlConfigEditorLocal bean;
+    private static ConfigModificationInfo configModificationInfo;
+    private static Context context;
 
     @BeforeClass
-    protected void setUp() throws Exception {
-        Context context = EJBContainer.createEJBContainer().getContext();
+    public static void setUp() throws Exception {
+        context = EJBContainer.createEJBContainer().getContext();
         bean = (XmlConfigEditorLocal) context.lookup("java:global/XmlConfigEditorEjb/XmlConfigEditorEJB");
     }
 
@@ -36,9 +35,12 @@ public class EjbTester {
     }
 
     @AfterClass
-    protected void tearDown() throws Exception {
+    public static void tearDown() throws Exception {
         if (bean != null) {
             bean.cancelConfigEditing(configModificationInfo);
+        }
+        if (context != null) {
+            context.close();
         }
     }
 }

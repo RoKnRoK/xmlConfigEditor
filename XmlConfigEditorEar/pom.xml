@@ -17,13 +17,6 @@
 
         <dependency>
             <groupId>com.rok.xml</groupId>
-            <artifactId>XmlConfigEditorGwt</artifactId>
-            <version>${project.parent.version}</version>
-            <type>war</type>
-        </dependency>
-
-        <dependency>
-            <groupId>com.rok.xml</groupId>
             <artifactId>XmlConfigEditorModel</artifactId>
             <version>${project.parent.version}</version>
             <exclusions>
@@ -63,32 +56,94 @@
             </exclusions>
         </dependency>
 
+
     </dependencies>
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-ear-plugin</artifactId>
-                <version>2.3.2</version>
-                <configuration>
-                    <defaultLibBundleDir>lib</defaultLibBundleDir>
-                    <modules>
-                        <webModule>
-                            <groupId>com.rok.xml</groupId>
-                            <artifactId>XmlConfigEditorGwt</artifactId>
-                        </webModule>
-                        <ejbModule>
-                            <groupId>com.rok.xml</groupId>
-                            <artifactId>XmlConfigEditorEjb</artifactId>
-                        </ejbModule>
-                    </modules>
-                    <displayName>XmlConfigEditor EAR</displayName>
-                    <generateApplicationXml>true</generateApplicationXml>
-                </configuration>
-            </plugin>
+    <profiles>
+        <profile>
+            <id>EJB+GWT</id>
+         <!--   <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>-->
 
-        </plugins>
-        <finalName>XmlConfigEditor</finalName>
-    </build>
+            <dependencies>
+
+                <dependency>
+                    <groupId>com.rok.xml</groupId>
+                    <artifactId>XmlConfigEditorGwt</artifactId>
+                    <version>${project.parent.version}</version>
+                    <type>war</type>
+                </dependency>
+
+            </dependencies>
+
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-ear-plugin</artifactId>
+                        <version>2.3.2</version>
+                        <configuration>
+                            <defaultLibBundleDir>lib</defaultLibBundleDir>
+                            <modules>
+                                <webModule>
+                                    <groupId>com.rok.xml</groupId>
+                                    <artifactId>XmlConfigEditorGwt</artifactId>
+                                </webModule>
+                                <ejbModule>
+                                    <groupId>com.rok.xml</groupId>
+                                    <artifactId>XmlConfigEditorEjb</artifactId>
+                                </ejbModule>
+                            </modules>
+                            <displayName>XmlConfigEditor EAR</displayName>
+                            <generateApplicationXml>true</generateApplicationXml>
+                        </configuration>
+                    </plugin>
+
+                </plugins>
+                <finalName>XmlConfigEditor</finalName>
+            </build>
+        </profile>
+
+        <profile>
+            <id>EJB+REST</id>
+
+            <dependencies>
+                <dependency>
+                    <groupId>com.rok.xml</groupId>
+                    <artifactId>XmlConfigEditorREST</artifactId>
+                    <version>${project.parent.version}</version>
+                    <type>war</type>
+                </dependency>
+            </dependencies>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-ear-plugin</artifactId>
+                        <version>2.3.2</version>
+                        <configuration>
+                            <defaultLibBundleDir>lib</defaultLibBundleDir>
+                            <modules>
+                                <ejbModule>
+                                    <groupId>com.rok.xml</groupId>
+                                    <artifactId>XmlConfigEditorEjb</artifactId>
+                                </ejbModule>
+
+                                <webModule>
+                                    <groupId>com.rok.xml</groupId>
+                                    <artifactId>XmlConfigEditorREST</artifactId>
+                                </webModule>
+                            </modules>
+                            <displayName>XmlConfigEditor EAR</displayName>
+                            <generateApplicationXml>true</generateApplicationXml>
+                        </configuration>
+                    </plugin>
+
+                </plugins>
+                <finalName>XmlConfigEditor</finalName>
+            </build>
+        </profile>
+    </profiles>
+
 </project>

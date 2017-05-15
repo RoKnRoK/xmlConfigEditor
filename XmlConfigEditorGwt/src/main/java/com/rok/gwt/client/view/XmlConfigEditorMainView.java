@@ -13,6 +13,7 @@ import com.rok.xml.dto.config_dto.ConfigBlock;
  * Created by RoK on 21.06.2015.
  * All rights reserved =)
  */
+@SuppressWarnings("WeakerAccess")
 public class XmlConfigEditorMainView extends Composite {
 
     public void renderConfig(ConfigBlock result) {
@@ -30,19 +31,12 @@ public class XmlConfigEditorMainView extends Composite {
     private Presenter presenter;
 
     @UiField
-    private
     SimplePanel mainPanel;
     @UiField
-    private
     Button saveButton;
-
-    public CheckBox getDisplayNamesMode() {
-        return displayNamesMode;
-    }
-
     @UiField
-    private
     CheckBox displayNamesMode;
+
 
     public XmlConfigEditorMainView() {
         initWidget(ourUiBinder.createAndBindUi(this));
@@ -63,5 +57,9 @@ public class XmlConfigEditorMainView extends Composite {
 
     public void disableSaveButton() {
         saveButton.setEnabled(false);
+    }
+
+    public CheckBox getDisplayNamesMode() {
+        return displayNamesMode;
     }
 }

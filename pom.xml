@@ -8,13 +8,46 @@
     <artifactId>xml-config-editor</artifactId>
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
-    <modules>
-        <module>XmlConfigEditorModel</module>
-        <module>XmlConfigEditorGwt</module>
-        <module>XmlConfigEditorEjb</module>
-        <module>XmlConfigEditorEar</module>
-    </modules>
 
+    <profiles>
+        <profile>
+            <id>EJB+REST</id>
+            <modules>
+                <module>XmlConfigEditorModel</module>
+                <module>XmlConfigEditorEjb</module>
+                <module>XmlConfigEditorREST</module>
+                <module>XmlConfigEditorEar</module>
+            </modules>
+        </profile>
+
+        <profile>
+            <id>EJB+GWT</id>
+            <modules>
+                <module>XmlConfigEditorModel</module>
+                <module>XmlConfigEditorGwt</module>
+                <module>XmlConfigEditorEjb</module>
+                <module>XmlConfigEditorEar</module>
+            </modules>
+        </profile>
+
+        <profile>
+            <id>All modules</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <modules>
+                <module>XmlConfigEditorModel</module>
+                <module>XmlConfigEditorGwt</module>
+                <module>XmlConfigEditorEjb</module>
+                <module>XmlConfigEditorEar</module>
+                <module>XmlConfigEditorAngular</module>
+                <module>XmlConfigEditorREST</module>
+            </modules>
+        </profile>
+    </profiles>
+    <modules>
+        <module>XmlConfigEditorREST</module>
+    </modules>
 
     <properties>
         <gwtVersion>2.8.0</gwtVersion>
@@ -86,9 +119,9 @@
 
 
             <dependency>
-                <groupId>javaee</groupId>
+                <groupId>javax</groupId>
                 <artifactId>javaee-api</artifactId>
-                <version>5</version>
+                <version>6.0</version>
                 <scope>compile</scope>
             </dependency>
 
