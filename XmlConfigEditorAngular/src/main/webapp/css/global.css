@@ -1,19 +1,19 @@
-h1 {
+/*h1 {
     font-size: 2em;
     font-weight: bold;
     text-align: center;
-}
+}*/
 
-body, td, a, div, .p {
+/*body, td, a, div, .p {
     font-family: arial, sans-serif
-}
+}*/
 body {
     margin: 15px;
 }
 
 .uib-tab {
     margin-right: 1px; /*space between tabs */
-    font-size: 1.2em; /* font-size of tabs */
+    /*font-size: 1.2em;*/ /* font-size of tabs */
     background: #8e8e8e; /*inactive background*/
     border-radius: 5px 5px 0 0; /* tab border-radius*/
 }
@@ -50,19 +50,74 @@ body {
 
 
 input[type="text"]{
-    width: 100%;
-    font-size: 1em;
+    /*width: 100%;*/
+    /*font-size: 1em;*/
 }
 
-.configEntryRow {
-    background: #e6e6e6;
-    border: 2px solid #e6e6e6;
-}
+/*.configEntryRow {
+    background: #eee;
+    border: 2px solid #eee;
+    border-radius: 10px 0 0 10px
+}*/
 .configEntryName {
-    font-size: 1em;
-    background: #ddd;
+    text-align: right;
+    /*font-size: 1em;*/
+    background: #e6e6e6;
+    border: 2px solid white;
     padding: 5px 10px 5px 2px ;
     border-radius: 10px 0 0 10px
+}
+.configEntryValueEditable {
+    /*text-align: right;
+    font-size: 1em;*/
+    background: #eee;
+    border: 2px solid white;
+    padding: 2px 10px 2px 2px ;
+}
+.configEntryValueNonEditable {
+    /*text-align: right;
+    font-size: 1em;*/
+    background: #eee;
+    border: 2px solid white;
+    padding: 5px 10px 5px 2px ;
+}
+.configEntryValueEditable:hover, .configEntryValueNonEditable:hover {
+    background: #aeaeae;
+}
+
+.configBlock {
+    margin-top: 5px;
+    text-align: center;
+    background: #8e8e8e;
+    /*font-size: 1.2em;*/
+}
+
+.panel {
+    border: none;
+}
+.panel-group .panel, .panel-heading {
+    border-radius: 10px; /* override for panels.less */
+}
+.panel-heading-opened {
+    border-radius: 10px 10px 0 0;
+    background: #8e8e8e;
+    font-weight: bold;
+}
+.panel-default>.panel-heading {
+    padding: 0; /**hack: override, actual padding 10px 15px goes to inner panel heading div**/
+}
+.panel-heading:hover {
+    background: #aeaeae;
+}
+.blackBordered {
+    border: 1px solid black;
+}
+
+.panel-default>.panel-heading+.panel-collapse>.panel-body {
+    border: none; /* override, was default border-top */
+}
+a:focus, a:hover {
+    text-decoration: none; /* override of a in tab header , tab-focus.less*/
 }
 
 /*https://stackoverflow.com/questions/19695784/how-can-i-make-bootstrap-columns-all-the-same-height*/
@@ -70,8 +125,10 @@ input[type="text"]{
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
-  display:         flex;
+  display: flex;
   flex-wrap: wrap;
+  align-items: center;
+  margin: 0;
 }
 .row > [class*='col-'] {
   display: flex;

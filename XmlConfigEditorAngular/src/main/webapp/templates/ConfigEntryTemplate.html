@@ -1,8 +1,9 @@
-<div class="row configEntryRow">
+<div class="row">
   <div class="col-xs-3 configEntryName">
     {{entry.name}}
   </div>
-  <div class="col-xs-9">
-    <input type="text" name="input" ng-model="entry.value">
+  <div class="col-xs-9 " ng-class="{configEntryValueEditable: entry.editable, configEntryValueNonEditable: !entry.editable}">
+    <input type="text" name="input" ng-model="entry.value" ng-if="entry.editable">
+    <span ng-if="!entry.editable">{{entry.value}}</span>
   </div>
 </div>

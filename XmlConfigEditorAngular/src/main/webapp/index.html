@@ -9,27 +9,26 @@
           crossorigin="anonymous">
     <link rel="stylesheet" href="css/global.css">
 
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
-    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-animate.min.js"></script>
-    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-aria.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js" defer ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" defer></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap-tpls.min.js" defer></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-animate.min.js" defer></script>
+    <script src="js/scripts.js" defer></script>
+    <!--<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-aria.min.js"></script>-->
     <!--<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-messages.min.js"></script>-->
 
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap-tpls.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <!-- if AngularJS fails to load, fallback a local version -->
-    <script>window.angular || document.write('<script src="locallib/angular.min.js"><\/script>');
-    </script>
+    <!--<script>window.angular || document.write('<script src="locallib/angular.min.js"><\/script>');-->
 
-    <script src="js/scripts.js"></script>
 </head>
 
 <body ng-controller="ConfigViewController" class="generic-container">
 
     <uib-tabset active="0">
         <uib-tab index="$index"  ng-repeat="tabBlock in tabLevelBlocks" heading="{{tabBlock.name}}" disable="tab.disabled">
-            <div ng-include="'templates/ConfigBlockTemplate.html'" ng-init="block = tabBlock"></div>
+            <div  ng-include="'templates/ConfigBlockTemplate.html'" ng-init="block = tabBlock"></div>
         </uib-tab>
     </uib-tabset>
 
