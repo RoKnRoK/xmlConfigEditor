@@ -7,24 +7,73 @@ h1 {
 body, td, a, div, .p {
     font-family: arial, sans-serif
 }
-input {
-    margin-right: 10px;
+body {
+    margin: 15px;
 }
 
-.md-toolbar
-{
-    height: 100%;
+.uib-tab {
+    margin-right: 1px; /*space between tabs */
+    font-size: 1.2em; /* font-size of tabs */
+    background: #8e8e8e; /*inactive background*/
+    border-radius: 5px 5px 0 0; /* tab border-radius*/
 }
 
-.md-tab {
-    margin-left: 1px;
-    padding: 6px 16px 6px 16px;
-    cursor: pointer;
-    font-size: 1.2em;
-    color: white;
-    font-weight: normal;
-    text-align: center;
-    background: #8e8e8e;
-    border-radius: 5px 5px 0 0;
-    outline: none;
+.nav-tabs{
+    border-bottom: none; /* override for navs.less style */
+    padding-left: 10px; /* padding for first tab */
+}
+.nav-tabs>li.active{ /* styling for selected tab */
+    background: #ddd;
+    font-weight: bold;
+    color: #555;
+}
+.nav-tabs>li.active>a, /* styling for selected tab's inner link, override for navs.less style */
+.nav-tabs>li.active>a:focus,
+.nav-tabs>li.active>a:hover {
+    background: none;
+    border: none;
+}
+
+.nav-tabs>li>a {
+    margin-right: 0px; /* override for bootstrap.css, */
+    border: none; /* override for bootstrap.css, */
+    padding: 6px 16px 6px 16px; /* override for .nav>li>a from navs.less */
+    color: white; /* override of a from bootstrap.css */
+}
+
+.tab-content {
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    border-top-width: 0;
+    padding: 8px;
+}
+
+
+input[type="text"]{
+    width: 100%;
+    font-size: 1em;
+}
+
+.configEntryRow {
+    background: #e6e6e6;
+    border: 2px solid #e6e6e6;
+}
+.configEntryName {
+    font-size: 1em;
+    background: #ddd;
+    padding: 5px 10px 5px 2px ;
+    border-radius: 10px 0 0 10px
+}
+
+/*https://stackoverflow.com/questions/19695784/how-can-i-make-bootstrap-columns-all-the-same-height*/
+.row {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display:         flex;
+  flex-wrap: wrap;
+}
+.row > [class*='col-'] {
+  display: flex;
+  flex-direction: column;
 }

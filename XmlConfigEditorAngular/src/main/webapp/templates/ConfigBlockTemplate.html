@@ -1,0 +1,9 @@
+<div class="container" ng-include="'templates/ConfigEntryTemplate.html'" ng-repeat="entry in block.configEntries"></div>
+<uib-accordion close-others="false">
+    <div uib-accordion-group class="panel-default" ng-repeat="childBlock in block.configContainers">
+        <uib-accordion-heading>
+            <div>{{childBlock.name}}</div>
+        </uib-accordion-heading>
+        <div ng-include="'templates/ConfigBlockTemplate.html'" ng-init="block = childBlock"/>
+    </div>
+</uib-accordion>

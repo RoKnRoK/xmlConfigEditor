@@ -76,7 +76,7 @@ public abstract class CommonConfigModifier implements XmlConfigModifier {
 
             return (ConfigBlock) configBlock;
         } catch (Exception e) {
-            logger.error("Error occured while parsing xml {}: {}", xmlConfig.getName(), e.getMessage(), e);
+            logger.error("Error occurred while parsing xml {}: {}", xmlConfig.getName(), e.getMessage(), e);
             return new ConfigBlock("undefined", null);
         }
     }

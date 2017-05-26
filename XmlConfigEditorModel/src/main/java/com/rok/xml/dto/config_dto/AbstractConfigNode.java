@@ -1,5 +1,6 @@
 package com.rok.xml.dto.config_dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.rok.xml.Constants;
 import com.rok.xml.settings.ApplicationSettings;
 
@@ -21,6 +22,7 @@ public abstract class AbstractConfigNode implements ConfigNode {
 
     List<ConfigValueNode> configNodeAttributes = new ArrayList<>();
     private boolean isEditable;
+    @JsonIgnore
     AbstractConfigNode parentNode;
 
     public void setName(String configEntryName) {
