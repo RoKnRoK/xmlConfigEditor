@@ -15,22 +15,21 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap-tpls.min.js" defer></script>
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-animate.min.js" defer></script>
     <script src="js/scripts.js" defer></script>
-    <!--<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-aria.min.js"></script>-->
-    <!--<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-messages.min.js"></script>-->
-
-
-    <!-- if AngularJS fails to load, fallback a local version -->
-    <!--<script>window.angular || document.write('<script src="locallib/angular.min.js"><\/script>');-->
+    <script src="js/editorService.js" defer></script>
 
 </head>
 
 <body ng-controller="ConfigViewController" class="generic-container">
 
     <uib-tabset active="0">
-        <uib-tab index="$index"  ng-repeat="tabBlock in tabLevelBlocks" heading="{{tabBlock.name}}" disable="tab.disabled">
+        <uib-tab index="$index"  ng-repeat="tabBlock in configInfo.configBlock.configContainers" heading="{{tabBlock.name}}" disable="tab.disabled">
             <div  ng-include="'templates/ConfigBlockTemplate.html'" ng-init="block = tabBlock"></div>
         </uib-tab>
     </uib-tabset>
-
+    <div class="row">
+        <div class="floatRight">
+            <button type="button" ng-click="saveConfig()" class="btn btn-warning btn-sm" ng-disabled="changedEntriesCount == 0">Save changes</button>
+        </div>
+    </div>
 </body>
 </html>

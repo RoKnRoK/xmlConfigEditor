@@ -3,7 +3,7 @@
     {{entry.name}}
   </div>
   <div class="col-xs-9 " ng-class="{configEntryValueEditable: entry.editable, configEntryValueNonEditable: !entry.editable}">
-    <input type="text" name="input" ng-model="entry.value" ng-if="entry.editable">
+    <input type="text" name="input" ng-model="entry.value" ng-change="configEntryValueChanged(entry, '{{entry.value}}')" ng-if="entry.editable">
     <span ng-if="!entry.editable">{{entry.value}}</span>
   </div>
 </div>

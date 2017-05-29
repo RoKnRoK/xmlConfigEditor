@@ -4,10 +4,7 @@ import com.rok.xml.dto.config_dto.*;
 import com.rok.xml.ejb.XmlConfigEditorLocal;
 
 import javax.ejb.EJB;
-import javax.ws.rs.ApplicationPath;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.Application;
 import javax.ws.rs.core.MediaType;
 
@@ -28,6 +25,14 @@ public class XmlConfigRestService extends Application{
     @Produces(MediaType.APPLICATION_JSON)
     public ConfigModificationInfo getConfig(){
         return xmlConfigEditorLocal.getConfigModificationInfo();
+    }
+
+
+    @PUT
+    @Path("/save")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public void saveConfig(ConfigModificationInfo configModificationInfo){
+        xmlConfigEditorLocal.saveConfigBlock(configModificationInfo);
     }
 
 }

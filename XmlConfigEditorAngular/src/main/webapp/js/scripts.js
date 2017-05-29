@@ -1,16 +1,37 @@
 (function(){
-  angular.module('XmlConfigEditor', ['ui.bootstrap', 'ngAnimate'])
-    .constant('servicePath', 'http://localhost:8080/XmlConfigEditorREST/rest/config/get')
+angular.module('XmlConfigEditor', ['ui.bootstrap', 'ngAnimate'])
 
-  .controller('ConfigViewController', function($scope, $http, servicePath){
+    .controller('ConfigViewController', ['$scope', 'editorService', function($scope, editorService){
 
-    $http.get(servicePath).
-            then(function(response) {
-                console.log(response.data);
-                $scope.configRootBlock = response.data.configBlock;
-                console.log(response.data.configBlock);
-                $scope.tabLevelBlocks = $scope.configRootBlock.childNodes
-                console.log($scope.tabLevelBlocks);
-            });
-  })
+        $scope.changedEntriesCount = 0;
+        fetchConfigInfo();
+
+
+        function fetchConfigInfo(){
+            editorService.fetchConfig().then(
+                function(result) {
+                     $scope.configInfo = result;
+                     console.log($scope.configInfo );
+                }
+            );
+        }
+
+        $scope.saveConfigInfo = function(){
+            editorService.saveConfig($scope.configInfo).then(fetchConfigInfo);
+        }
+
+        $scope.configEntryValueChanged = function(entry, oldValue){
+            console.log(oldValue);
+            var backToOriginal = entry.value == entry.originalValue;
+            var oneMoreNewValue =  oldValue != entry.originalValue;
+            entry.changed = backToOriginal;
+            if (backToOriginal) {
+                $scope.changedEntriesCount--;
+            }
+            if (!oneMoreNewValue) {
+                $scope.changedEntriesCount++;
+            }
+            console.log($scope.changedEntriesCount);
+        }
+    }])
 })();
