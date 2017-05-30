@@ -1,5 +1,7 @@
 package com.rok.xml.dto.config_dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.List;
 
 /**
@@ -8,7 +10,14 @@ import java.util.List;
  */
 public interface HasChildNodes {
 
-    List<ConfigNode> getChildNodes();
-    ConfigNode getChildNode(Integer selectedItem);
+    List<ConfigValueNode> getEntries();
+    ConfigValueNode getEntry(Integer index);
+
+    List<ConfigValueNode> getBooleanEntries();
+    ConfigValueNode getBooleanEntry(Integer index);
+
+    List<ConfigNode> getBlocks();
+    ConfigNode getBlock(Integer index);
+
     void addChildNode(ConfigNode childNode);
 }

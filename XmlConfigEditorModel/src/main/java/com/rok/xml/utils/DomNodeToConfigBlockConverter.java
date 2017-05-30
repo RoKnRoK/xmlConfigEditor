@@ -50,7 +50,7 @@ public class DomNodeToConfigBlockConverter {
 
     private ConfigBlock createEmptyConfigBlockWithAttributes(Node node, AbstractConfigNode parent) {
         ConfigBlock configBlock = new ConfigBlock(node.getNodeName(), parent);
-        configBlock.setNodeAttributes(defineAttributes(node));
+        configBlock.setAttributes(defineAttributes(node));
         return configBlock;
     }
 
@@ -84,7 +84,7 @@ public class DomNodeToConfigBlockConverter {
         }
 
         List<ConfigValueNode> configBlockAttributes = defineAttributes(node);
-        configEntry.setNodeAttributes(configBlockAttributes);
+        configEntry.setAttributes(configBlockAttributes);
         return configEntry;
     }
 

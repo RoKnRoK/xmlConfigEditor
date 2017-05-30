@@ -8,36 +8,35 @@ import java.util.Objects;
  * All rights reserved =)
  */
 @XmlRootElement
-public class  ConfigEntry extends AbstractConfigNode implements ConfigValueNode {
+public class ConfigEntry extends AbstractConfigNode implements ConfigValueNode {
 
     private static final long serialVersionUID = -4269070863916591307L;
 
-    String configEntryValue;
+    String value;
+    private String originalValue;
 
-    private String configEntryOriginalValue;
-
-    public ConfigEntry(String configEntryName, String configEntryValue, AbstractConfigNode parentNode) {
-        this.configNodeName = configEntryName;
-        this.configEntryValue = configEntryValue;
-        this.configEntryOriginalValue = configEntryValue;
+    public ConfigEntry(String configEntryName, String value, AbstractConfigNode parentNode) {
+        this.name = configEntryName;
+        this.value = value;
+        this.originalValue = value;
         this.parentNode = parentNode;
 
     }
 
     ConfigEntry() {
-        this.configNodeName = "defaultEntryName";
-        this.configEntryValue = this.configEntryOriginalValue = "defaultEntryValue";
+        this.name = "defaultEntryName";
+        this.value = this.originalValue = "defaultEntryValue";
     }
 
     public String getValue() {
-        return configEntryValue;
+        return value;
     }
     public void setValue(String configEntryValue) {
-        this.configEntryValue = configEntryValue;
+        this.value = configEntryValue;
     }
 
     public String getOriginalValue() {
-        return configEntryOriginalValue;
+        return originalValue;
     }
 
     @Override
@@ -47,7 +46,7 @@ public class  ConfigEntry extends AbstractConfigNode implements ConfigValueNode 
 
 
     public ConfigNodeType getNodeType(){
-        if (getNodeAttributes() != null && !getNodeAttributes().isEmpty()) {
+        if (getAttributes() != null && !getAttributes().isEmpty()) {
             return ConfigNodeType.ENTRY;
         }
         else {
@@ -60,12 +59,12 @@ public class  ConfigEntry extends AbstractConfigNode implements ConfigValueNode 
     @Override
     public String toString() {
         StringBuilder result = new StringBuilder();
-        result.append("<").append(configNodeName);
-        for (ConfigValueNode attribute : configNodeAttributes){
+        result.append("<").append(name);
+        for (ConfigValueNode attribute : attributes){
             result.append(" ").append(attribute.toString()).append(" ");
         }
         result.append(">");
-        result.append(configEntryValue).append("</").append(configNodeName).append(">\n");
+        result.append(value).append("</").append(name).append(">\n");
         return result.toString();
     }
 
@@ -76,7 +75,7 @@ public class  ConfigEntry extends AbstractConfigNode implements ConfigValueNode 
 
     public void setEditable(boolean isEditable){
         super.setEditable(isEditable);
-        for (ConfigValueNode attribute : getNodeAttributes()){
+        for (ConfigValueNode attribute : getAttributes()){
             attribute.setEditable(isEditable);
         }
 

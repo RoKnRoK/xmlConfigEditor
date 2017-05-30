@@ -1,5 +1,6 @@
 package com.rok.xml.dto.config_dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.rok.xml.dto.LockInfo;
 
 import javax.xml.bind.annotation.XmlRootElement;
@@ -15,10 +16,6 @@ public class ConfigModificationInfo implements Serializable {
     private static final long serialVersionUID = -2968138039395794332L;
 
     private ConfigBlock configBlock;
-
-
-
-
     private LockInfo lockInfo;
 
     public ConfigModificationInfo() {
@@ -45,9 +42,11 @@ public class ConfigModificationInfo implements Serializable {
         this.lockInfo = lockInfo;
     }
 
+    @JsonIgnore
     public Serializable getLock() {
         return lockInfo.getLockObject();
     }
+    @JsonIgnore
     public long getLockStartTimeMillis() {
         return lockInfo.getLockStartTime();
     }

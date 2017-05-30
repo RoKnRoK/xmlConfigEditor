@@ -21,7 +21,7 @@ public class FNConfigLocker implements ConfigLocker {
 
     @Override
     public LockInfo tryLockConfig() {
-        return new LockInfo(UUID.randomUUID(), new Date().getTime());
+        return new LockInfo(UUID.randomUUID().toString(), new Date().getTime());
     }
 
     @Override

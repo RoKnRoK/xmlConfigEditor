@@ -25,10 +25,10 @@ public class TabConfigBlockWidget extends Composite {
         final ConfigBlock configBlock = (ConfigBlock) configNode;
 
         widgetMainPanel.setWidth("100%");
-        List<ConfigNode> childConfigBlocks = configBlock.getChildNodes();
+        List<ConfigNode> tabBlock = configBlock.getBlocks();
         final List<SimplePanel> tabStubs = new ArrayList<>();
 
-        for (ConfigNode childConfigBlock : childConfigBlocks) {
+        for (ConfigNode childConfigBlock : tabBlock) {
             if (childConfigBlock.getNodeType() != ConfigNodeType.BLOCK) {
                 continue;
             } //todo: что делать в случае !BLOCK
@@ -39,7 +39,7 @@ public class TabConfigBlockWidget extends Composite {
         }
         widgetMainPanel.addBeforeSelectionHandler(event -> {
             Integer selectedItem = event.getItem();
-            ConfigNode selectedChildNode = configBlock.getChildNode(selectedItem);
+            ConfigNode selectedChildNode = configBlock.getBlock(selectedItem);
             SimpleConfigBlockWidget tabContent = new SimpleConfigBlockWidget((ConfigBlock) selectedChildNode);
             ScrollPanel scrollableTabContent = new ScrollPanel();
             scrollableTabContent.add(tabContent);

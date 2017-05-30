@@ -1,5 +1,7 @@
 package com.rok.xml.dto.config_dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,48 +14,47 @@ import java.util.Objects;
 @XmlRootElement
 public class ConfigNodeAttribute implements ConfigValueNode {
     private static final long serialVersionUID = -677434795409847499L;
-    private String attributeName;
-    private String attributeValue;
+
+    private String name;
+    private String value;
+    private String originalValue;
     private boolean isEditable;
+    private ConfigNodeType nodeType;
 
-
-
-    private String attributeOriginalValue;
-    private ConfigNodeType type;
-
-    public ConfigNodeAttribute(String attributeName, String attributeValue) {
+    public ConfigNodeAttribute(String name, String value) {
         this();
-        this.attributeName = attributeName;
-        this.attributeValue = attributeValue;
-        this.attributeOriginalValue = attributeValue;
+        this.name = name;
+        this.value = value;
+        this.originalValue = value;
 
     }
 
     private ConfigNodeAttribute(){
-        this.type = ConfigNodeType.ATTRIBUTE;
+        this.nodeType = ConfigNodeType.ATTRIBUTE;
     }
 
     public String getName() {
-        return attributeName;
+        return name;
     }
     public void setName(String name) {
-        this.attributeName = name;
+        this.name = name;
     }
 
     @Override
+    @JsonIgnore
     public String getDisplayName() {
-        return attributeName;
+        return name;
     }
 
     public String getValue() {
-        return attributeValue;
+        return value;
     }
     public void setValue(String value) {
-        this.attributeValue = value;
+        this.value = value;
     }
 
     public String getOriginalValue() {
-        return attributeOriginalValue;
+        return originalValue;
     }
 
     @Override
@@ -63,15 +64,15 @@ public class ConfigNodeAttribute implements ConfigValueNode {
 
     @Override
     public ConfigNodeType getNodeType() {
-        return this.type;
+        return this.nodeType;
     }
     @Override
     public void setNodeType(ConfigNodeType type) {
-        this.type = type;
+        this.nodeType = type;
     }
 
     @Override
-    public List<ConfigValueNode> getNodeAttributes() {
+    public List<ConfigValueNode> getAttributes() {
         return new ArrayList<>();
     }
 
@@ -87,7 +88,7 @@ public class ConfigNodeAttribute implements ConfigValueNode {
 
     @Override
     public String toString() {
-        return attributeName +"=\"" + attributeValue+"\"";
+        return name +"=\"" + value +"\"";
     }
 
 }

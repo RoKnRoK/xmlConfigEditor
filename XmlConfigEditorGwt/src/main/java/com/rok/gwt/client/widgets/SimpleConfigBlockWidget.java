@@ -40,7 +40,7 @@ class SimpleConfigBlockWidget extends Composite {
 
 
     private void addChildBlocks(ConfigBlock configBlock) {
-        List<ConfigNode> childConfigContainers = configBlock.getConfigContainers();
+        List<ConfigNode> childConfigContainers = configBlock.getBlocks();
         for (ConfigNode childConfigContainer : childConfigContainers) {
             Widget widget = ConfigBlockWidgetFactory.createWidget(childConfigContainer);
             mainWidgetPanel.add(widget);
@@ -48,14 +48,14 @@ class SimpleConfigBlockWidget extends Composite {
     }
 
     private void addEntries(ConfigBlock configBlock) {
-        List<ConfigValueNode> childConfigEntries = configBlock.getConfigEntries();
+        List<ConfigValueNode> childConfigEntries = configBlock.getEntries();
         ListDataProvider<ConfigValueNode> configEntriesProvider = new ListDataProvider<>(childConfigEntries);
         configEntriesProvider.addDataDisplay(configEntryDataGrid);
         configEntryDataGrid.setVisibleRange(0, childConfigEntries.size());
         mainWidgetPanel.add(configEntryDataGrid);
     }
     private void addBooleanEntries(ConfigBlock configBlock) {
-        List<ConfigValueNode> childConfigEntries = configBlock.getConfigBooleanEntries();
+        List<ConfigValueNode> childConfigEntries = configBlock.getBooleanEntries();
         for (final ConfigValueNode configValueNode : childConfigEntries) {
             final ConfigBooleanEntry configBooleanEntry = (ConfigBooleanEntry) configValueNode;
             CheckBox checkBox = new CheckBox();
@@ -72,7 +72,7 @@ class SimpleConfigBlockWidget extends Composite {
     }
 
     private void addAttributes(ConfigBlock configBlock) {
-        List<ConfigValueNode> configBlockAttributes = configBlock.getNodeAttributes();
+        List<ConfigValueNode> configBlockAttributes = configBlock.getAttributes();
         ListDataProvider<ConfigValueNode> configAttributesProvider = new ListDataProvider<>(configBlockAttributes);
         configAttributesProvider.addDataDisplay(configAttributesDataGrid);
         configAttributesDataGrid.setVisibleRange(0, configBlockAttributes.size());

@@ -16,7 +16,7 @@ public class XPathBuilder {
             return "";
         }
         String configNodeName = configNode.getName();
-        List<ConfigValueNode> nodeAttributes = configNode.getNodeAttributes();
+        List<ConfigValueNode> nodeAttributes = configNode.getAttributes();
         StringBuilder myXPath = new StringBuilder("/" + configNodeName + "[");
 
         for (ConfigValueNode nodeAttribute : nodeAttributes) {

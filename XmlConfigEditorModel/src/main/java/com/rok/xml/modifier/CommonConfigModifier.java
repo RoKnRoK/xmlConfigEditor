@@ -85,7 +85,7 @@ public abstract class CommonConfigModifier implements XmlConfigModifier {
     public ConfigModificationInfo getConfig() {
         logger.trace("Trying to lock configuration file");
         LockInfo lockInfo = configLocker.tryLockConfig();
-        Serializable lockObject = lockInfo.getLockObject();
+        String lockObject = lockInfo.getLockObject();
         boolean backupSuccessful = false;
         if (lockObject != null) {
             backupSuccessful = configBackuper.backupConfig();
@@ -103,7 +103,7 @@ public abstract class CommonConfigModifier implements XmlConfigModifier {
             return false;
         }
         try {
-
+            logger.trace("Saving started");
             DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
             Document document = documentBuilder.parse(new FileInputStream(xmlConfig));
@@ -112,12 +112,16 @@ public abstract class CommonConfigModifier implements XmlConfigModifier {
 
             XPathBuilder xPathBuilder = new XPathBuilder();
             List<ConfigValueNode> changedNodes = configModificationInfo.getConfigBlock().getChangedValueNodes();
+            logger.trace(changedNodes.isEmpty() ? "No changes detected" : "There are some changes, processing");
             for (ConfigValueNode changedNode : changedNodes) {
+                logger.trace("Changed node {}: {} -> {}", changedNode.getName(), changedNode.getOriginalValue(), changedNode.getValue());
                 switch (changedNode.getNodeType()) {
                     case ENTRY:
                     case BOOLEAN_ENTRY: {
                         String expression = xPathBuilder.createXPath((AbstractConfigNode) changedNode);
+                        logger.trace(expression);
                         Node node = (Node) xpath.evaluate(expression, document, XPathConstants.NODE);
+                        logger.debug(String.valueOf(node));
                         node.setTextContent(changedNode.getValue());
                     }
                     break;

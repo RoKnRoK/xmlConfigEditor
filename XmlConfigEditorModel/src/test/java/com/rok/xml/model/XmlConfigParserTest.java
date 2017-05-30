@@ -34,8 +34,8 @@ public class XmlConfigParserTest {
         System.out.println("Config lock: " + configModificationInfo.getLock());
         ConfigBlock configBlock = configModificationInfo.getConfigBlock();
         System.out.println("Config editable: " + configBlock.isEditable());
-        ConfigBlock childNode = (ConfigBlock) configBlock.getChildNode(0);
-        ConfigEntry childEntry = (ConfigEntry) childNode.getChildNode(3);
+        ConfigBlock childNode = (ConfigBlock) configBlock.getBlock(0);
+        ConfigEntry childEntry = (ConfigEntry) childNode.getEntry(0);
         if (childEntry.isEditable()) {
             System.out.println("Setting "+ newValue);
             childEntry.setValue(newValue);

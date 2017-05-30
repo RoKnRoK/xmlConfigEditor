@@ -1,8 +1,10 @@
 package com.rok.xml.dto.config_dto;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementWrapper;
-import javax.xml.bind.annotation.XmlElements;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,22 +12,30 @@ import java.util.List;
  * Created by RoK on 21.06.2015.
  * All rights reserved =)
  */
+
 public class ConfigBlock extends AbstractConfigNode implements ConfigNode, HasChildNodes {
 
     private static final long serialVersionUID = -2968138039440394332L;
+    private static final Logger logger = LoggerFactory.getLogger(ConfigBlock.class.getName());
 
 
-    private List<ConfigNode> allChildConfigBlocks = new ArrayList<>();
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
+    private final List<ConfigValueNode> entries = new ArrayList<>();
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
+    private final List<ConfigValueNode> booleanEntries = new ArrayList<>();
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
+    private final List<ConfigNode> blocks = new ArrayList<>();
     private ConfigNodeType nodeType;
 
 
     private ConfigBlock() {
-        this.configNodeName = "defaultBlockName";
+        this.name = "defaultBlockName";
         this.nodeType = ConfigNodeType.BLOCK;
     }
+
     public ConfigBlock(String configBlockName, AbstractConfigNode parentNode) {
         this();
-        this.configNodeName = configBlockName;
+        this.name = configBlockName;
         this.parentNode = parentNode;
     }
 
@@ -40,10 +50,19 @@ public class ConfigBlock extends AbstractConfigNode implements ConfigNode, HasCh
     }
 
     @Override
-    public ConfigNode getChildNode(Integer index) {
-        return allChildConfigBlocks.get(index);
+    public ConfigValueNode getEntry(Integer index) {
+        return entries.get(index);
+    }
+    @Override
+    public ConfigValueNode getBooleanEntry(Integer index) {
+        return booleanEntries.get(index);
+    }
+    @Override
+    public ConfigNode getBlock(Integer index) {
+        return blocks.get(index);
     }
 
+    /* todo: this is example for future
     @XmlElements({
             @XmlElement(name = "entry", type=ConfigEntry.class),
             @XmlElement(name = "block", type=ConfigBlock.class),
@@ -52,60 +71,57 @@ public class ConfigBlock extends AbstractConfigNode implements ConfigNode, HasCh
     })
     @XmlElementWrapper
     public List<ConfigNode> getChildNodes() {
-        return allChildConfigBlocks;
-    }
+        return childNodes;
+    }*/
     public void addChildNode(ConfigNode configNode) {
-        if (configNode.getNodeType() == ConfigNodeType.ROOT_BLOCK) {
-            return;
-        }
-        allChildConfigBlocks.add(configNode);
-    }
-
-    public List<ConfigValueNode> getConfigEntries() {
-        return getChildValueNodesOfType(ConfigNodeType.ENTRY);
-    }
-    public List<ConfigValueNode> getConfigBooleanEntries() {
-        return getChildValueNodesOfType(ConfigNodeType.BOOLEAN_ENTRY);
-    }
-    public List<ConfigNode> getConfigContainers() {
-        return getChildNodesOfType(ConfigNodeType.BLOCK);
-    }
-
-    private List<ConfigNode> getChildNodesOfType(ConfigNodeType type) {
-        List<ConfigNode> childNodes = new ArrayList<>();
-        for (ConfigNode childBlock : allChildConfigBlocks) {
-            if (childBlock.getNodeType() != type) {
-                continue;
+        switch (configNode.getNodeType()) {
+            case BLOCK: {
+                blocks.add(configNode);
             }
-
-            childNodes.add(childBlock);
-        }
-        return childNodes;
-    }
-    private List<ConfigValueNode> getChildValueNodesOfType(ConfigNodeType type) {
-        List<ConfigValueNode> childNodes = new ArrayList<>();
-        for (ConfigNode childBlock : allChildConfigBlocks) {
-            if (childBlock.getNodeType() != type) {
-                continue;
+            break;
+            case ENTRY: {
+                entries.add((ConfigValueNode) configNode);
             }
-
-            childNodes.add((ConfigValueNode) childBlock);
+            break;
+            case BOOLEAN_ENTRY: {
+                booleanEntries.add((ConfigValueNode) configNode);
+            }
+            break;
         }
-        return childNodes;
+    }
+
+    public List<ConfigValueNode> getEntries() {
+        return entries;
+    }
+
+    public List<ConfigValueNode> getBooleanEntries() {
+        return booleanEntries;
+    }
+
+    public List<ConfigNode> getBlocks() {
+        return blocks;
     }
 
     @Override
     public String toString() {
         StringBuilder result = new StringBuilder();
-        result.append("<").append(configNodeName);
-        for (ConfigValueNode attribute : configNodeAttributes) {
+        result.append("<").append(name);
+        for (ConfigValueNode attribute : attributes) {
             result.append(" ").append(attribute.toString()).append(" ");
         }
         result.append(">\n");
-        for (ConfigNode child : allChildConfigBlocks) {
-            result.append("\t").append(child.toString());
+        for (ConfigValueNode configBooleanEntry : getBooleanEntries()) {
+            result.append("\t").append(configBooleanEntry.toString());
         }
-        result.append("</").append(configNodeName).append(">\n");
+        result.append(">\n");
+        for (ConfigValueNode configEntry : getEntries()) {
+            result.append("\t").append(configEntry.toString());
+        }
+        result.append(">\n");
+        for (ConfigNode configBlock : getBlocks()) {
+            result.append("\t").append(configBlock.toString());
+        }
+        result.append("</").append(name).append(">\n");
         return result.toString();
     }
 
@@ -114,32 +130,40 @@ public class ConfigBlock extends AbstractConfigNode implements ConfigNode, HasCh
         return this.parentNode;
     }
 
+    @JsonIgnore
     public List<ConfigValueNode> getChangedValueNodes() {
         List<ConfigValueNode> changedNodes = new ArrayList<>();
-        List<ConfigNode> childNodes = getChildNodes();
-        for (ConfigNode childNode : childNodes) {
-            if (childNode.getNodeType() == ConfigNodeType.BLOCK) {
-                ConfigBlock childConfigBlock = (ConfigBlock) childNode;
-                changedNodes.addAll(childConfigBlock.getChangedValueNodes());
+        logger.trace("Config block {}", this.getName());
+        List<ConfigValueNode> configEntries = new ArrayList<>(getBooleanEntries());
+        configEntries.addAll(getEntries());
+
+        for (ConfigValueNode configEntry : configEntries) {
+            if (!configEntry.isChanged()) {
                 continue;
             }
-            if (!(childNode instanceof ConfigValueNode)) {
-                continue;
-            }
-            if (!((ConfigValueNode) childNode).isChanged()) {
-                continue;
-            }
-            changedNodes.add((ConfigValueNode) childNode);
+            logger.trace("Child node {}: changed = {}", configEntry.getName(), configEntry.isChanged());
+            changedNodes.add(configEntry);
+        }
+        for (ConfigNode configBlock : getBlocks()) {
+            ConfigBlock childConfigBlock = (ConfigBlock) configBlock;
+            changedNodes.addAll(childConfigBlock.getChangedValueNodes());
+
         }
         return changedNodes;
     }
 
-    public void setEditable(boolean editable){
+    public void setEditable(boolean editable) {
         super.setEditable(editable);
-        for (ConfigValueNode valueNode : configNodeAttributes){
+        for (ConfigValueNode valueNode : attributes) {
             valueNode.setEditable(editable);
         }
-        for (ConfigNode valueNode : getChildNodes()){
+        for (ConfigNode valueNode : getBlocks()) {
+            valueNode.setEditable(editable);
+        }
+        for (ConfigNode valueNode : getEntries()) {
+            valueNode.setEditable(editable);
+        }
+        for (ConfigNode valueNode : getBooleanEntries()) {
             valueNode.setEditable(editable);
         }
     }

@@ -1,12 +1,12 @@
-<div ng-include="'templates/ConfigEntryTemplate.html'" ng-repeat="entry in block.nodeAttributes"></div>
-<div ng-include="'templates/ConfigEntryTemplate.html'" ng-repeat="entry in block.configEntries"></div>
+<div ng-include="'templates/ConfigEntryTemplate.html'" ng-repeat="entry in block.attributes"></div>
+<div ng-include="'templates/ConfigEntryTemplate.html'" ng-repeat="entry in block.entries"></div>
 <uib-accordion close-others="false">
     <div uib-accordion-group
          ng-init="status = {isOpen: false}"
          is-open="status.isOpen"
          class="panel-default configBlock"
          ng-class="{blackBordered: status.isOpen}"
-         ng-repeat="childBlock in block.configContainers">
+         ng-repeat="childBlock in block.blocks">
         <uib-accordion-heading>
             <div style="padding: 10px 15px" ng-class="{'panel-heading-opened': status.isOpen}">{{childBlock.name}}</div>
         </uib-accordion-heading>

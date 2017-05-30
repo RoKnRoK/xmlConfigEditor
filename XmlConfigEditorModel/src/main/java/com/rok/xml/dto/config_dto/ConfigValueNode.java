@@ -1,6 +1,8 @@
 package com.rok.xml.dto.config_dto;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 /**
@@ -16,5 +18,6 @@ public interface ConfigValueNode extends ConfigNode {
 
     String getOriginalValue();
 
+    @JsonIgnore
     boolean isChanged();
 }

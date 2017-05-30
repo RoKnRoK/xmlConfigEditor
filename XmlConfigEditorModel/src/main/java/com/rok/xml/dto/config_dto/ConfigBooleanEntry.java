@@ -37,7 +37,7 @@ public class ConfigBooleanEntry extends ConfigEntry{
     }
 
     public boolean getBooleanValue(){
-        return stringToBoolean(configEntryValue);
+        return stringToBoolean(value);
     }
     public void setBooleanValue(boolean entryValue) {
         setValue(booleanToString(entryValue));

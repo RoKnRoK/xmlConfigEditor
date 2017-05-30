@@ -1,12 +1,11 @@
 package com.rok.xml.dto.config_dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import com.rok.xml.Constants;
 import com.rok.xml.settings.ApplicationSettings;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
-import javax.xml.bind.annotation.XmlElements;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,32 +16,28 @@ import java.util.List;
 
 public abstract class AbstractConfigNode implements ConfigNode {
     private static final long serialVersionUID = -3926678108830977911L;
-    String configNodeName;
-    private String configNodeDisplayName;
 
-    List<ConfigValueNode> configNodeAttributes = new ArrayList<>();
+    String name;
+    private String displayName;
     private boolean isEditable;
-    @JsonIgnore
+    List<ConfigValueNode> attributes = new ArrayList<>();
     AbstractConfigNode parentNode;
 
     public void setName(String configEntryName) {
-        this.configNodeName = configEntryName;
+        this.name = configEntryName;
     }
     public String getName() {
-        return this.configNodeName;
+        return this.name;
     }
 
 
     @Override
-    @XmlElements({
-            @XmlElement(name = "entry", type=ConfigEntry.class),
-            @XmlElement(name = "booleanEntry", type=ConfigBooleanEntry.class),
-            @XmlElement(name = "attribute", type=ConfigNodeAttribute.class)
-    })
+    @XmlElement(name = "attribute", type=ConfigNodeAttribute.class)
     @XmlElementWrapper
-    public List<ConfigValueNode> getNodeAttributes() {
+    @JsonUnwrapped
+    public List<ConfigValueNode> getAttributes() {
         List<ConfigValueNode> result = new ArrayList<>();
-        result.addAll(configNodeAttributes);
+        result.addAll(attributes);
         ConfigValueNode displayNameAttribute = getDisplayNameAttribute();
         if (!ApplicationSettings.isDisplayNamesEditingEnabled()) {
             result.remove(displayNameAttribute);
@@ -50,21 +45,20 @@ public abstract class AbstractConfigNode implements ConfigNode {
         return result;
     }
 
-    public void setNodeAttributes(List<ConfigValueNode> attributes) {
-        this.configNodeAttributes.addAll(attributes);
+    public void setAttributes(List<ConfigValueNode> attributes) {
+        this.attributes.addAll(attributes);
         ConfigValueNode displayNameAttribute = getDisplayNameAttribute();
-        configNodeDisplayName = displayNameAttribute == null ? configNodeName : displayNameAttribute.getValue();
+        displayName = displayNameAttribute == null ? name : displayNameAttribute.getValue();
 
     }
 
     @Override
     public String getDisplayName() {
-        if (configNodeDisplayName != null) {return configNodeDisplayName;}
-        return configNodeName;
+        return displayName != null ? displayName : name;
     }
 
     private ConfigValueNode getDisplayNameAttribute(){
-        for (ConfigValueNode configAttribute : configNodeAttributes) {
+        for (ConfigValueNode configAttribute : attributes) {
             if (!Constants.DISPLAY_NAME.equals(configAttribute.getName())) {
                 continue;
             }
