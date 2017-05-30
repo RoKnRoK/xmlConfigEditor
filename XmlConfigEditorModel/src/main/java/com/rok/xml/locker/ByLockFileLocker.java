@@ -44,7 +44,7 @@ public class ByLockFileLocker implements ConfigLocker {
                 return new LockInfo();
             }
 
-            return new LockInfo(lockGuid, new Date().getTime());
+            return new LockInfo(lockGuid);
 
         } catch (Exception e) {
             return new LockInfo();

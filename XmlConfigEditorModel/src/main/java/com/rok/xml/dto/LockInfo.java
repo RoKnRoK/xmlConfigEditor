@@ -2,6 +2,9 @@ package com.rok.xml.dto;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
+import java.util.Date;
+
+import com.rok.xml.Constants;
 
 /**
  * Created by roman.kulikov on 5/10/2017.
@@ -15,15 +18,17 @@ public class LockInfo implements Serializable{
 
     private String lockObject;
     private long lockStartTime;
+    private long lockDuration;
 
     public LockInfo() {
         this.lockObject = null;
-        this.lockStartTime = -1;
+        this.lockStartTime = new Date().getTime();
+        this.lockDuration = Constants.EDITING_TIME_IN_MILLIS;
     }
 
-    public LockInfo(String lockObject, long lockStartTime) {
+    public LockInfo(String lockObject) {
+        this();
         this.lockObject = lockObject;
-        this.lockStartTime = lockStartTime;
     }
 
     public String getLockObject() {
@@ -34,4 +39,7 @@ public class LockInfo implements Serializable{
         return lockStartTime;
     }
 
+    public long getLockDuration() {
+        return lockDuration;
+    }
 }

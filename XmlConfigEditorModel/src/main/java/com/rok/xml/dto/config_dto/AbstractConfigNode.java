@@ -1,5 +1,6 @@
 package com.rok.xml.dto.config_dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import com.rok.xml.Constants;
 import com.rok.xml.settings.ApplicationSettings;
@@ -20,6 +21,7 @@ public abstract class AbstractConfigNode implements ConfigNode {
     String name;
     private String displayName;
     private boolean isEditable;
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     List<ConfigValueNode> attributes = new ArrayList<>();
     AbstractConfigNode parentNode;
 

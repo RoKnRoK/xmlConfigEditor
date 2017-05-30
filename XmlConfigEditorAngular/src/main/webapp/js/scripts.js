@@ -1,7 +1,7 @@
 (function(){
 angular.module('XmlConfigEditor', ['ui.bootstrap', 'ngAnimate'])
 
-    .controller('ConfigViewController', ['$scope', 'editorService', function($scope, editorService){
+    .controller('ConfigViewController', ['$scope', '$timeout', 'editorService', function($scope, $timeout, editorService){
 
 
         fetchConfigInfo();
@@ -12,15 +12,25 @@ angular.module('XmlConfigEditor', ['ui.bootstrap', 'ngAnimate'])
                 function(result) {
                      $scope.configInfo = result;
                      $scope.changedEntriesCount = 0;
+                     $scope.savedAfterTimeout = false;
                      console.log($scope.configInfo );
+                     $timeout(function(){return $scope.saveConfigInfo(false)}, $scope.configInfo.lockInfo.lockDuration);
                 }
             );
         }
 
-        $scope.saveConfigInfo = function(){
+        $scope.saveConfigInfo = function(fetchAfterSave){
             console.log('Saving:');
             console.log($scope.configInfo);
-            editorService.saveConfig($scope.configInfo).then(fetchConfigInfo);
+            editorService.saveConfig($scope.configInfo).then(function(){
+                if (!fetchAfterSave) {
+                    $scope.changedEntriesCount = 0;
+                    $scope.savedAfterTimeout = true;
+                    return;
+                }
+                fetchConfigInfo();
+            });
+
         }
 
         $scope.configEntryValueChanged = function(entry, oldValue){
