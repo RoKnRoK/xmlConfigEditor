@@ -1,6 +1,8 @@
 package com.rok.xml.dto.config_dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import com.rok.xml.Constants;
 import com.rok.xml.settings.ApplicationSettings;
@@ -15,13 +17,13 @@ import java.util.List;
  * All rights reserved =)
  */
 
-public abstract class AbstractConfigNode implements ConfigNode {
+public abstract class AbstractConfigNode implements ConfigNode, HasAttributes {
     private static final long serialVersionUID = -3926678108830977911L;
 
     String name;
     private String displayName;
     private boolean isEditable;
-    @JsonInclude(JsonInclude.Include.NON_EMPTY)
+    @JsonIgnore
     List<ConfigValueNode> attributes = new ArrayList<>();
     AbstractConfigNode parentNode;
 
@@ -34,9 +36,11 @@ public abstract class AbstractConfigNode implements ConfigNode {
 
 
     @Override
-    @XmlElement(name = "attribute", type=ConfigNodeAttribute.class)
+   /* @XmlElement(name = "attribute", type=ConfigNodeAttribute.class)
     @XmlElementWrapper
-    @JsonUnwrapped
+    @JsonUnwrapped*/
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
+    @JsonProperty
     public List<ConfigValueNode> getAttributes() {
         List<ConfigValueNode> result = new ArrayList<>();
         result.addAll(attributes);
@@ -68,9 +72,6 @@ public abstract class AbstractConfigNode implements ConfigNode {
         }
         return  null;
     }
-
-
-    public abstract AbstractConfigNode getParentNode() ;
 
 
     @Override

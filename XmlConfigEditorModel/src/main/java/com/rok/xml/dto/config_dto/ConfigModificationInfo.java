@@ -51,5 +51,11 @@ public class ConfigModificationInfo implements Serializable {
         return lockInfo.getLockStartTime();
     }
 
-
+    @Override
+    public String toString() {
+        return "ConfigModificationInfo{" +
+                "configBlock=" + configBlock +
+                ", lockInfo=" + lockInfo +
+                '}';
+    }
 }

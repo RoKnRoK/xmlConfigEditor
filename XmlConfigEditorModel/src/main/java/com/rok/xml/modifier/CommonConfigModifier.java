@@ -71,10 +71,7 @@ public abstract class CommonConfigModifier implements XmlConfigModifier {
             root.normalize();
             DomNodeToConfigBlockConverter converter = new DomNodeToConfigBlockConverter();
 
-            ConfigNode configBlock = converter.createConfigNode(root, null);
-            configBlock.setNodeType(ConfigNodeType.ROOT_BLOCK);
-
-            return (ConfigBlock) configBlock;
+            return (ConfigBlock) converter.createConfigNode(root, null);
         } catch (Exception e) {
             logger.error("Error occurred while parsing xml {}: {}", xmlConfig.getName(), e.getMessage(), e);
             return new ConfigBlock("undefined", null);

@@ -8,7 +8,7 @@
          ng-class="{blackBordered: status.isOpen}"
          ng-repeat="childBlock in block.blocks">
         <uib-accordion-heading>
-            <div style="padding: 10px 15px" ng-class="{'panel-heading-opened': status.isOpen}">{{childBlock.name}}</div>
+            <div style="padding: 10px 15px" ng-class="{'panel-heading-opened': status.isOpen}">{{childBlock.displayName}}</div>
         </uib-accordion-heading>
         <div  ng-include="'templates/ConfigBlockTemplate.html'" ng-init="block = childBlock"/>
     </div>

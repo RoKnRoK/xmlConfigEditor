@@ -127,10 +127,8 @@ a:focus, a:hover {
   display: -ms-flexbox;
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
   margin: 0;
 }
 .row > [class*='col-'] {
-  display: flex;
-  flex-direction: column;
+  display: grid;
 }

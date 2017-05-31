@@ -73,6 +73,11 @@ public class ConfigEntry extends AbstractConfigNode implements ConfigValueNode {
         return this.parentNode;
     }
 
+    @Override
+    public void setParentNode(AbstractConfigNode parentNode) {
+        this.parentNode = parentNode;
+    }
+
     public void setEditable(boolean isEditable){
         super.setEditable(isEditable);
         for (ConfigValueNode attribute : getAttributes()){

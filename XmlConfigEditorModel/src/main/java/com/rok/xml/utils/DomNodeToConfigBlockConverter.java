@@ -3,6 +3,7 @@ package com.rok.xml.utils;
 import com.rok.xml.Constants;
 import com.rok.xml.dto.config_dto.*;
 import com.rok.xml.settings.ApplicationSettings;
+import org.apache.commons.lang.StringEscapeUtils;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -11,50 +12,82 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import static com.rok.xml.dto.config_dto.ConfigNodeType.*;
+
 /**
  * Created by RoK on 21.06.2015.
  * All rights reserved =)
  */
 public class DomNodeToConfigBlockConverter {
-    private final static List<Short> relevantNodeTypes = new ArrayList<>(Collections.singletonList(Node.ELEMENT_NODE));
+    private final static List<Short> relevantNodeTypes = Collections.singletonList(Node.ELEMENT_NODE);
 
 
     public ConfigNode createConfigNode(Node node, AbstractConfigNode parent) {
 
+        List<ConfigValueNode> attributes = createNodeAttributes(node);
+        AbstractConfigNode result = null;
         NodeList childNodes = node.getChildNodes();
 
-        if (childNodes.getLength() == 0) {
-            if ( isEmptyAttributes(node)) { return createConfigEntry(node, parent);}
-            else {return  createEmptyConfigBlockWithAttributes(node, parent);}
+        //<name></name>
+        boolean hasNoChildren = childNodes.getLength() == 0;
+        //<name displayName="foo"></name> or <name></name>
+        boolean hasNoAttrsOrOnlyDisplayNameAttr = isEmptyAttributes(attributes);
+        boolean isEmptyEntry = hasNoChildren && hasNoAttrsOrOnlyDisplayNameAttr;
+        boolean isNameValueNode = childNodes.getLength() == 1 && node.getFirstChild().getNodeType() == Node.TEXT_NODE; // <name>value</name>
+
+        ConfigNodeType typeToCreate = (isEmptyEntry || isNameValueNode) ? ENTRY : BLOCK;
+        switch (typeToCreate) {
+            case ENTRY: {
+                result = createConfigEntry(node, parent);
+            }
+            break;
+            case BLOCK: {
+                ConfigBlock configBlock = createEmptyConfigBlock(node, parent);
+                result = addChildrenToBlock(configBlock, node, childNodes);
+            }
         }
-        // <name>value</name>
-        if (childNodes.getLength() == 1 && node.getFirstChild().getNodeType() == Node.TEXT_NODE) {
+        /*if (hasNoChildren) {
 
-            return createConfigEntry(node, parent);
-
+            if (hasNoAttrsOrOnlyDisplayNameAttr) {
+                result = createConfigEntry(node, parent);
+            } else {
+                //<name attr1="d"></name>
+                result = createEmptyConfigBlock(node, parent);
+            }
         }
 
-        ConfigBlock configBlock = createEmptyConfigBlockWithAttributes(node, parent);
+        if (isNameValueNode) {
+            result = createConfigEntry(node, parent);
+        }
 
+        ConfigBlock configBlock = createEmptyConfigBlock(node, parent);*/
+
+
+//        result = result == null ? configBlock : result;
+        result.setAttributes(attributes);
+        return result;
+    }
+
+    private ConfigBlock addChildrenToBlock(ConfigBlock configBlock, Node node, NodeList childNodes) {
         for (int i = 0; i < childNodes.getLength(); i++) {
             Node childNode = childNodes.item(i);
-            if (!relevantNodeTypes.contains(childNode.getNodeType())) {continue;}
-
-            if (node.getNodeValue() == null) {
-                configBlock.addChildNode(createConfigNode(childNode, configBlock));
+            if (!relevantNodeTypes.contains(childNode.getNodeType())) {
+                continue;
             }
+
+//            if (node.getNodeValue() == null) {
+                configBlock.addChildNode(createConfigNode(childNode, configBlock));
+//            }
 
         }
         return configBlock;
     }
 
-    private ConfigBlock createEmptyConfigBlockWithAttributes(Node node, AbstractConfigNode parent) {
-        ConfigBlock configBlock = new ConfigBlock(node.getNodeName(), parent);
-        configBlock.setAttributes(defineAttributes(node));
-        return configBlock;
+    private ConfigBlock createEmptyConfigBlock(Node node, AbstractConfigNode parent) {
+        return new ConfigBlock(node.getNodeName(), parent);
     }
 
-    private List<ConfigValueNode> defineAttributes(Node node) {
+    private List<ConfigValueNode> createNodeAttributes(Node node) {
         List<ConfigValueNode> result = new ArrayList<>();
         NamedNodeMap attributes = node.getAttributes();
         for (int i = 0; i< attributes.getLength(); i++) {
@@ -65,12 +98,11 @@ public class DomNodeToConfigBlockConverter {
     }
 
     private ConfigEntry createConfigEntry(Node node, AbstractConfigNode parentNode) {
-
         ConfigEntry configEntry;
 
         String textContent = node.getTextContent();
 
-        String normalizedTextContent = normalize(textContent).trim();
+        String normalizedTextContent = StringEscapeUtils.unescapeXml(textContent).trim();
 
         boolean isBoolean =
                 Boolean.TRUE.toString().equals(normalizedTextContent) ||
@@ -83,13 +115,10 @@ public class DomNodeToConfigBlockConverter {
             configEntry = new ConfigEntry(node.getNodeName(), normalizedTextContent, parentNode);
         }
 
-        List<ConfigValueNode> configBlockAttributes = defineAttributes(node);
-        configEntry.setAttributes(configBlockAttributes);
         return configEntry;
     }
 
-    private boolean isEmptyAttributes(Node node){
-        List<ConfigValueNode> attributes = defineAttributes(node);
+    private boolean isEmptyAttributes(List<ConfigValueNode> attributes){
         if ( attributes == null || attributes.isEmpty()) {return true;}
 
         if (ApplicationSettings.isDisplayNamesEditingEnabled()){
@@ -101,11 +130,4 @@ public class DomNodeToConfigBlockConverter {
         }
     }
 
-    private String normalize(String textContent) {
-        String result;
-        result = textContent.replace("&", "&amp;")
-                .replace("<", "&lt;")
-                .replace(">", "&gt;");
-        return result;
-    }
 }

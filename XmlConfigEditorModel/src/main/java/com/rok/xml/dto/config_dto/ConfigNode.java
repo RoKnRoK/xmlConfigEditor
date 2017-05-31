@@ -6,6 +6,7 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.io.Serializable;
 import java.util.List;
 
+import static com.fasterxml.jackson.annotation.JsonAutoDetect.*;
 import static com.fasterxml.jackson.annotation.JsonSubTypes.*;
 
 /**
@@ -16,12 +17,16 @@ import static com.fasterxml.jackson.annotation.JsonSubTypes.*;
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "nodeType")
 @JsonSubTypes({
         @Type(name = "BLOCK", value = ConfigBlock.class),
-        @Type(name = "ROOT_BLOCK", value = ConfigBlock.class),
         @Type(name = "ENTRY", value = ConfigEntry.class),
         @Type(name = "BOOLEAN_ENTRY", value = ConfigBooleanEntry.class),
         @Type(name = "ATTRIBUTE", value = ConfigNodeAttribute.class)
 })
 @JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class)
+@JsonAutoDetect(
+        fieldVisibility = Visibility.ANY,
+        getterVisibility = Visibility.NONE,
+        isGetterVisibility = Visibility.NONE,
+        setterVisibility = Visibility.NONE)
 public interface ConfigNode extends Serializable{
 
     String getName();
@@ -32,11 +37,10 @@ public interface ConfigNode extends Serializable{
     ConfigNodeType getNodeType();
     void setNodeType(ConfigNodeType type);
 
-
-    List<ConfigValueNode> getAttributes();
-
-
     void setEditable(boolean isEditable);
     boolean isEditable();
+
+    AbstractConfigNode getParentNode() ;
+    void setParentNode(AbstractConfigNode parent) ;
 }
 

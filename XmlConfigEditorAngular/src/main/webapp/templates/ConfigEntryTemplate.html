@@ -1,9 +1,17 @@
 <div class="row">
   <div class="col-xs-3 configEntryName">
-    {{entry.name}}
+    {{entry.displayName}}
   </div>
-  <div class="col-xs-9 " ng-class="{configEntryValueEditable: entry.editable && !savedAfterTimeout, configEntryValueNonEditable: !entry.editable || savedAfterTimeout}">
-    <input type="text" name="input" ng-model="entry.value" ng-change="configEntryValueChanged(entry, '{{entry.value}}')" ng-if="entry.editable && !savedAfterTimeout">
-    <span ng-if="!entry.editable || savedAfterTimeout">{{entry.value}}</span>
+  <div class="col-xs-9 "
+
+       ng-class="{
+       configEntryValueEditable: entry.isEditable && !savedAfterTimeout,
+       configEntryValueNonEditable: !(entry.isEditable && !savedAfterTimeout)}">
+
+    <input type="text" name="input"
+        ng-model="entry.value"
+        ng-change="configEntryValueChanged(entry, '{{entry.value}}')"
+        ng-if="entry.isEditable && !savedAfterTimeout">
+    <span ng-if="!(entry.isEditable && !savedAfterTimeout)">{{entry.value}}</span>
   </div>
 </div>

@@ -1,9 +1,9 @@
 (function(){
 angular.module('XmlConfigEditor', ['ui.bootstrap', 'ngAnimate'])
 
-    .controller('ConfigViewController', ['$scope', '$timeout', 'editorService', function($scope, $timeout, editorService){
+    .controller('ConfigViewController', ['$scope', '$timeout', '$uibModal', 'editorService', function($scope, $timeout, $uibModal, editorService){
 
-
+        var editingTimer;
         fetchConfigInfo();
 
 
@@ -14,7 +14,16 @@ angular.module('XmlConfigEditor', ['ui.bootstrap', 'ngAnimate'])
                      $scope.changedEntriesCount = 0;
                      $scope.savedAfterTimeout = false;
                      console.log($scope.configInfo );
-                     $timeout(function(){return $scope.saveConfigInfo(false)}, $scope.configInfo.lockInfo.lockDuration);
+                     editingTimer = $timeout(function(){
+                        var modalInstance = $uibModal.open({
+                           animation: true,
+                           ariaLabelledBy: 'modal-title',
+                           ariaDescribedBy: 'modal-body',
+                           templateUrl: 'templates/ErrorMessageTemplate.html',
+                           controller: 'ModalInstanceController'
+                        });
+                        return $scope.saveConfigInfo(false)
+                     }, $scope.configInfo.lockInfo.lockDuration);
                 }
             );
         }
@@ -28,6 +37,7 @@ angular.module('XmlConfigEditor', ['ui.bootstrap', 'ngAnimate'])
                     $scope.savedAfterTimeout = true;
                     return;
                 }
+                $timeout.cancel(editingTimer);
                 fetchConfigInfo();
             });
 
@@ -45,5 +55,11 @@ angular.module('XmlConfigEditor', ['ui.bootstrap', 'ngAnimate'])
             }
             console.log($scope.changedEntriesCount);
         }
+
+        $(window).on('beforeunload', function() {
+            if ($scope.changedEntriesCount != 0) {
+                return 'Your own message goes here...';
+            }
+        });
     }])
 })();

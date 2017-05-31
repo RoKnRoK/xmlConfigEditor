@@ -2,6 +2,8 @@ package com.rok.xml.rest;
 
 import com.rok.xml.dto.config_dto.*;
 import com.rok.xml.ejb.XmlConfigEditorLocal;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.ejb.EJB;
 import javax.ws.rs.*;
@@ -15,6 +17,8 @@ import javax.ws.rs.core.MediaType;
 @ApplicationPath("/rest")
 @Path("/config")
 public class XmlConfigRestService extends Application{
+
+    private static final Logger logger = LoggerFactory.getLogger(XmlConfigRestService.class.getName());
 
     @SuppressWarnings("unused")
     @EJB
@@ -32,6 +36,7 @@ public class XmlConfigRestService extends Application{
     @Path("/save")
     @Consumes(MediaType.APPLICATION_JSON)
     public void saveConfig(ConfigModificationInfo configModificationInfo){
+        logger.debug(configModificationInfo.toString());
         xmlConfigEditorLocal.saveConfigBlock(configModificationInfo);
     }
 

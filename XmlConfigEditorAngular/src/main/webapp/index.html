@@ -15,6 +15,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap-tpls.min.js" defer></script>
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-animate.min.js" defer></script>
     <script src="js/scripts.js" defer></script>
+    <script src="js/ModalInstanceController.js" defer></script>
     <script src="js/editorService.js" defer></script>
 
 </head>
@@ -22,13 +23,13 @@
 <body ng-controller="ConfigViewController" class="generic-container">
 
     <uib-tabset>
-        <uib-tab index="$index"  ng-repeat="tabBlock in configInfo.configBlock.blocks" heading="{{tabBlock.name}}" disable="tab.disabled">
+        <uib-tab index="$index"  ng-repeat="tabBlock in configInfo.configBlock.blocks" heading="{{tabBlock.displayName}}" disable="tab.disabled">
             <div  ng-include="'templates/ConfigBlockTemplate.html'" ng-init="block = tabBlock"></div>
         </uib-tab>
     </uib-tabset>
     <div class="row">
         <div class="floatRight">
-            <button type="button" ng-click="saveConfigInfo()" class="btn btn-warning btn-sm" ng-disabled="changedEntriesCount == 0">Save changes</button>
+            <button type="button" ng-click="saveConfigInfo(true)" class="btn btn-warning btn-sm" ng-disabled="changedEntriesCount == 0">Save changes</button>
         </div>
     </div>
 </body>

@@ -19,9 +19,10 @@ public class ConfigBlockWidgetFactory {
 
     public static Widget createWidget(ConfigNode configBlock) {
         switch (configBlock.getNodeType()) {
-            case ROOT_BLOCK:
-                return new TabConfigBlockWidget(configBlock);
             case BLOCK:
+                if (configBlock.getParentNode() == null) {
+                    return new TabConfigBlockWidget(configBlock);
+                }
                 return new ExpandableConfigBlockWidget(configBlock);
             case ENTRY:
             case ATTRIBUTE:

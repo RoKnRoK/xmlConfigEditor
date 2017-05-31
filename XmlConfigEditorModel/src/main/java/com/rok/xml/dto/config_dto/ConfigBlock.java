@@ -118,9 +118,9 @@ public class ConfigBlock extends AbstractConfigNode implements ConfigNode, HasCh
             result.append("\t").append(configEntry.toString());
         }
         result.append(">\n");
-        for (ConfigNode configBlock : getBlocks()) {
+      /*  for (ConfigNode configBlock : getBlocks()) {
             result.append("\t").append(configBlock.toString());
-        }
+        }*/
         result.append("</").append(name).append(">\n");
         return result.toString();
     }
@@ -129,8 +129,11 @@ public class ConfigBlock extends AbstractConfigNode implements ConfigNode, HasCh
     public AbstractConfigNode getParentNode() {
         return this.parentNode;
     }
+    @Override
+    public void setParentNode(AbstractConfigNode parentNode) {
+        this.parentNode = parentNode;
+    }
 
-    @JsonIgnore
     public List<ConfigValueNode> getChangedValueNodes() {
         List<ConfigValueNode> changedNodes = new ArrayList<>();
         logger.trace("Config block {}", this.getName());
@@ -144,6 +147,7 @@ public class ConfigBlock extends AbstractConfigNode implements ConfigNode, HasCh
             logger.trace("Child node {}: changed = {}", configEntry.getName(), configEntry.isChanged());
             changedNodes.add(configEntry);
         }
+        logger.debug("Detecting changes: {}", getBlocks());
         for (ConfigNode configBlock : getBlocks()) {
             ConfigBlock childConfigBlock = (ConfigBlock) configBlock;
             changedNodes.addAll(childConfigBlock.getChangedValueNodes());
@@ -157,6 +161,7 @@ public class ConfigBlock extends AbstractConfigNode implements ConfigNode, HasCh
         for (ConfigValueNode valueNode : attributes) {
             valueNode.setEditable(editable);
         }
+        logger.trace("{}, {}, {}", this.name, getBlocks().size() > 0 ? getBlocks().get(0) : "no blocks", blocks.size() > 0 ? blocks.get(0) : "no blocks");
         for (ConfigNode valueNode : getBlocks()) {
             valueNode.setEditable(editable);
         }

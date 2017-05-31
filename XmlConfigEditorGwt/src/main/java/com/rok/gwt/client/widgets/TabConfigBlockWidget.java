@@ -17,7 +17,7 @@ public class TabConfigBlockWidget extends Composite {
     private TabPanel widgetMainPanel = new TabPanel();
 
     public TabConfigBlockWidget(final ConfigNode configNode) {
-        if (configNode.getNodeType() != ConfigNodeType.ROOT_BLOCK){
+        if (configNode.getParentNode() != null){
             Label errorLabel = new Label("Не удалось отобразить блок " + configNode.getDisplayName());
             widgetMainPanel.add(errorLabel, "Ошибка!");
             initWidget(widgetMainPanel);
