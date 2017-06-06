@@ -1,5 +1,7 @@
 package com.rok.xml.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
 import java.util.Date;
@@ -18,6 +20,8 @@ public class LockInfo implements Serializable{
 
     private String lockObject;
     private long lockStartTime;
+
+    @JsonProperty
     private long lockDuration;
 
     public LockInfo() {
@@ -39,7 +43,4 @@ public class LockInfo implements Serializable{
         return lockStartTime;
     }
 
-    public long getLockDuration() {
-        return lockDuration;
-    }
 }

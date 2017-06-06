@@ -4,9 +4,11 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import sun.security.krb5.Config;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by RoK on 21.06.2015.
@@ -117,10 +119,19 @@ public class ConfigBlock extends AbstractConfigNode implements ConfigNode, HasCh
         for (ConfigValueNode configEntry : getEntries()) {
             result.append("\t").append(configEntry.toString());
         }
+        Object firstBlock = blocks.size() > 1 ? blocks.get(0) : new ConfigBlock();
+        if (firstBlock instanceof Map){
+            Map firstBlockMap = (Map) firstBlock;
+            logger.debug("Block #1: {}", firstBlockMap.get("name"));
+        }
+        else {
+            logger.debug("Block #1: {}", ((ConfigBlock)firstBlock).getName());
+        }
+        logger.debug("Block of type: {}", firstBlock.getClass().getName());
         result.append(">\n");
-      /*  for (ConfigNode configBlock : getBlocks()) {
+        for (ConfigNode configBlock : getBlocks()) {
             result.append("\t").append(configBlock.toString());
-        }*/
+        }
         result.append("</").append(name).append(">\n");
         return result.toString();
     }
@@ -161,7 +172,6 @@ public class ConfigBlock extends AbstractConfigNode implements ConfigNode, HasCh
         for (ConfigValueNode valueNode : attributes) {
             valueNode.setEditable(editable);
         }
-        logger.trace("{}, {}, {}", this.name, getBlocks().size() > 0 ? getBlocks().get(0) : "no blocks", blocks.size() > 0 ? blocks.get(0) : "no blocks");
         for (ConfigNode valueNode : getBlocks()) {
             valueNode.setEditable(editable);
         }

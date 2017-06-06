@@ -27,6 +27,19 @@
             </Policies>
             <DefaultRolloverStrategy max="10"/>
         </RollingFile>
+
+        <RollingFile
+                name="restAppender"
+                fileName="C:\XmlEditor\XmlConfigEditorREST.log"
+                filePattern="C:\XmlEditor\$${date:yyyy-MM}/XmlConfigEditorREST-%d{MM-dd-yyyy}-%i.log.gz">
+            <PatternLayout>
+                <Pattern>%d [%t] %-5p %c{3} - %m%n</Pattern>
+            </PatternLayout>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="10 MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="10"/>
+        </RollingFile>
     </Appenders>
 
 
@@ -40,6 +53,10 @@
 
         <Logger name="com.rok.xml" level="trace">
             <AppenderRef ref="modelAppender"/>
+        </Logger>
+
+        <Logger name="com.rok.xml.rest" level="trace">
+            <AppenderRef ref="restAppender"/>
         </Logger>
     </Loggers>
 
