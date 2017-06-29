@@ -1,6 +1,6 @@
 (function(){
     angular.module('XmlConfigEditor')
-    .constant('serviceUrl', 'http://localhost:8080/XmlConfigEditorREST/rest/config/')
+    .constant('serviceUrl', 'http://localhost:8080/XmlConfigEditorRest/rest/config/')
     .factory('editorService', function($http, $q, serviceUrl){
 
         var factory = {

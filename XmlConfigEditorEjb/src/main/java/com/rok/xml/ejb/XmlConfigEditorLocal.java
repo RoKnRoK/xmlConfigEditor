@@ -7,5 +7,5 @@ import javax.ejb.Local;
  * All rights reserved =)
  */
 @Local
-public interface XmlConfigEditorLocal extends XmlConfigEditorRemote {
+public interface XmlConfigEditorLocal extends XmlConfigEditor {
 }

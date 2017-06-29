@@ -9,8 +9,5 @@ import javax.ejb.Remote;
  * All rights reserved =)
  */
 @Remote
-public interface XmlConfigEditorRemote {
-    ConfigModificationInfo getConfigModificationInfo();
-    boolean saveConfigBlock(ConfigModificationInfo configModificationInfo) ;
-    void cancelConfigEditing(ConfigModificationInfo configModificationInfo);
+public interface XmlConfigEditorRemote extends XmlConfigEditor {
 }

@@ -182,6 +182,7 @@
                         <clientExclude>**/*Impl.class</clientExclude>
                         <clientExclude>**/XmlLockCanceller.class</clientExclude>
                     </clientExcludes>
+                    <jarName>${project.artifactId}</jarName>
                 </configuration>
             </plugin>
         </plugins>

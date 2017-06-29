@@ -18,7 +18,7 @@ import static com.rok.xml.Constants.FILE_NAME;
  * All rights reserved =)
  */
 @SuppressWarnings("unused")
-@Stateless(name = "XmlConfigEditorEJB")
+@Stateless(name = "ejb/XmlConfigEditorEJB")
 @LocalBean
 public class XmlConfigEditorImpl implements XmlConfigEditorLocal, XmlConfigEditorRemote {
 
@@ -31,16 +31,13 @@ public class XmlConfigEditorImpl implements XmlConfigEditorLocal, XmlConfigEdito
 
     public XmlConfigEditorImpl() {
     }
-
+    //todo: filename as @Resource
     private XmlConfigModifier getXmlConfigModifier() {
         return new FSXmlConfigModifier(FILE_NAME);
     }
 
     @Override
     public ConfigModificationInfo getConfigModificationInfo() {
-
-        //todo: filename as @Resource
-
         ConfigModificationInfo config = getXmlConfigModifier().getConfig();
         canceller.startLockValidityTimer(config);
         return config;

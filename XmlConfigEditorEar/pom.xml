@@ -180,6 +180,61 @@
                                 <webModule>
                                     <groupId>com.rok.xml</groupId>
                                     <artifactId>XmlConfigEditorREST</artifactId>
+                                    <contextRoot>XmlConfigEditorRest</contextRoot>
+                                </webModule>
+
+                                <webModule>
+                                    <groupId>com.rok.xml</groupId>
+                                    <artifactId>XmlConfigEditorAngular</artifactId>
+                                </webModule>
+                            </modules>
+                            <displayName>XmlConfigEditor EAR</displayName>
+                            <generateApplicationXml>true</generateApplicationXml>
+                        </configuration>
+                    </plugin>
+
+                </plugins>
+
+            </build>
+        </profile>
+
+        <profile>
+            <id>EJB+SpringREST+Angular</id>
+
+            <dependencies>
+                <dependency>
+                    <groupId>com.rok.xml</groupId>
+                    <artifactId>XmlConfigEditorSpringRest</artifactId>
+                    <version>${project.parent.version}</version>
+                    <type>war</type>
+                </dependency>
+
+                <dependency>
+                    <groupId>com.rok.xml</groupId>
+                    <artifactId>XmlConfigEditorAngular</artifactId>
+                    <version>${project.parent.version}</version>
+                    <type>war</type>
+                </dependency>
+
+            </dependencies>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-ear-plugin</artifactId>
+                        <version>2.3.2</version>
+                        <configuration>
+                            <defaultLibBundleDir>lib</defaultLibBundleDir>
+                            <modules>
+                                <ejbModule>
+                                    <groupId>com.rok.xml</groupId>
+                                    <artifactId>XmlConfigEditorEjb</artifactId>
+                                </ejbModule>
+
+                                <webModule>
+                                    <groupId>com.rok.xml</groupId>
+                                    <artifactId>XmlConfigEditorSpringRest</artifactId>
+                                    <contextRoot>XmlConfigEditorRest</contextRoot>
                                 </webModule>
 
                                 <webModule>
