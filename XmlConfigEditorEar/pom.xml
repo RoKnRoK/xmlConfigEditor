@@ -39,23 +39,6 @@
             </exclusions>
         </dependency>
 
-        <dependency>
-            <groupId>com.rok.xml</groupId>
-            <artifactId>XmlConfigEditorEjb</artifactId>
-            <version>${project.parent.version}</version>
-            <type>ejb</type>
-            <exclusions>
-                <exclusion>
-                    <artifactId>junit</artifactId>
-                    <groupId>junit</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>XmlConfigEditorModel</artifactId>
-                    <groupId>com.rok.xml</groupId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-
 
     </dependencies>
 
@@ -75,6 +58,22 @@
                     <type>war</type>
                 </dependency>
 
+                <dependency>
+                    <groupId>com.rok.xml</groupId>
+                    <artifactId>XmlConfigEditorEjb</artifactId>
+                    <version>${project.parent.version}</version>
+                    <type>ejb</type>
+                    <exclusions>
+                        <exclusion>
+                            <artifactId>junit</artifactId>
+                            <groupId>junit</groupId>
+                        </exclusion>
+                        <exclusion>
+                            <artifactId>XmlConfigEditorModel</artifactId>
+                            <groupId>com.rok.xml</groupId>
+                        </exclusion>
+                    </exclusions>
+                </dependency>
             </dependencies>
 
             <build>
@@ -114,6 +113,23 @@
                     <artifactId>XmlConfigEditorREST</artifactId>
                     <version>${project.parent.version}</version>
                     <type>war</type>
+                </dependency>
+
+                <dependency>
+                    <groupId>com.rok.xml</groupId>
+                    <artifactId>XmlConfigEditorEjb</artifactId>
+                    <version>${project.parent.version}</version>
+                    <type>ejb</type>
+                    <exclusions>
+                        <exclusion>
+                            <artifactId>junit</artifactId>
+                            <groupId>junit</groupId>
+                        </exclusion>
+                        <exclusion>
+                            <artifactId>XmlConfigEditorModel</artifactId>
+                            <groupId>com.rok.xml</groupId>
+                        </exclusion>
+                    </exclusions>
                 </dependency>
             </dependencies>
             <build>
@@ -161,6 +177,23 @@
                     <artifactId>XmlConfigEditorAngular</artifactId>
                     <version>${project.parent.version}</version>
                     <type>war</type>
+                </dependency>
+
+                <dependency>
+                    <groupId>com.rok.xml</groupId>
+                    <artifactId>XmlConfigEditorEjb</artifactId>
+                    <version>${project.parent.version}</version>
+                    <type>ejb</type>
+                    <exclusions>
+                        <exclusion>
+                            <artifactId>junit</artifactId>
+                            <groupId>junit</groupId>
+                        </exclusion>
+                        <exclusion>
+                            <artifactId>XmlConfigEditorModel</artifactId>
+                            <groupId>com.rok.xml</groupId>
+                        </exclusion>
+                    </exclusions>
                 </dependency>
             </dependencies>
             <build>
@@ -216,6 +249,23 @@
                     <type>war</type>
                 </dependency>
 
+                <dependency>
+                    <groupId>com.rok.xml</groupId>
+                    <artifactId>XmlConfigEditorEjb</artifactId>
+                    <version>${project.parent.version}</version>
+                    <type>ejb</type>
+                    <exclusions>
+                        <exclusion>
+                            <artifactId>junit</artifactId>
+                            <groupId>junit</groupId>
+                        </exclusion>
+                        <exclusion>
+                            <artifactId>XmlConfigEditorModel</artifactId>
+                            <groupId>com.rok.xml</groupId>
+                        </exclusion>
+                    </exclusions>
+                </dependency>
+
             </dependencies>
             <build>
                 <plugins>
@@ -234,7 +284,63 @@
                                 <webModule>
                                     <groupId>com.rok.xml</groupId>
                                     <artifactId>XmlConfigEditorSpringRest</artifactId>
-                                    <contextRoot>XmlConfigEditorRest</contextRoot>
+                                    <contextRoot>/XmlConfigEditorRest</contextRoot>
+                                </webModule>
+
+                                <webModule>
+                                    <groupId>com.rok.xml</groupId>
+                                    <artifactId>XmlConfigEditorAngular</artifactId>
+                                </webModule>
+                            </modules>
+                            <displayName>XmlConfigEditor EAR</displayName>
+                            <generateApplicationXml>true</generateApplicationXml>
+                        </configuration>
+                    </plugin>
+
+                </plugins>
+
+            </build>
+        </profile>
+
+        <profile>
+            <id>Spring+Angular</id>
+
+            <dependencies>
+                <dependency>
+                    <groupId>com.rok.xml</groupId>
+                    <artifactId>XmlConfigEditorSpringRest</artifactId>
+                    <version>${project.parent.version}</version>
+                    <type>war</type>
+                </dependency>
+
+                <dependency>
+                    <groupId>com.rok.xml</groupId>
+                    <artifactId>XmlConfigEditorSpringBean</artifactId>
+                    <version>${project.parent.version}</version>
+                </dependency>
+
+                <dependency>
+                    <groupId>com.rok.xml</groupId>
+                    <artifactId>XmlConfigEditorAngular</artifactId>
+                    <version>${project.parent.version}</version>
+                    <type>war</type>
+                </dependency>
+
+            </dependencies>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-ear-plugin</artifactId>
+                        <version>2.3.2</version>
+                        <configuration>
+                            <defaultLibBundleDir>lib</defaultLibBundleDir>
+                            <modules>
+
+                                <webModule>
+                                    <groupId>com.rok.xml</groupId>
+                                    <artifactId>XmlConfigEditorSpringRest</artifactId>
+                                    <contextRoot>/XmlConfigEditorRest</contextRoot>
                                 </webModule>
 
                                 <webModule>

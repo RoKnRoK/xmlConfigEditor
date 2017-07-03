@@ -3,7 +3,7 @@
 
     <Appenders>
         <RollingFile
-                name="ejbAppender"
+                name="beanAppender"
                 fileName="C:\XmlEditor\XmlConfigEditorEjb.log"
                 filePattern="C:\XmlEditor\$${date:yyyy-MM}/XmlConfigEditorEjb-%d{MM-dd-yyyy}-%i.log.gz">
             <PatternLayout>
@@ -44,11 +44,11 @@
 
 
     <Loggers>
-        <Logger name="com.rok.xml.ejb" level="trace">
-            <AppenderRef ref="ejbAppender"/>
+        <Logger name="com.rok.xml.bean" level="trace">
+            <AppenderRef ref="beanAppender"/>
         </Logger>
         <Logger name="com.rok.xml.timer" level="trace">
-            <AppenderRef ref="ejbAppender"/>
+            <AppenderRef ref="beanAppender"/>
         </Logger>
 
         <Logger name="com.rok.xml" level="trace">

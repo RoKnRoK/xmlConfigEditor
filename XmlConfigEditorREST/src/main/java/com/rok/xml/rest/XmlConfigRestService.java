@@ -1,7 +1,7 @@
 package com.rok.xml.rest;
 
 import com.rok.xml.dto.config_dto.*;
-import com.rok.xml.ejb.XmlConfigEditorLocal;
+import com.rok.xml.bean.XmlConfigEditorLocal;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

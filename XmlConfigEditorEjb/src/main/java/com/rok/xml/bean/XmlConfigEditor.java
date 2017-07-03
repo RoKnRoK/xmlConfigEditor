@@ -1,4 +1,4 @@
-package com.rok.xml.ejb;
+package com.rok.xml.bean;
 
 import com.rok.xml.dto.config_dto.ConfigModificationInfo;
 

@@ -1,13 +1,6 @@
 package com.rok.xml.rest;
 
-import org.springframework.web.WebApplicationInitializer;
-import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
-import org.springframework.web.servlet.DispatcherServlet;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
-
-import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRegistration;
 
 /**
  * Created by roman.kulikov on 6/6/2017.
@@ -17,7 +10,7 @@ public class Initializer extends AbstractAnnotationConfigDispatcherServletInitia
 
     @Override
     protected Class[] getRootConfigClasses() {
-        return new Class[] { RestConfig.class };
+        return new Class[] { PropertyPlaceholderConfig.class, RestEjbConfig.class, RestSpringConfig.class };
     }
 
     @Override

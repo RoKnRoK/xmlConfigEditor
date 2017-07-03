@@ -1,4 +1,4 @@
-package com.rok.xml.ejb;
+package com.rok.xml.bean;
 
 import javax.ejb.Local;
 

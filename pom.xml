@@ -11,6 +11,17 @@
 
     <profiles>
         <profile>
+            <id>Spring+Angular</id>
+            <modules>
+                <module>XmlConfigEditorModel</module>
+                <module>XmlConfigEditorSpringRest</module>
+                <module>XmlConfigEditorSpringBean</module>
+                <module>XmlConfigEditorAngular</module>
+                <module>XmlConfigEditorEar</module>
+            </modules>
+        </profile>
+
+        <profile>
             <id>EJB+SpringREST+Angular</id>
             <modules>
                 <module>XmlConfigEditorModel</module>
@@ -64,11 +75,14 @@
                 <module>XmlConfigEditorEar</module>
                 <module>XmlConfigEditorAngular</module>
                 <module>XmlConfigEditorREST</module>
-                <module>XmlConfigEditorREST</module>
+                <module>XmlConfigEditorSpringRest</module>
+                <module>XmlConfigEditorSpringBean</module>
             </modules>
         </profile>
     </profiles>
-
+    <modules>
+        <module>XmlConfigEditorSpringBean</module>
+    </modules>
 
 
     <properties>
@@ -183,6 +197,12 @@
             <dependency>
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-core</artifactId>
+                <version>${spring.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-context</artifactId>
                 <version>${spring.version}</version>
             </dependency>
 

@@ -1,7 +1,7 @@
 package com.rok.xml.rest;
 
 import com.rok.xml.dto.config_dto.ConfigModificationInfo;
-import com.rok.xml.ejb.XmlConfigEditor;
+import com.rok.xml.bean.XmlConfigEditor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +19,7 @@ public class XmlConfigEditorController {
 //    private XmlConfigEditorRemote xmlConfigEditorBean;
 
     @Autowired
-    @Qualifier("xmlConfigEditorEJB")
+    @Qualifier("xmlConfigEditorBean")
     private XmlConfigEditor xmlConfigEditorBean;
 
     @RequestMapping(value = "/save", method = RequestMethod.PUT, produces="application/json")

@@ -7,9 +7,9 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
 http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.0.xsd">
 
 
-    <jee:local-slsb id="xmlConfigEditorEJB"
-                    jndi-name="java:global/XmlConfigEditor/XmlConfigEditorEjb/ejb/XmlConfigEditorEJB!com.rok.xml.ejb.XmlConfigEditorLocal"
-                    business-interface="com.rok.xml.ejb.XmlConfigEditor"/>
+    <jee:local-slsb id="xmlConfigEditorBean"
+                    jndi-name="java:global/XmlConfigEditor/XmlConfigEditorEjb/ejb/XmlConfigEditorEJB!com.rok.xml.bean.XmlConfigEditorLocal"
+                    business-interface="com.rok.xml.bean.XmlConfigEditor"/>
 
 
 </beans>

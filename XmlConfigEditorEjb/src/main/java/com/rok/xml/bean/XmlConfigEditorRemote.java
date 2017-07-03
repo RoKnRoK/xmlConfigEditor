@@ -1,6 +1,4 @@
-package com.rok.xml.ejb;
-
-import com.rok.xml.dto.config_dto.ConfigModificationInfo;
+package com.rok.xml.bean;
 
 import javax.ejb.Remote;
 

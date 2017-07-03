@@ -2,7 +2,7 @@ package com.rok.xml.timer;
 
 import com.rok.xml.Constants;
 import com.rok.xml.dto.config_dto.ConfigModificationInfo;
-import com.rok.xml.ejb.XmlConfigEditorLocal;
+import com.rok.xml.bean.XmlConfigEditorLocal;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

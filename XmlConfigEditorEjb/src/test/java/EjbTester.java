@@ -4,7 +4,7 @@
  */
 
 import com.rok.xml.dto.config_dto.ConfigModificationInfo;
-import com.rok.xml.ejb.XmlConfigEditorLocal;
+import com.rok.xml.bean.XmlConfigEditorLocal;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;

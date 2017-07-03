@@ -31,18 +31,70 @@
 
         <dependency>
             <groupId>com.rok.xml</groupId>
-            <artifactId>XmlConfigEditorEjb</artifactId>
-            <version>${parent.version}</version>
-            <type>ejb-client</type>
-        </dependency>
-
-        <dependency>
-            <groupId>com.rok.xml</groupId>
             <artifactId>XmlConfigEditorModel</artifactId>
             <version>${parent.version}</version>
         </dependency>
     </dependencies>
 
+    <profiles>
+        <profile>
+            <id>EJB+SpringREST+Angular</id>
+
+            <properties>
+                <xml.editor.bean.type>ejb</xml.editor.bean.type>
+            </properties>
+
+            <dependencies>
+                <dependency>
+                    <groupId>com.rok.xml</groupId>
+                    <artifactId>XmlConfigEditorEjb</artifactId>
+                    <version>${parent.version}</version>
+                    <type>ejb-client</type>
+                </dependency>
+            </dependencies>
+
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-war-plugin</artifactId>
+                        <version>2.1.1</version>
+                        <configuration>
+                            <packagingExcludes>WEB-INF/classes/spring-config.xml</packagingExcludes>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <profile>
+            <id>Spring+Angular</id>
+
+            <properties>
+                <xml.editor.bean.type>spring</xml.editor.bean.type>
+            </properties>
+            <dependencies>
+                <dependency>
+                    <groupId>com.rok.xml</groupId>
+                    <artifactId>XmlConfigEditorSpringBean</artifactId>
+                    <version>${project.parent.version}</version>
+                </dependency>
+            </dependencies>
+
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-war-plugin</artifactId>
+                        <version>2.1.1</version>
+                        <configuration>
+                            <packagingExcludes>WEB-INF/classes/ejb-config.xml</packagingExcludes>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
     <build>
         <plugins>
             <plugin>
